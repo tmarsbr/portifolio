@@ -499,12 +499,6 @@ const ProjectsPreview = () => {
       color: theme.palette.primary.main,
     },
     {
-      key: 'Análise de Dados',
-      label: 'Análise de Dados',
-      icon: <Analytics />,
-      color: '#2196f3',
-    },
-    {
       key: 'Engenharia de Dados',
       label: 'Engenharia de Dados',
       icon: <Engineering />,
@@ -518,8 +512,8 @@ const ProjectsPreview = () => {
     },
   ];
 
-  // Função para filtrar projetos por categoria
-  const visibleProjects = projects.filter(project => !project.hidden);
+  // Função para filtrar projetos por categoria (excluindo Análise de Dados)
+  const visibleProjects = projects.filter(project => !project.hidden && project.category !== 'Análise de Dados');
 
   const filteredProjects = selectedCategory === 'all'
     ? visibleProjects.slice(0, projectsConfig.maxProjects) // Mostrar apenas projetos configurados na home

@@ -5,7 +5,7 @@
 export const personalInfo = {
   name: "Tiago da Silva E. Santo",
   fullName: "Tiago da Silva E. Santo",
-  title: "Engenheiro de Dados DataOps",
+  title: "Engenheiro de Dados",
   subtitle: "Mentalidade de Produção Sênior aplicada a pipelines de dados resilientes e confiáveis",
   location: "São Paulo, SP",
   email: "tiagomars233@gmail.com",

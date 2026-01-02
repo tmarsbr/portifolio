@@ -29,7 +29,7 @@ export {
  * @includes title, description, keywords, Open Graph, Twitter Cards
  */
 export const seoConfig = {
-  title: "Tiago Silva — Engenheiro de Dados DataOps",
+  title: "Tiago Silva — Engenheiro de Dados",
   description: "Engenheiro de Dados especialista em pipelines ETL/ELT (Airflow, dbt, Spark), Data Warehouses modelados e testados, Modern Data Stack e infraestrutura AWS via Terraform. Foco em Data Quality, Idempotência e Observabilidade.",
   keywords: "engenheiro de dados, data engineering, dataops, etl, elt, python, sql, aws, airflow, dbt, spark, terraform, data quality, pipeline de dados, tiago silva, portfólio",
   author: "Tiago Silva",
@@ -37,7 +37,7 @@ export const seoConfig = {
   image: `${process.env.PUBLIC_URL}/og-image.jpg`, // Adicione uma imagem de preview
 
   // Open Graph
-  ogTitle: "Tiago Silva — Engenheiro de Dados DataOps",
+  ogTitle: "Tiago Silva — Engenheiro de Dados",
   ogDescription: "Pipelines ETL/ELT resilientes, Data Warehouses modelados e testados, Modern Data Stack (dbt, PySpark, Airflow) e infraestrutura Cloud AWS via Terraform.",
   twitterCard: "summary_large_image",
   twitterCreator: "@tiagodados" // Se tiver Twitter
