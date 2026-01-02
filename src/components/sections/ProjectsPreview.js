@@ -321,6 +321,48 @@ const ProjectCard = ({ project, index }) => {
               {project.description}
             </Typography>
 
+            {/* Diagrama de Arquitetura */}
+            {project.architectureDiagramImage && (
+              <Box
+                sx={{
+                  backgroundColor: darkMode ? 'rgba(100, 181, 246, 0.05)' : 'rgba(21, 101, 192, 0.05)',
+                  borderRadius: 2,
+                  p: 2,
+                  border: `1px solid ${darkMode ? 'rgba(100, 181, 246, 0.2)' : 'rgba(21, 101, 192, 0.1)'}`,
+                }}
+              >
+                <Typography
+                  variant="caption"
+                  sx={{
+                    color: 'primary.main',
+                    fontWeight: 700,
+                    fontSize: '0.75rem',
+                    textTransform: 'uppercase',
+                    letterSpacing: 0.5,
+                    mb: 1.5,
+                    display: 'block',
+                  }}
+                >
+                  🏛️ Arquitetura do Projeto
+                </Typography>
+                <Box
+                  component="img"
+                  src={project.architectureDiagramImage}
+                  alt={`Arquitetura - ${project.title}`}
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: 1,
+                    backgroundColor: 'white',
+                    p: 1,
+                    boxShadow: darkMode
+                      ? '0 2px 8px rgba(0, 0, 0, 0.3)'
+                      : '0 2px 8px rgba(0, 0, 0, 0.1)',
+                  }}
+                />
+              </Box>
+            )}
+
             {/* Métricas do projeto */}
             {project.metrics && (
               <Box

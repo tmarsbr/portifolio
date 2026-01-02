@@ -505,6 +505,28 @@ const Projects = () => {
                       {selectedProject.longDescription || selectedProject.description}
                     </Typography>
 
+                    {selectedProject.architectureDiagramImage && (
+                      <Box sx={{ mb: 4 }}>
+                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <AutoGraph fontSize="small" color="primary" /> Arquitetura do Projeto
+                        </Typography>
+                        <Box
+                          component="img"
+                          src={selectedProject.architectureDiagramImage}
+                          alt={`Arquitetura - ${selectedProject.title}`}
+                          sx={{
+                            width: '100%',
+                            height: 'auto',
+                            borderRadius: 2,
+                            backgroundColor: 'white',
+                            p: 2,
+                            border: `1px solid ${theme.palette.divider}`,
+                            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                          }}
+                        />
+                      </Box>
+                    )}
+
                     {selectedProject.metrics && (
                       <Box sx={{ p: 3, backgroundColor: alpha(theme.palette.success.main, 0.1), borderRadius: 2, border: `1px solid ${alpha(theme.palette.success.main, 0.2)}`, mb: 4 }}>
                         <Typography variant="subtitle2" sx={{ color: 'success.main', fontWeight: 700, mb: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
