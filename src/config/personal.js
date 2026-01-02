@@ -5,8 +5,8 @@
 export const personalInfo = {
   name: "Tiago da Silva E. Santo",
   fullName: "Tiago da Silva E. Santo",
-  title: "Engenheiro de Dados em Formação",
-  subtitle: "Em transição da indústria para dados, construindo pipelines confiáveis e automatizados",
+  title: "Engenheiro de Dados DataOps",
+  subtitle: "Mentalidade de Produção Sênior aplicada a pipelines de dados resilientes e confiáveis",
   location: "São Paulo, SP",
   email: "tiagomars233@gmail.com",
   phone: "+55 11 97542-9994",
@@ -16,13 +16,15 @@ export const personalInfo = {
   resume: `${process.env.PUBLIC_URL}/certificates/Curriculo_Tiago_Santo_Formatado.pdf`,
 
   // Resumo para a página inicial (1-2 frases)
-  homeIntro: "Engenheiro de Dados em formação, em transição da área industrial. Experiência prática na construção de pipelines ETL/ELT, modelagem de dados e orquestração com Python, SQL, Airflow e dbt, atuando em ambientes AWS. Trago mentalidade de processo, disciplina operacional e foco em dados confiáveis.",
+  homeIntro: "Engenheiro de Dados Jr. com Mentalidade de Produção Sênior. Minha base na usinagem de precisão me ensinou que um erro de milímetro compromete toda a produção. Hoje, aplico esse mesmo rigor técnico e disciplina operacional para construir pipelines de dados resilientes e confiáveis.",
 
   // Descrição expandida para a seção Sobre
   aboutDescription: `Da Oficina para os Dados
 Tudo começou com barulho de torno, cheiro de óleo e precisão milimétrica. Na usinagem, aprendi que um erro de um décimo pode custar caro. Foi lá que desenvolvi o olhar clínico, a paciência e o gosto por resolver problemas com método.
 
-Hoje, essa precisão virou código. Projeto pipelines robustos, transformo dados brutos em ativos confiáveis e entrego soluções que movem decisões de negócio. Do Airflow ao dbt, do SQL ao Spark — cada etapa com a mesma atenção ao detalhe que aprendi calibrando peças.
+Hoje, essa precisão virou código. Sou especialista em transformar ecossistemas de dados brutos em Data Warehouses modelados e testados, utilizando a Modern Data Stack (dbt, PySpark, Airflow) e gerenciando infraestrutura Cloud (AWS) via Infraestrutura como Código (Terraform).
+
+Meu foco é em Data Quality, Idempotência e Observabilidade, garantindo que os dados sejam não apenas entregues, mas entregues com a tolerância apertada que o negócio exige.
 
 Tolerância apertada e processo confiável geram qualidade — em aço e em dados.
 

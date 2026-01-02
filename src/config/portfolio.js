@@ -29,16 +29,16 @@ export {
  * @includes title, description, keywords, Open Graph, Twitter Cards
  */
 export const seoConfig = {
-  title: "Tiago Silva — Eng. de Dados | Data Science",
-  description: "Engenharia de Dados e Data Science: ETL/ELT (Airflow, dbt, Spark), analytics e features para ML. IaC, CI/CD e DataOps na AWS.",
-  keywords: "engenharia de dados, data engineering, data science, analytics, python, machine learning, sql, aws, airflow, dbt, spark, tiago silva, portfólio",
+  title: "Tiago Silva — Engenheiro de Dados DataOps",
+  description: "Engenheiro de Dados especialista em pipelines ETL/ELT (Airflow, dbt, Spark), Data Warehouses modelados e testados, Modern Data Stack e infraestrutura AWS via Terraform. Foco em Data Quality, Idempotência e Observabilidade.",
+  keywords: "engenheiro de dados, data engineering, dataops, etl, elt, python, sql, aws, airflow, dbt, spark, terraform, data quality, pipeline de dados, tiago silva, portfólio",
   author: "Tiago Silva",
   url: "https://tmarsbr.github.io/portifolio", // URL do GitHub Pages
   image: `${process.env.PUBLIC_URL}/og-image.jpg`, // Adicione uma imagem de preview
 
   // Open Graph
-  ogTitle: "Tiago Silva — Eng. de Dados | Data Science",
-  ogDescription: "ETL/ELT (Airflow, dbt, Spark), modelagem para analytics e features de ML. IaC, CI/CD e DataOps na AWS.",
+  ogTitle: "Tiago Silva — Engenheiro de Dados DataOps",
+  ogDescription: "Pipelines ETL/ELT resilientes, Data Warehouses modelados e testados, Modern Data Stack (dbt, PySpark, Airflow) e infraestrutura Cloud AWS via Terraform.",
   twitterCard: "summary_large_image",
   twitterCreator: "@tiagodados" // Se tiver Twitter
 };

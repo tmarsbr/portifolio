@@ -188,24 +188,24 @@ const HeroSection = () => {
       items: ['Python', 'pandas', 'SQL', 'PostgreSQL', 'DuckDB'],
     },
     {
-      label: 'Airflow & dbt',
+      label: 'Airflow & Orquestração',
       icon: <DeviceHub fontSize="small" />,
-      items: ['Apache Airflow', 'dbt', 'Airbyte', 'ETL/ELT'],
+      items: ['Apache Airflow', 'DAGs', 'Schedul®ing', 'Monitoramento'],
     },
     {
-      label: 'Cloud AWS',
+      label: 'dbt & Modelagem',
+      icon: <Hub fontSize="small" />,
+      items: ['dbt', 'Data Modeling', 'Tests', 'Documentation', 'Airbyte'],
+    },
+    {
+      label: 'AWS & Cloud',
       icon: <CloudQueue fontSize="small" />,
-      items: ['S3', 'Redshift', 'Athena', 'Glue', 'EMR', 'Databricks', 'QuickSight', 'DynamoDB', 'SageMaker'],
+      items: ['S3', 'Redshift', 'Athena', 'Glue', 'EMR', 'Lambda'],
     },
     {
-      label: 'IaC',
+      label: 'IaC & Terraform',
       icon: <Storage fontSize="small" />,
-      items: ['Terraform', 'Docker', 'GitHub Actions'],
-    },
-    {
-      label: 'Web Scraping',
-      icon: <Code fontSize="small" />,
-      items: ['Selenium', 'Scrapy', 'BeautifulSoup', 'Playwright', 'Selectolax'],
+      items: ['Terraform', 'Docker', 'GitHub Actions', 'CI/CD'],
     },
   ];
 

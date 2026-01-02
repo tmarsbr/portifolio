@@ -23,7 +23,6 @@ import { seoConfig, personalInfo } from './config/portfolio';
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
 const Projects = lazy(() => import('./pages/Projects'));
-const Studies = lazy(() => import('./pages/Studies'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Certificacoes = lazy(() => import('./pages/Certificacoes'));
 
@@ -137,7 +136,6 @@ function AppContent() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/projects" element={<Projects />} />
-              <Route path="/studies" element={<Studies />} />
               <Route path="/certificacoes" element={<Certificacoes />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>

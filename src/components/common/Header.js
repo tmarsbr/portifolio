@@ -73,7 +73,6 @@ const Header = ({ elevation = 0 }) => {
     { text: 'Home', path: '/', icon: '🏠' },
     { text: 'Sobre', path: '/about', icon: '👨‍💻' },
     { text: 'Projetos', path: '/projects', icon: '💼' },
-    { text: 'Estudos', path: '/studies', icon: '📚' },
     { text: 'Contato', path: '/contact', icon: '📬' },
   ];
 

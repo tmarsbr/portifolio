@@ -178,7 +178,7 @@ export const studies = [
         technologies: ["Terraform", "AWS", "EC2", "IaC", "Docker"],
         course: "iac-terraform",
         courseName: "Infraestrutura e Cloud",
-        image: `${process.env.PUBLIC_URL}/projects/iac_lab1.png`,
+        image: `${process.env.PUBLIC_URL}/projects/lab1.png`,
         github: "https://github.com/tmarsbr/Lab_1_projeto_automatizando_a_infraestrutura",
         date: "2024"
     },

@@ -4,7 +4,6 @@
  */
 export const PROJECT_CATEGORIES = [
     'Todos',
-    'Análise de Dados',
     'Engenharia de Dados',
     'API & Scraping'
 ];
@@ -15,7 +14,6 @@ export const PROJECT_CATEGORIES = [
  */
 export const PROJECT_SUBCATEGORIES = {
     'Engenharia de Dados': ['ETL/ELT', 'Cloud AWS', 'SQL'],
-    'Análise de Dados': ['EDA', 'Visualização', 'Estatística', 'Experimentação'],
     'API & Scraping': ['Scraping', 'API REST', 'Integrações'],
     'Todos': []
 };
@@ -40,7 +38,8 @@ export const projects = [
         github: "https://github.com/tmarsbr/data-analyst-project",
         demo: "",
         metrics: "Análise de +50k músicas, identificação de 8 fatores-chave de sucesso",
-        featured: true,
+        featured: false,
+        hidden: true,
         complexity: 4,
         date: "2024"
     },
@@ -57,7 +56,8 @@ export const projects = [
         github: "https://github.com/tmarsbr/analise-PRF-",
         demo: "",
         metrics: "Análise de +100k acidentes, mapeamento de 27 estados",
-        featured: true,
+        featured: false,
+        hidden: true,
         complexity: 5,
         date: "2024"
     },
