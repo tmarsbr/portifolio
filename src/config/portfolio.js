@@ -29,16 +29,16 @@ export {
  * @includes title, description, keywords, Open Graph, Twitter Cards
  */
 export const seoConfig = {
-  title: "Tiago Silva — Engenheiro de Dados",
-  description: "Engenheiro de Dados especialista em pipelines ETL/ELT (Airflow, dbt, Spark), Data Warehouses modelados e testados, Modern Data Stack e infraestrutura AWS via Terraform. Foco em Data Quality, Idempotência e Observabilidade.",
-  keywords: "engenheiro de dados, data engineering, dataops, etl, elt, python, sql, aws, airflow, dbt, spark, terraform, data quality, pipeline de dados, tiago silva, portfólio",
+  title: "Tiago Silva — Engenheiro de Dados Júnior",
+  description: "Engenheiro de Dados Júnior focado em ETL, SQL e automação de pipelines na nuvem. Experiência prática com Python, Pandas, dbt, Apache Airflow e AWS. Foco em Data Quality, testes automatizados e pipelines confiáveis.",
+  keywords: "engenheiro de dados junior, data engineering, etl, python, sql, aws, airflow, dbt, pandas, pydantic, pytest, pipeline de dados, tiago silva, portfólio, data quality",
   author: "Tiago Silva",
   url: "https://tmarsbr.github.io/portifolio", // URL do GitHub Pages
   image: `${process.env.PUBLIC_URL}/og-image.jpg`, // Adicione uma imagem de preview
 
   // Open Graph
-  ogTitle: "Tiago Silva — Engenheiro de Dados",
-  ogDescription: "Pipelines ETL/ELT resilientes, Data Warehouses modelados e testados, Modern Data Stack (dbt, PySpark, Airflow) e infraestrutura Cloud AWS via Terraform.",
+  ogTitle: "Tiago Silva — Engenheiro de Dados Júnior",
+  ogDescription: "ETL robusto, SQL avançado, automação com Python e orquestração com Airflow e dbt. Focado em Data Quality e pipelines confiáveis.",
   twitterCard: "summary_large_image",
   twitterCreator: "@tiagodados" // Se tiver Twitter
 };

@@ -183,29 +183,34 @@ const HeroSection = () => {
 
   const mainStacks = [
     {
-      label: 'Python & SQL',
+      label: 'SQL',
       icon: <Code fontSize="small" />,
-      items: ['Python', 'pandas', 'SQL', 'PostgreSQL', 'DuckDB'],
+      items: ['PostgreSQL', 'MySQL', 'Consultas', 'Joins', 'Agregações'],
     },
     {
-      label: 'Airflow & Orquestração',
-      icon: <DeviceHub fontSize="small" />,
-      items: ['Apache Airflow', 'DAGs', 'Schedul®ing', 'Monitoramento'],
+      label: 'Python',
+      icon: <Code fontSize="small" />,
+      items: ['Pandas', 'Pydantic', 'Pytest', 'Requests', 'Automação'],
     },
     {
-      label: 'dbt & Modelagem',
+      label: 'dbt',
       icon: <Hub fontSize="small" />,
-      items: ['dbt', 'Data Modeling', 'Tests', 'Documentation', 'Airbyte'],
+      items: ['Modelagem', 'Testes', 'Documentação', 'Transformações SQL'],
     },
     {
-      label: 'AWS & Cloud',
+      label: 'Airflow',
+      icon: <DeviceHub fontSize="small" />,
+      items: ['DAGs', 'Scheduling', 'Orquestração', 'Monitoramento'],
+    },
+    {
+      label: 'AWS',
       icon: <CloudQueue fontSize="small" />,
-      items: ['S3', 'Redshift', 'Athena', 'Glue', 'EMR', 'Lambda'],
+      items: ['S3', 'Redshift', 'Athena', 'EC2'],
     },
     {
-      label: 'IaC & Terraform',
+      label: 'Docker',
       icon: <Storage fontSize="small" />,
-      items: ['Terraform', 'Docker', 'GitHub Actions', 'CI/CD'],
+      items: ['Containers', 'Docker Compose', 'Ambientes'],
     },
   ];
 

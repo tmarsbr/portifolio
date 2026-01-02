@@ -24,18 +24,18 @@ const AboutPreview = () => {
   const highlights = [
     {
       icon: <Engineering />,
-      title: 'Background Técnico',
-      description: 'Anos de experiência em usinagem de precisão, desenvolvendo habilidades analíticas e atenção aos detalhes.',
+      title: 'Mentalidade de Engenharia',
+      description: 'Da usinagem de precisão para dados: rigor técnico, atenção aos detalhes e foco em qualidade.',
     },
     {
       icon: <Analytics />,
-      title: 'Transição para Data',
-      description: 'Especialização em Data & Analytics, aplicando experiência prática para resolver problemas com dados.',
+      title: 'Fundamentos Sólidos',
+      description: 'SQL avançado, Python para automação, ETL com validações e testes automatizados.',
     },
     {
       icon: <School />,
-      title: 'Aprendizado Contínuo',
-      description: 'Mais de 9 projetos práticos desenvolvidos, sempre buscando novas tecnologias e metodologias.',
+      title: 'Ferramentas de Mercado',
+      description: 'Experiência prática com Airflow, dbt, AWS e Docker em projetos end-to-end.',
     },
   ];
 
@@ -103,9 +103,9 @@ const AboutPreview = () => {
                   mb: 4,
                 }}
               >
-                Tudo começou com barulho de torno, cheiro de óleo e precisão milimétrica. 
-                Na usinagem, aprendi que um erro de um décimo pode custar caro. Foi lá que 
-                desenvolvi o olhar clínico, a paciência e o gosto por resolver problemas com método.
+                Na usinagem, aprendi que a qualidade do produto final depende do rigor de cada etapa do processo. 
+                Eu aplico essa mesma filosofia na engenharia de dados: validações, testes e automação 
+                para entregar resultados confiáveis.
               </Typography>
 
               <Typography
@@ -117,10 +117,9 @@ const AboutPreview = () => {
                   mb: 4,
                 }}
               >
-                Hoje, essa precisão virou código. Projeto pipelines, organizo dados brutos, 
-                crio dashboards, desenvolvo modelos preditivos e conto histórias com dados reais. 
-                Da engenharia à análise, passando pela ciência de dados, aplico o mesmo rigor 
-                técnico que aprendi na mecânica para transformar números em decisões inteligentes.
+                Meu foco está nos fundamentos: SQL avançado para consultas e modelagem, Python para 
+                automação e manipulação de dados, e ferramentas modernas como dbt e Airflow para 
+                construir pipelines escaláveis e testáveis.
               </Typography>
 
               <Typography

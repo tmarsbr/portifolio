@@ -5,8 +5,8 @@
 export const personalInfo = {
   name: "Tiago da Silva E. Santo",
   fullName: "Tiago da Silva E. Santo",
-  title: "Engenheiro de Dados",
-  subtitle: "Mentalidade de Produção Sênior aplicada a pipelines de dados resilientes e confiáveis",
+  title: "Engenheiro de Dados Júnior",
+  subtitle: "Focado em ETL, SQL e Automação de Pipelines na Nuvem",
   location: "São Paulo, SP",
   email: "tiagomars233@gmail.com",
   phone: "+55 11 97542-9994",
@@ -16,19 +16,19 @@ export const personalInfo = {
   resume: `${process.env.PUBLIC_URL}/certificates/Curriculo_Tiago_Santo_Formatado.pdf`,
 
   // Resumo para a página inicial (1-2 frases)
-  homeIntro: "Engenheiro de Dados Jr. com Mentalidade de Produção Sênior. Minha base na usinagem de precisão me ensinou que um erro de milímetro compromete toda a produção. Hoje, aplico esse mesmo rigor técnico e disciplina operacional para construir pipelines de dados resilientes e confiáveis.",
+  homeIntro: "Vindo da engenharia de precisão, trago um forte senso de processo e disciplina para a construção de pipelines de dados. Meu foco é transformar dados brutos em informações confiáveis através de ETLs robustos, modelagem de dados eficiente e automação com ferramentas padrão de mercado como Airflow e dbt.",
 
   // Descrição expandida para a seção Sobre
   aboutDescription: `Da Oficina para os Dados
-Tudo começou com barulho de torno, cheiro de óleo e precisão milimétrica. Na usinagem, aprendi que um erro de um décimo pode custar caro. Foi lá que desenvolvi o olhar clínico, a paciência e o gosto por resolver problemas com método.
+Tudo começou com barulho de torno, cheiro de óleo e precisão milimétrica. Na usinagem, aprendi que a qualidade do produto final depende do rigor de cada etapa do processo.
 
-Hoje, essa precisão virou código. Sou especialista em transformar ecossistemas de dados brutos em Data Warehouses modelados e testados, utilizando a Modern Data Stack (dbt, PySpark, Airflow) e gerenciando infraestrutura Cloud (AWS) via Infraestrutura como Código (Terraform).
+Eu aplico essa mesma filosofia na engenharia de dados. Um pipeline de dados, para mim, é uma linha de produção que exige validações, testes e automação para entregar um resultado confiável.
 
-Meu foco é em Data Quality, Idempotência e Observabilidade, garantindo que os dados sejam não apenas entregues, mas entregues com a tolerância apertada que o negócio exige.
+Meu objetivo é construir sistemas de dados que funcionem não apenas uma vez, mas de forma consistente e escalável. Domino os fundamentos: SQL avançado, Python para automação, ETL com validações de qualidade usando Pydantic, e orquestração com Apache Airflow.
 
 Tolerância apertada e processo confiável geram qualidade — em aço e em dados.
 
-Agora, busco oportunidades onde possa aplicar essa mentalidade para construir pipelines que fazem a diferença.`,
+Busco oportunidades onde possa aplicar essa mentalidade para construir pipelines que fazem a diferença.`,
 
 
   // Avatar/Foto (deixe vazio para usar placeholder)
