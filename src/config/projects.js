@@ -6,7 +6,8 @@ export const PROJECT_CATEGORIES = [
     'Todos',
     'ETL & Data Quality',
     'Data Warehouse',
-    'Orquestração'
+    'Orquestração',
+    'API & Scraping'
 ];
 
 /**
@@ -17,6 +18,7 @@ export const PROJECT_SUBCATEGORIES = {
     'ETL & Data Quality': ['Python', 'Pydantic', 'Testes'],
     'Data Warehouse': ['dbt', 'SQL', 'Cloud AWS'],
     'Orquestração': ['Airflow', 'Docker', 'Automação'],
+    'API & Scraping': ['Web Scraping', 'Python', 'AWS'],
     'Todos': []
 };
 
@@ -27,6 +29,52 @@ export const PROJECT_SUBCATEGORIES = {
  * @structure Array de objetos com dados completos do projeto
  */
 export const projects = [
+    // =====================================================
+    // PROJETO: Web Scraping Receita Federal (NOVO)
+    // =====================================================
+    {
+        id: 100,
+        title: "Pipeline de Web Scraping: Extração de Dados Públicos da Receita Federal",
+        impactPhrase: "⭐ Destaque | API & Scraping",
+        description: "🚀 Pipeline end-to-end para coleta, tratamento e carga de dados massivos do CNPJ da Receita Federal, utilizando Python para scraping e Apache Spark para processamento distribuído na AWS.",
+        longDescription: "Este projeto demonstra a construção de um pipeline de dados robusto para lidar com dados públicos massivos. Desenvolvi crawlers em Python para automatizar a coleta de arquivos do site da Receita Federal, implementando verificações automáticas de novos arquivos. O processamento dos dados (Empresas, Sócios, Estabelecimentos) foi realizado com Apache Spark para garantir escalabilidade. A arquitetura foi desenhada na AWS, utilizando S3 para armazenamento em camadas, Lambda para gatilhos, e EMR para o processamento pesado. O projeto foca em transformar dados brutos e complexos em ativos prontos para análise e consumo em dashboards ou aplicações.",
+        technologies: ["Python", "Apache Spark", "AWS S3", "AWS Lambda", "Amazon EMR", "Amazon Athena"],
+        category: "API & Scraping",
+        subcategories: ["Web Scraping", "Python", "AWS"],
+        image: `${process.env.PUBLIC_URL}/projects/capa_receita_federal_scraping.png`,
+        github: "https://github.com/tmarsbr",
+        demo: "",
+        metrics: "Processamento distribuído, automação de crawlers, arquitetura cloud AWS",
+        featured: true,
+        hidden: false,
+        complexity: 5,
+        date: "2024",
+        technicalDifferentiator: "Uso de Apache Spark para processamento de dados massivos da Receita Federal e orquestração em ambiente AWS.",
+        architectureDiagram: `graph TD
+    subgraph "Origem - Receita Federal"
+        A[Dados Abertos CNPJ - FTP/HTTP]
+    end
+
+    subgraph "Coleta & Ingestão"
+        B(Crawlers Python) -- Monitora e Extrai --> A
+        B -- Envia para --> C[AWS S3 - Camada Raw]
+    end
+
+    subgraph "Processamento Distribuído"
+        D(Amazon EMR - Spark) -- Lê de --> C
+        D -- Limpa e Transforma --> E[AWS S3 - Camada Trusted]
+        D -- Particiona e Converte --> F[AWS S3 - Camada Refined]
+    end
+
+    subgraph "Consumo & Análise"
+        F -- Consultas via --> G(Amazon Athena)
+        G -- Alimenta --> H[Dashboards / BI]
+    end
+
+    style B fill:#ff9800,stroke:#333,stroke-width:2px
+    style D fill:#e91e63,stroke:#333,stroke-width:2px
+    style G fill:#2196f3,stroke:#333,stroke-width:2px`
+    },
     // =====================================================
     // PROJETO 1: ETL com Qualidade de Dados (DESTAQUE)
     // =====================================================
@@ -502,7 +550,7 @@ export const projects = [
 export const projectsConfig = {
     title: "Projetos em Destaque",
     description: "Projetos práticos que demonstram domínio dos fundamentos: ETL robusto, SQL avançado e automação com ferramentas de mercado.",
-    maxProjects: 3
+    maxProjects: 4
 };
 
 /**
@@ -511,7 +559,7 @@ export const projectsConfig = {
  */
 export const projectsPageConfig = {
     title: "Portfólio de Projetos",
-    subtitle: "ETL • Data Quality • Orquestração",
+    subtitle: "ETL • Data Quality • Orquestração • API & Scraping",
     description: "Cada projeto demonstra foco nos fundamentos: pipelines ETL com validações de qualidade, modelagem de dados eficiente e automação com ferramentas padrão de mercado.",
     philosophy: "Código testável, dados validados e pipelines confiáveis. O objetivo é entregar valor através de dados íntegros e processos automatizados."
 };
