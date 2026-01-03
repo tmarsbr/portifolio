@@ -44,7 +44,7 @@ const Projects = () => {
   const theme = useTheme();
   const location = useLocation();
   const [selectedProject, setSelectedProject] = useState(null);
-  const [categoryFilter, setCategoryFilter] = useState('all');
+  const [categoryFilter, setCategoryFilter] = useState('Engenharia de Dados');
   const [subcategoryFilter, setSubcategoryFilter] = useState('Todos');
   const [techFilter, setTechFilter] = useState('');
 
@@ -66,7 +66,7 @@ const Projects = () => {
 
   const { filtered: baseFilteredProjects, total } = useProjectFilter(
     projects,
-    categoryFilter === 'all' ? 'Todos' : categoryFilter,
+    categoryFilter,
     subcategoryFilter
   );
 
@@ -225,8 +225,8 @@ const Projects = () => {
             {/* Stats Cards */}
             <Grid container spacing={3} justifyContent="center" sx={{ mb: 6 }}>
               {[
-                { number: projects.length, label: 'Projetos Totais', icon: <Storage /> },
-                { number: categories.length - 1, label: 'Áreas de Atuação', icon: <AutoGraph /> },
+                { number: projects.filter(p => !p.hidden).length, label: 'Projetos Totais', icon: <Storage /> },
+                { number: categories.length, label: 'Áreas de Atuação', icon: <AutoGraph /> },
                 { number: '40+', label: 'Tecnologias', icon: <Code /> },
               ].map((stat, index) => (
                 <Grid item xs={12} sm={4} md={3} key={index}>

@@ -29,16 +29,6 @@ const CategoryPills = ({ categories, active, onChange }) => {
 
   // Mapeamento de categorias para chaves, ícones e cores
   const categoryConfig = {
-    'Todos': {
-      key: 'all',
-      icon: <DataObject />,
-      color: theme.palette.primary.main,
-    },
-    'Análise de Dados': {
-      key: 'Análise de Dados',
-      icon: <Analytics />,
-      color: '#2196f3',
-    },
     'Engenharia de Dados': {
       key: 'Engenharia de Dados',
       icon: <Engineering />,

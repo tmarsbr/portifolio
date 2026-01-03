@@ -3,10 +3,8 @@
  * @description Lista de categorias principais para filtros
  */
 export const PROJECT_CATEGORIES = [
-    'Todos',
-    'ETL & Data Quality',
-    'Data Warehouse',
-    'Orquestração'
+    'Engenharia de Dados',
+    'API & Scraping'
 ];
 
 /**
@@ -14,10 +12,8 @@ export const PROJECT_CATEGORIES = [
  * @description Subfiltros específicos para cada categoria principal
  */
 export const PROJECT_SUBCATEGORIES = {
-    'ETL & Data Quality': ['Python', 'Pydantic', 'Testes'],
-    'Data Warehouse': ['dbt', 'SQL', 'Cloud AWS'],
-    'Orquestração': ['Airflow', 'Docker', 'Automação'],
-    'Todos': []
+    'Engenharia de Dados': ['ETL', 'Data Warehouse', 'Orquestração', 'Python', 'dbt', 'Airflow'],
+    'API & Scraping': ['Scraping', 'API REST', 'Automação']
 };
 
 /**
@@ -37,8 +33,8 @@ export const projects = [
         description: "🔍 Pipeline ETL para ingestão automatizada de dados de vendas de e-commerce (10k+ registros/dia), com validações de qualidade usando Pydantic e testes automatizados com Pytest, garantindo 99.9% de integridade dos dados e reduzindo erros de carga em 80%.",
         longDescription: "Este projeto demonstra domínio dos fundamentos de ETL com foco em Data Quality. Desenvolvi um pipeline que extrai dados de arquivos CSV/APIs, valida cada registro usando schemas Pydantic (rejeitando dados fora do contrato), aplica transformações de limpeza com Pandas, e carrega em PostgreSQL. O diferencial é o rigor: cada função possui testes unitários com Pytest, garantindo que o pipeline funcione de forma consistente. Implementei logging estruturado para rastrear registros rejeitados e relatórios de qualidade. O projeto prova que me preocupo não apenas em mover dados, mas em garantir sua integridade.",
         technologies: ["Python", "Pandas", "Pydantic", "Pytest", "PostgreSQL", "SQL"],
-        category: "ETL & Data Quality",
-        subcategories: ["Python", "Pydantic", "Testes"],
+        category: "Engenharia de Dados",
+        subcategories: ["ETL", "Python"],
         image: `${process.env.PUBLIC_URL}/projects/capa_etl_qualidade.png`,
         architectureDiagramImage: `${process.env.PUBLIC_URL}/images/arquitetura_etl_qualidade.png`,
         github: "https://github.com/tmarsbr/etl-data-quality",
@@ -83,8 +79,8 @@ export const projects = [
         description: "🏛️ Data Warehouse dimensional para análise de desempenho de campanhas de marketing digital, transformando dados brutos de múltiplas fontes (Google Ads, Facebook Ads, CRM) armazenados no S3 em modelo Star Schema otimizado com dbt, permitindo análises 5x mais rápidas.",
         longDescription: "Projeto de Analytics Engineering que demonstra como preparar dados para análise de forma profissional. Partindo de dados brutos no AWS S3, utilizei Amazon Redshift como Data Warehouse e dbt Core para orquestrar todas as transformações SQL. Implementei a arquitetura em camadas: Staging (dados brutos limpos), Intermediate (transformações de negócio), e Marts (tabelas Fato e Dimensão prontas para BI). O diferencial está no uso do dbt: cada modelo SQL é modular, testável e documentado automaticamente. Implementei testes de integridade (chaves únicas, not null) e geração de documentação com dbt docs, mostrando que sei organizar SQL de forma colaborativa e confiável.",
         technologies: ["dbt", "SQL", "AWS S3", "Amazon Redshift", "Data Modeling", "Star Schema"],
-        category: "Data Warehouse",
-        subcategories: ["dbt", "SQL", "Cloud AWS"],
+        category: "Engenharia de Dados",
+        subcategories: ["Data Warehouse", "dbt"],
         image: `${process.env.PUBLIC_URL}/projects/capa_dw_dbt.png`,
         architectureDiagramImage: `${process.env.PUBLIC_URL}/images/arquitetura_dw_dbt.png`,
         github: "https://github.com/tmarsbr/dbt-analytics-warehouse",
@@ -130,8 +126,8 @@ export const projects = [
         description: "⚡ Pipeline automatizado para coleta diária de dados meteorológicos de APIs públicas (OpenWeather), orquestrado com Apache Airflow na AWS, processando 50+ localizações com agendamento noturno, retry automático e alertas de falha via email.",
         longDescription: "Este projeto une ETL e automação em um ambiente de nuvem real. Utilizei Apache Airflow para orquestrar um pipeline completo: extração de dados de API externa, carregamento na camada Raw do S3, transformação com Python/Pandas, e disponibilização na camada Processed. O Airflow gerencia todo o fluxo através de DAGs (Directed Acyclic Graphs) com dependências claras entre tarefas. Implementei agendamento semanal, retentativas automáticas em caso de falha, e alertas de monitoramento. Todo o ambiente roda em Docker Compose, demonstrando conhecimento em containerização. O projeto prova que sei pensar em automação e resiliência, preocupações centrais de um Engenheiro de Dados.",
         technologies: ["Apache Airflow", "Python", "AWS S3", "Docker", "Pandas", "Amazon Athena"],
-        category: "Orquestração",
-        subcategories: ["Airflow", "Docker", "Automação"],
+        category: "Engenharia de Dados",
+        subcategories: ["Orquestração", "Airflow"],
         image: `${process.env.PUBLIC_URL}/projects/capa_airflow_aws.png`,
         architectureDiagramImage: `${process.env.PUBLIC_URL}/images/arquitetura_airflow_aws.png`,
         github: "https://github.com/tmarsbr/airflow-etl-pipeline",

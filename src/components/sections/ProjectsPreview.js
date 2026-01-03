@@ -530,16 +530,10 @@ const ProjectCard = ({ project, index }) => {
 
 const ProjectsPreview = () => {
   const { theme, darkMode } = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('Engenharia de Dados');
 
   // Definir categorias com seus ícones e cores
   const categories = [
-    {
-      key: 'all',
-      label: 'Todos',
-      icon: <DataObject />,
-      color: theme.palette.primary.main,
-    },
     {
       key: 'Engenharia de Dados',
       label: 'Engenharia de Dados',
@@ -557,11 +551,9 @@ const ProjectsPreview = () => {
   // Função para filtrar projetos por categoria (excluindo Análise de Dados)
   const visibleProjects = projects.filter(project => !project.hidden && project.category !== 'Análise de Dados');
 
-  const filteredProjects = selectedCategory === 'all'
-    ? visibleProjects.slice(0, projectsConfig.maxProjects) // Mostrar apenas projetos configurados na home
-    : visibleProjects
-      .filter(project => project.category === selectedCategory)
-      .slice(0, projectsConfig.maxProjects);
+  const filteredProjects = visibleProjects
+    .filter(project => project.category === selectedCategory)
+    .slice(0, projectsConfig.maxProjects);
 
   return (
     <Box
