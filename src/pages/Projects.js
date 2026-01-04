@@ -30,9 +30,8 @@ import {
 } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 
-import { projects, personalInfo, PROJECT_SUBCATEGORIES, PROJECT_CATEGORIES, projectsPageConfig } from '../config/portfolio';
+import { projects, personalInfo, PROJECT_CATEGORIES, projectsPageConfig } from '../config/portfolio';
 import CategoryPills from '../components/common/CategoryPills';
-import SubCategoryPills from '../components/common/SubCategoryPills';
 import { useProjectFilter } from '../hooks/useProjectFilter';
 
 /**
