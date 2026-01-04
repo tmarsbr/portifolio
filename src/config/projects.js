@@ -35,7 +35,8 @@ export const projects = [
         technologies: ["Python", "Apache Spark", "AWS S3", "AWS Lambda", "Amazon EMR", "Amazon Athena"],
         category: "API & Scraping",
         subcategories: ["Web Scraping", "Python", "AWS"],
-        image: `${process.env.PUBLIC_URL}/projects/capa_receita_federal_scraping.png`,
+        image: `${process.env.PUBLIC_URL}/projects/capa_web_scraping_receita.png`,
+        architectureDiagramImage: `${process.env.PUBLIC_URL}/images/arquitetura_web_scraping.png`,
         github: "https://github.com/tmarsbr",
         demo: "",
         metrics: "Processamento distribuído, automação de crawlers, arquitetura cloud AWS",
@@ -533,6 +534,28 @@ export const projects = [
         metrics: "1.5GB/mês processados, 24 exec./dia, 3-5min tempo médio, 70% economia storage, 99.9% uptime",
         featured: true,
         complexity: 4,
+        date: "2024"
+    },
+    // =====================================================
+    // PROJETO: Data Lake AWS (NOVO)
+    // =====================================================
+    {
+        id: 105,
+        title: "Arquitetura Data Lake Escalável: Democratização de Dados para Otimização de Cobranças",
+        impactPhrase: "⭐ Destaque | Engenharia de Dados",
+        description: "☁️ Arquitetura completa de Data Lake na AWS com 4 camadas (RAW/Bronze/Silver/Gold), orquestração via Airflow e governança para democratizar dados e otimizar cobrança de inadimplentes.",
+        longDescription: "Implementação end-to-end de Data Lake na AWS para centralizar dados de múltiplas fontes e democratizar acesso para times de negócio e ciência de dados. A arquitetura em camadas garante qualidade progressiva dos dados, enquanto Apache Airflow orquestra todo o pipeline. Empresa precisava otimizar processo de cobrança de clientes inadimplentes, mas dados estavam fragmentados em múltiplos sistemas (RDS, APIs, arquivos). Data Lake centraliza todas as fontes, aplica transformações e disponibiliza dados prontos para modelos preditivos de inadimplência. Arquitetura em 4 camadas: RAW (dados brutos), Bronze (validados), Silver (transformados), Gold (analíticos). Implementa ingestão de múltiplas fontes heterogêneas, processamento massivo com Apache Spark no EMR, governança com IAM e políticas de ciclo de vida, otimização de custos com compressão Parquet, monitoramento e alertas com CloudWatch.",
+        technologies: ["AWS S3", "Amazon RDS", "Amazon EMR", "Apache Spark", "Amazon Athena", "CloudWatch", "IAM", "Apache Airflow", "Parquet"],
+        category: "Engenharia de Dados",
+        subcategories: ["Data Warehouse", "Python", "Airflow"],
+        image: `${process.env.PUBLIC_URL}/projects/capa_data_lake_aws.png`,
+        architectureDiagramImage: `${process.env.PUBLIC_URL}/images/arquitetura_data_lake_aws.png`,
+        github: "https://github.com/tmarsbr/aws-data-lake-architecture",
+        demo: "",
+        metrics: "4 camadas, 6 serviços AWS, múltiplas fontes, orquestração Airflow, governança IAM",
+        featured: true,
+        hidden: false,
+        complexity: 5,
         date: "2024"
     }
 ];
