@@ -280,14 +280,6 @@ const Projects = () => {
             onChange={handleCategoryChange}
           />
 
-          {categoryFilter !== 'all' && (
-            <SubCategoryPills
-              subcategories={PROJECT_SUBCATEGORIES[categoryFilter] || []}
-              active={subcategoryFilter}
-              onChange={setSubcategoryFilter}
-            />
-          )}
-
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center', gap: 1 }}>
             <Speed sx={{ fontSize: 16, color: 'text.secondary' }} />
             <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 500 }}>
