@@ -160,7 +160,7 @@ const Projects = () => {
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
           <Box sx={{ textAlign: 'center', mb: 8 }} data-aos="fade-up">
             <Chip
-              label="PORTFÓLIO TÉCNICO"
+              label="ENGENHARIA DE DADOS APLICADA"
               size="small"
               sx={{
                 mb: 3,
@@ -224,9 +224,9 @@ const Projects = () => {
             {/* Stats Cards */}
             <Grid container spacing={3} justifyContent="center" sx={{ mb: 6 }}>
               {[
-                { number: projects.filter(p => !p.hidden).length, label: 'Projetos Totais', icon: <Storage /> },
+                { number: projects.filter(p => !p.hidden).length, label: 'Soluções Completas', icon: <Storage /> },
                 { number: categories.length, label: 'Áreas de Atuação', icon: <AutoGraph /> },
-                { number: '40+', label: 'Tecnologias', icon: <Code /> },
+                { number: '40+', label: 'Ferramentas', icon: <Code /> },
               ].map((stat, index) => (
                 <Grid item xs={12} sm={4} md={3} key={index}>
                   <Box

@@ -575,8 +575,8 @@ export const projectsConfig = {
  * @description Textos e storytelling da página de projetos
  */
 export const projectsPageConfig = {
-    title: "Portfólio de Projetos",
-    subtitle: "ETL • Data Quality • Orquestração • API & Scraping",
-    description: "Cada projeto demonstra foco nos fundamentos: pipelines ETL com validações de qualidade, modelagem de dados eficiente e automação com ferramentas padrão de mercado.",
+    title: "Engenharia de Dados Aplicada",
+    subtitle: "Coleta • Transformação • Qualidade • Entrega",
+    description: "Mais do que escrever código, meu objetivo é garantir que os dados fluam de forma segura e eficiente. Aqui apresento como utilizo padrões de mercado para resolver gargalos de performance e garantir a qualidade da informação que chega à ponta final.",
     philosophy: "Código testável, dados validados e pipelines confiáveis. O objetivo é entregar valor através de dados íntegros e processos automatizados."
 };
