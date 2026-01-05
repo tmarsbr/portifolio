@@ -3,7 +3,7 @@
 // ========================================
 // Edite este arquivo para personalizar seu portfólio
 
-import { personalInfo, experiences, certificates } from './personal';
+import { personalInfo, experiences, certificates, certificationStats } from './personal';
 import { projects, PROJECT_CATEGORIES, PROJECT_SUBCATEGORIES, projectsConfig, projectsPageConfig } from './projects';
 import { skills, SKILL_TREE } from './skills';
 import { themeConfig } from './theme';
@@ -13,6 +13,7 @@ export {
   personalInfo,
   experiences,
   certificates,
+  certificationStats,
   projects,
   PROJECT_CATEGORIES,
   PROJECT_SUBCATEGORIES,

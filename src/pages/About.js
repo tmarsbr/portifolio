@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Helmet } from 'react-helmet';
 
-import { personalInfo, certificates } from '../config/portfolio';
+import { personalInfo, certificates, certificationStats } from '../config/portfolio';
 
 
 /**
@@ -189,13 +189,113 @@ const About = () => {
               sx={{
                 fontSize: '1.1rem',
                 color: 'text.secondary',
-                maxWidth: '600px',
+                maxWidth: '700px',
                 mx: 'auto',
                 lineHeight: 1.7,
               }}
             >
-              Validação técnica e aprendizado contínuo através de formações especializadas.
+              <strong>1.090 horas</strong> de formação intensiva em Dados & Analytics, com projeto de conclusão aprovado por banca de executivos. Certificações que validam domínio end-to-end: da coleta e engenharia de dados até modelagem preditiva e apresentação de resultados.
             </Typography>
+          </Box>
+
+          {/* Estatísticas de Formação */}
+          <Box
+            sx={{
+              mb: 6,
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: 3,
+            }}
+            data-aos="fade-up"
+          >
+            <Paper
+              sx={{
+                p: 3,
+                borderRadius: 3,
+                border: `2px solid ${theme.palette.primary.main}`,
+                textAlign: 'center',
+                minWidth: 200,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: theme.shadows[8],
+                },
+              }}
+            >
+              <Typography variant="h3" sx={{ fontWeight: 700, color: 'primary.main', mb: 1 }}>
+                {certificationStats.totalHours}h
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Total de Formação
+              </Typography>
+            </Paper>
+
+            <Paper
+              sx={{
+                p: 3,
+                borderRadius: 3,
+                border: `2px solid ${theme.palette.secondary.main}`,
+                textAlign: 'center',
+                minWidth: 200,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: theme.shadows[8],
+                },
+              }}
+            >
+              <Typography variant="h3" sx={{ fontWeight: 700, color: 'secondary.main', mb: 1 }}>
+                {certificationStats.totalCertificates}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Certificações Concluídas
+              </Typography>
+            </Paper>
+
+            <Paper
+              sx={{
+                p: 3,
+                borderRadius: 3,
+                border: `2px solid ${theme.palette.success.main}`,
+                textAlign: 'center',
+                minWidth: 200,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: theme.shadows[8],
+                },
+              }}
+            >
+              <Typography variant="h3" sx={{ fontWeight: 700, color: 'success.main', mb: 1 }}>
+                🏆
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Aprovado por Banca
+              </Typography>
+            </Paper>
+
+            <Paper
+              sx={{
+                p: 3,
+                borderRadius: 3,
+                border: `2px solid ${theme.palette.info.main}`,
+                textAlign: 'center',
+                minWidth: 200,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-4px)',
+                  boxShadow: theme.shadows[8],
+                },
+              }}
+            >
+              <Typography variant="h3" sx={{ fontWeight: 700, color: 'info.main', mb: 1 }}>
+                {certificationStats.technologies}+
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+                Tecnologias Dominadas
+              </Typography>
+            </Paper>
           </Box>
 
           <Grid container spacing={4}>
@@ -203,8 +303,8 @@ const About = () => {
               <Grid
                 item
                 xs={12}
-                md={6}
-                lg={3}
+                md={cert.highlight ? 12 : 6}
+                lg={cert.highlight ? 6 : 4}
                 key={cert.id}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
@@ -249,6 +349,19 @@ const About = () => {
                     />
                   </Box>
                   <Box sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    {cert.badge && (
+                      <Chip
+                        label={cert.badge}
+                        size="small"
+                        sx={{
+                          mb: 2,
+                          fontWeight: 700,
+                          backgroundColor: 'primary.main',
+                          color: 'white',
+                          alignSelf: 'flex-start',
+                        }}
+                      />
+                    )}
                     <Typography
                       variant="caption"
                       sx={{
@@ -259,7 +372,7 @@ const About = () => {
                         display: 'block',
                       }}
                     >
-                      {cert.institution}
+                      {cert.institution} • {cert.duration}
                     </Typography>
                     <Typography
                       variant="h6"
@@ -274,15 +387,28 @@ const About = () => {
                       {cert.title}
                     </Typography>
 
+                    {cert.description && (
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: 'text.secondary',
+                          mb: 2,
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        {cert.description}
+                      </Typography>
+                    )}
+
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 3 }}>
-                      {cert.skills.slice(0, 3).map((skill, i) => (
+                      {cert.skills.slice(0, cert.highlight ? 8 : 5).map((skill, i) => (
                         <Chip
                           key={i}
                           label={skill}
                           size="small"
                           sx={{
-                            height: 20,
-                            fontSize: '0.65rem',
+                            height: 22,
+                            fontSize: '0.7rem',
                             backgroundColor: theme.palette.action.hover,
                           }}
                         />

@@ -94,39 +94,87 @@ export const certificates = [
     title: "Formação Full Stack Dados & Analytics",
     institution: "PoD Academy",
     year: "2024",
-    duration: "Completo",
+    duration: "550 horas",
+    highlight: true,
+    badge: "🏆 Formação Principal",
+    description: "Programa avançado end-to-end reunindo Engenharia de Dados, Ciência de Dados, Analytics e Cloud Computing, com projeto prático de conclusão aprovado por banca de executivos.",
     image: `${process.env.PUBLIC_URL}/certificates/fullstackdataanalytics.png`,
     pdf: `${process.env.PUBLIC_URL}/certificates/Formação-full-stack-data-analytics.pdf`,
-    skills: ["Engenharia de Dados", "Ciência de Dados", "Analytics", "Business"]
+    skills: ["Engenharia de Dados", "Ciência de Dados", "Analytics", "Cloud AWS", "Machine Learning", "ETL/ELT", "Airflow", "Spark"],
+    modules: [
+      "Engenharia de Dados (250h)",
+      "Ciência de Dados (250h)",
+      "Análise de Dados (40h)",
+      "Cloud Computing AWS",
+      "Projeto de Conclusão"
+    ]
   },
   {
     id: 2,
     title: "Formação Engenharia de Dados",
     institution: "PoD Academy",
     year: "2024",
-    duration: "Especialização",
+    duration: "250 horas",
+    highlight: false,
+    description: "Domínio completo do ciclo de vida de dados: coleta, processamento, armazenamento e orquestração de pipelines em escala.",
     image: `${process.env.PUBLIC_URL}/certificates/engenhariadedados.png`,
     pdf: `${process.env.PUBLIC_URL}/certificates/formação-engenheiro-de-dados.pdf`,
-    skills: ["Big Data", "Spark", "Airflow", "Cloud AWS", "IaC"]
+    skills: ["Python Big Data", "Apache Spark", "Apache Airflow", "Cloud AWS", "ETL/ELT"],
+    keyTopics: [
+      "Arquitetura de Dados",
+      "Processamento Distribuído",
+      "Orquestração de Pipelines",
+      "Data Warehousing",
+      "Streaming de Dados"
+    ]
   },
   {
     id: 3,
     title: "Formação Ciência de Dados",
     institution: "PoD Academy",
     year: "2024",
-    duration: "Especialização",
+    duration: "250 horas",
+    highlight: false,
+    description: "Modelagem preditiva e machine learning aplicado, desde feature engineering até deploy de modelos em produção.",
     image: `${process.env.PUBLIC_URL}/certificates/cienciadedados.png`,
     pdf: `${process.env.PUBLIC_URL}/certificates/Formação-em-ciencia-de-dados.pdf`,
-    skills: ["Machine Learning", "Estatística", "Python", "Modelagem"]
+    skills: ["Machine Learning", "Estatística Aplicada", "Python", "Feature Engineering", "AutoML"],
+    keyTopics: [
+      "Modelos Supervisionados",
+      "Modelos Não Supervisionados",
+      "Séries Temporais",
+      "Feature Selection",
+      "Projetos de Ciência de Dados"
+    ]
   },
   {
     id: 4,
     title: "Formação Análise de Dados",
     institution: "PoD Academy",
     year: "2024",
-    duration: "Especialização",
+    duration: "40 horas",
+    highlight: false,
+    description: "Análise exploratória, storytelling com dados e construção de dashboards para apresentação de insights de negócio.",
     image: `${process.env.PUBLIC_URL}/certificates/analisededados.png`,
     pdf: `${process.env.PUBLIC_URL}/certificates/Formação-analise-de-dados.pdf`,
-    skills: ["Storytelling", "Visualização", "SQL", "KPIs"]
+    skills: ["Storytelling", "Visualização", "SQL", "Dashboards", "Teste A/B"],
+    keyTopics: [
+      "Framework CRISP-DM",
+      "Análise Exploratória",
+      "Insights de Negócio",
+      "Dashboards Streamlit",
+      "Apresentação de Resultados"
+    ]
   }
 ];
+
+/**
+ * Estatísticas de Formação
+ * @description Métricas consolidadas das certificações
+ */
+export const certificationStats = {
+  totalHours: 1090,
+  totalCertificates: 4,
+  executiveBoardApproval: true,
+  technologies: 30
+};
