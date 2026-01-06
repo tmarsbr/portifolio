@@ -24,10 +24,15 @@ html {
 }
 
 /* Body global */
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
 body {
   font-family: 'Inter', 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
   line-height: 1.6;
-  overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -196,6 +201,13 @@ html {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+}
+
+/* Prevenir overflow horizontal em todos os elementos */
+#root {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
 }
 
 @media (max-width: 768px) {
