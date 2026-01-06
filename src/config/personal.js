@@ -97,7 +97,7 @@ export const certificates = [
     duration: "550 horas",
     highlight: true,
     badge: "🏆 Formação Principal",
-    description: "Programa avançado end-to-end reunindo Engenharia de Dados, Ciência de Dados, Analytics e Cloud Computing, com projeto prático de conclusão aprovado por banca de executivos.",
+    description: "Programa avançado end-to-end reunindo Engenharia de Dados, Ciência de Dados, Analytics e Cloud Computing, com projeto prático de conclusão integrando todas as disciplinas.",
     image: `${process.env.PUBLIC_URL}/certificates/fullstackdataanalytics.png`,
     pdf: `${process.env.PUBLIC_URL}/certificates/Formação-full-stack-data-analytics.pdf`,
     skills: ["Engenharia de Dados", "Ciência de Dados", "Analytics", "Cloud AWS", "Machine Learning", "ETL/ELT", "Airflow", "Spark"],
@@ -173,8 +173,7 @@ export const certificates = [
  * @description Métricas consolidadas das certificações
  */
 export const certificationStats = {
-  totalHours: 1090,
+  totalHours: 550,
   totalCertificates: 4,
-  executiveBoardApproval: true,
   technologies: 30
 };

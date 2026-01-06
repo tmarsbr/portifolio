@@ -194,7 +194,7 @@ const About = () => {
                 lineHeight: 1.7,
               }}
             >
-              <strong>1.090 horas</strong> de formação intensiva em Dados & Analytics, com projeto de conclusão aprovado por banca de executivos. Certificações que validam domínio end-to-end: da coleta e engenharia de dados até modelagem preditiva e apresentação de resultados.
+              <strong>550 horas</strong> de formação intensiva e prática em Engenharia de Dados, Ciência de Dados e Analytics. Certificações que validam domínio end-to-end: da coleta e processamento de dados até modelagem preditiva e visualização de resultados.
             </Typography>
           </Box>
 
@@ -250,28 +250,6 @@ const About = () => {
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
                 Certificações Concluídas
-              </Typography>
-            </Paper>
-
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 3,
-                border: `2px solid ${theme.palette.success.main}`,
-                textAlign: 'center',
-                minWidth: 200,
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: theme.shadows[8],
-                },
-              }}
-            >
-              <Typography variant="h3" sx={{ fontWeight: 700, color: 'success.main', mb: 1 }}>
-                🏆
-              </Typography>
-              <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 600 }}>
-                Aprovado por Banca
               </Typography>
             </Paper>
 
