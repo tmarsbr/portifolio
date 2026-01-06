@@ -276,12 +276,13 @@ const About = () => {
             </Paper>
           </Box>
 
-          <Grid container spacing={4}>
+          <Grid container spacing={4} justifyContent="center">
             {certificates.map((cert, index) => (
               <Grid
                 item
                 xs={12}
-                md={cert.highlight ? 12 : 6}
+                sm={cert.highlight ? 10 : 6}
+                md={cert.highlight ? 8 : 6}
                 lg={cert.highlight ? 6 : 4}
                 key={cert.id}
                 data-aos="fade-up"
