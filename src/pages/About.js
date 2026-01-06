@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Container,
@@ -9,7 +9,13 @@ import {
   Chip,
   Button,
   useTheme,
+  Modal,
+  IconButton,
+  CardMedia,
+  Stack,
+  alpha,
 } from '@mui/material';
+import { Close, School, EmojiEvents, CalendarToday } from '@mui/icons-material';
 import { Helmet } from 'react-helmet';
 
 import { personalInfo, certificates, certificationStats } from '../config/portfolio';
@@ -33,8 +39,15 @@ import { personalInfo, certificates, certificationStats } from '../config/portfo
  */
 const About = () => {
   const theme = useTheme();
+  const [selectedCertificate, setSelectedCertificate] = useState(null);
 
+  const handleOpenCertificate = (cert) => {
+    setSelectedCertificate(cert);
+  };
 
+  const handleCloseCertificate = () => {
+    setSelectedCertificate(null);
+  };
 
   return (
     <>
@@ -394,16 +407,25 @@ const About = () => {
                       ))}
                     </Box>
 
-                    <Button
-                      variant="outlined"
-                      fullWidth
-                      href={cert.pdf}
-                      target="_blank"
-                      size="small"
-                      sx={{ mt: 'auto' }}
-                    >
-                      Ver Certificado
-                    </Button>
+                    <Stack spacing={1} sx={{ mt: 'auto' }}>
+                      <Button
+                        variant="contained"
+                        fullWidth
+                        onClick={() => handleOpenCertificate(cert)}
+                        size="small"
+                      >
+                        Ver Detalhes
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        fullWidth
+                        href={cert.pdf}
+                        target="_blank"
+                        size="small"
+                      >
+                        Baixar PDF
+                      </Button>
+                    </Stack>
                   </Box>
                 </Paper>
               </Grid>
@@ -411,6 +433,178 @@ const About = () => {
           </Grid>
         </Container>
       </Box>
+
+      {/* Modal de Detalhes do Certificado */}
+      <Modal
+        open={!!selectedCertificate}
+        onClose={handleCloseCertificate}
+        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2, backdropFilter: 'blur(5px)' }}
+      >
+        <Box
+          sx={{
+            backgroundColor: 'background.paper',
+            borderRadius: 3,
+            maxWidth: 900,
+            width: '100%',
+            maxHeight: '90vh',
+            overflow: 'auto',
+            boxShadow: 24,
+            position: 'relative',
+          }}
+        >
+          {selectedCertificate && (
+            <>
+              <Box sx={{ position: 'relative', height: 300 }}>
+                <CardMedia
+                  component="img"
+                  image={selectedCertificate.image}
+                  alt={selectedCertificate.title}
+                  sx={{ height: '100%', objectFit: 'cover' }}
+                />
+                <Box
+                  sx={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7))',
+                  }}
+                />
+                <IconButton
+                  onClick={handleCloseCertificate}
+                  sx={{
+                    position: 'absolute',
+                    top: 16,
+                    right: 16,
+                    backgroundColor: 'rgba(255,255,255,0.9)',
+                    '&:hover': { backgroundColor: 'white' },
+                  }}
+                >
+                  <Close />
+                </IconButton>
+                <Box sx={{ position: 'absolute', bottom: 24, left: 24, right: 24 }}>
+                  {selectedCertificate.badge && (
+                    <Chip
+                      label={selectedCertificate.badge}
+                      sx={{
+                        backgroundColor: 'primary.main',
+                        color: 'white',
+                        fontWeight: 700,
+                        mb: 2,
+                      }}
+                    />
+                  )}
+                  <Typography variant="caption" sx={{ color: 'white', display: 'block', mb: 1, opacity: 0.9 }}>
+                    {selectedCertificate.institution} • {selectedCertificate.duration}
+                  </Typography>
+                  <Typography variant="h4" sx={{ color: 'white', fontWeight: 800, textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
+                    {selectedCertificate.title}
+                  </Typography>
+                </Box>
+              </Box>
+
+              <Box sx={{ p: 4 }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <School fontSize="small" color="primary" /> Sobre a Formação
+                </Typography>
+                <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 4, fontSize: '1.05rem' }}>
+                  {selectedCertificate.description}
+                </Typography>
+
+                {selectedCertificate.modules && (
+                  <Box sx={{ mb: 4 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <EmojiEvents fontSize="small" color="primary" /> Módulos da Formação
+                    </Typography>
+                    <Grid container spacing={2}>
+                      {selectedCertificate.modules.map((module, i) => (
+                        <Grid item xs={12} sm={6} key={i}>
+                          <Paper
+                            sx={{
+                              p: 2,
+                              backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                              border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                            }}
+                          >
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                              • {module}
+                            </Typography>
+                          </Paper>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Box>
+                )}
+
+                {selectedCertificate.keyTopics && (
+                  <Box sx={{ mb: 4 }}>
+                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <EmojiEvents fontSize="small" color="primary" /> Tópicos Principais
+                    </Typography>
+                    <Grid container spacing={2}>
+                      {selectedCertificate.keyTopics.map((topic, i) => (
+                        <Grid item xs={12} sm={6} key={i}>
+                          <Paper
+                            sx={{
+                              p: 2,
+                              backgroundColor: alpha(theme.palette.secondary.main, 0.05),
+                              border: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
+                            }}
+                          >
+                            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                              • {topic}
+                            </Typography>
+                          </Paper>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Box>
+                )}
+
+                <Box sx={{ mb: 4 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
+                    Habilidades Desenvolvidas
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {selectedCertificate.skills.map((skill, i) => (
+                      <Chip
+                        key={i}
+                        label={skill}
+                        sx={{
+                          backgroundColor: theme.palette.action.hover,
+                          fontWeight: 600,
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </Box>
+
+                <Stack spacing={2}>
+                  <Button
+                    variant="contained"
+                    fullWidth
+                    href={selectedCertificate.pdf}
+                    target="_blank"
+                    startIcon={<School />}
+                    sx={{ py: 1.5, fontWeight: 700 }}
+                  >
+                    Baixar Certificado (PDF)
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    onClick={handleCloseCertificate}
+                    sx={{ py: 1.5, fontWeight: 700 }}
+                  >
+                    Fechar
+                  </Button>
+                </Stack>
+              </Box>
+            </>
+          )}
+        </Box>
+      </Modal>
 
     </>
   );
