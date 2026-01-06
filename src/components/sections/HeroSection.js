@@ -41,7 +41,7 @@ import { motion } from 'framer-motion';
 import { useTheme } from '../../contexts/ThemeContext';
 
 import { personalInfo } from '../../config/portfolio';
-import HoverSkillChip from '../common/HoverSkillChip';
+// import HoverSkillChip from '../common/HoverSkillChip'; // Removido tooltip
 
 // Componente para efeito de digitação
 const TypewriterEffect = ({ text, delay = 0 }) => {
@@ -421,11 +421,31 @@ const HeroSection = () => {
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 2.6 + index * 0.1 }}
                         >
-                          <HoverSkillChip
-                            label={stack.label}
+                          <Chip
                             icon={stack.icon}
-                            items={stack.items}
-                            placement="bottom-start"
+                            label={stack.label}
+                            sx={{
+                              fontSize: '0.875rem',
+                              fontWeight: 500,
+                              backgroundColor: darkMode
+                                ? 'rgba(30, 41, 59, 0.8)'
+                                : 'rgba(255, 255, 255, 0.9)',
+                              color: darkMode ? '#e2e8f0' : '#334155',
+                              border: darkMode
+                                ? '1px solid rgba(100, 181, 246, 0.3)'
+                                : '1px solid rgba(21, 101, 192, 0.3)',
+                              backdropFilter: 'blur(10px)',
+                              transition: 'all 0.3s ease',
+                              '&:hover': {
+                                transform: 'translateY(-2px)',
+                                boxShadow: darkMode
+                                  ? '0 4px 12px rgba(100, 181, 246, 0.2)'
+                                  : '0 4px 12px rgba(21, 101, 192, 0.2)',
+                                borderColor: darkMode
+                                  ? 'rgba(100, 181, 246, 0.6)'
+                                  : 'rgba(21, 101, 192, 0.6)',
+                              },
+                            }}
                           />
                         </motion.div>
                       ))}

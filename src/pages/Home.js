@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 
 // Seções da página Home
 import HeroSection from '../components/sections/HeroSection';
-import AboutPreview from '../components/sections/AboutPreview';
+// import AboutPreview from '../components/sections/AboutPreview'; // Removido da Home
 import ProjectsPreview from '../components/sections/ProjectsPreview';
 import ContactSection from '../components/sections/ContactSection';
 
@@ -46,7 +46,7 @@ const Home = () => {
 
       {/* Página Home principal */}
       <HeroSection />
-      <AboutPreview />
+      {/* <AboutPreview /> - Removido da Home */}
       <ProjectsPreview />
       <ContactSection />
     </>
