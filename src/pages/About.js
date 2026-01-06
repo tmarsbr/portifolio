@@ -281,9 +281,9 @@ const About = () => {
               <Grid
                 item
                 xs={12}
-                sm={cert.highlight ? 10 : 6}
-                md={cert.highlight ? 8 : 6}
-                lg={cert.highlight ? 6 : 4}
+                sm={cert.highlight ? 12 : 6}
+                md={cert.highlight ? 12 : 6}
+                lg={cert.highlight ? 12 : 4}
                 key={cert.id}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
