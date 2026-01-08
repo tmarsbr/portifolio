@@ -501,7 +501,7 @@ const Projects = () => {
                     <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
                       <Storage fontSize="small" color="primary" /> Sobre o Projeto
                     </Typography>
-                    <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 4, fontSize: '1.05rem' }}>
+                    <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.8, mb: 4, fontSize: '1.05rem', whiteSpace: 'pre-line' }}>
                       {selectedProject.longDescription || selectedProject.description}
                     </Typography>
 
