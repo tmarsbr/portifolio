@@ -554,7 +554,7 @@ export const projects = [
         demo: "",
         metrics: "4 camadas, 6 serviços AWS, múltiplas fontes, orquestração Airflow, governança IAM",
         featured: true,
-        hidden: false,
+        hidden: true,
         complexity: 5,
         date: "2024"
     }
@@ -566,8 +566,8 @@ export const projects = [
  */
 export const projectsConfig = {
     title: "Projetos em Destaque",
-    description: "Projetos práticos que demonstram domínio dos fundamentos: ETL robusto, SQL avançado e automação com ferramentas de mercado.",
-    maxProjects: 4
+    description: "",
+    maxProjects: 3
 };
 
 /**

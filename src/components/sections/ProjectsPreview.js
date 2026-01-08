@@ -28,6 +28,8 @@ import {
   Stack,
   Badge,
   Divider,
+  Modal,
+  alpha,
 } from '@mui/material';
 import {
   ArrowForward,
@@ -40,6 +42,7 @@ import {
   Star,
   Visibility,
   Code,
+  Close,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -48,7 +51,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { projects, projectsConfig } from '../../config/portfolio';
 
 // Componente para card de projeto aprimorado
-const ProjectCard = ({ project, index }) => {
+const ProjectCard = ({ project, index, onProjectClick }) => {
   const { theme, darkMode } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -82,6 +85,7 @@ const ProjectCard = ({ project, index }) => {
       whileHover={{ y: -8 }}
     >
       <Card
+        onClick={() => onProjectClick(project)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         sx={{
@@ -179,6 +183,7 @@ const ProjectCard = ({ project, index }) => {
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     zIndex: 1,
+                    pointerEvents: 'auto',
                   }}
                 >
                   <Stack direction="row" spacing={1}>
@@ -188,6 +193,7 @@ const ProjectCard = ({ project, index }) => {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         sx={{
                           backgroundColor: 'rgba(255, 255, 255, 0.9)',
                           color: 'text.primary',
@@ -207,6 +213,7 @@ const ProjectCard = ({ project, index }) => {
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         sx={{
                           backgroundColor: 'rgba(255, 255, 255, 0.9)',
                           color: 'text.primary',
@@ -531,6 +538,7 @@ const ProjectCard = ({ project, index }) => {
 const ProjectsPreview = () => {
   const { theme, darkMode } = useTheme();
   const [selectedCategory, setSelectedCategory] = useState('Engenharia de Dados');
+  const [selectedProject, setSelectedProject] = useState(null);
 
   // Definir categorias com seus ícones e cores
   const categories = [
@@ -694,7 +702,7 @@ const ProjectsPreview = () => {
             <Grid container spacing={4}>
               {filteredProjects.map((project, index) => (
                 <Grid item xs={12} md={6} lg={4} key={`${selectedCategory}-${index}`}>
-                  <ProjectCard project={project} index={index} />
+                  <ProjectCard project={project} index={index} onProjectClick={setSelectedProject} />
                 </Grid>
               ))}
             </Grid>
@@ -757,6 +765,272 @@ const ProjectsPreview = () => {
           </Box>
         </motion.div>
       </Container>
+
+      {/* Modal para exibir detalhes do projeto */}
+      <Modal
+        open={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backdropFilter: 'blur(4px)',
+          backgroundColor: alpha('#000', 0.5),
+        }}
+      >
+        <Box
+          sx={{
+            position: 'relative',
+            backgroundColor: darkMode ? '#1e293b' : '#ffffff',
+            borderRadius: 2,
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            width: '100%',
+            p: { xs: 3, md: 4 },
+            boxShadow: darkMode
+              ? '0 20px 60px rgba(0, 0, 0, 0.5)'
+              : '0 20px 60px rgba(0, 0, 0, 0.15)',
+          }}
+        >
+          {/* Botão fechar */}
+          <IconButton
+            onClick={() => setSelectedProject(null)}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              zIndex: 10,
+              backgroundColor: alpha(theme.palette.primary.main, 0.1),
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.primary.main, 0.2),
+              },
+            }}
+          >
+            <Close />
+          </IconButton>
+
+          {selectedProject && (
+            <Box sx={{ pt: 2 }}>
+              {/* Título */}
+              <Typography
+                variant="h4"
+                sx={{
+                  mb: 2,
+                  fontWeight: 700,
+                  color: 'text.primary',
+                }}
+              >
+                {selectedProject.title}
+              </Typography>
+
+              {/* Impact Phrase */}
+              {selectedProject.impactPhrase && (
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 3,
+                    color: 'primary.main',
+                    fontWeight: 600,
+                  }}
+                >
+                  {selectedProject.impactPhrase}
+                </Typography>
+              )}
+
+              {/* Imagem do projeto */}
+              {selectedProject.image && (
+                <Box
+                  sx={{
+                    width: '100%',
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                    mb: 3,
+                    boxShadow: `0 4px 20px ${alpha(theme.palette.primary.main, 0.2)}`,
+                  }}
+                >
+                  <Box
+                    component="img"
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      maxHeight: 400,
+                      objectFit: 'cover',
+                    }}
+                  />
+                </Box>
+              )}
+
+              {/* Descrição */}
+              <Typography
+                variant="body1"
+                sx={{
+                  mb: 3,
+                  color: 'text.secondary',
+                  lineHeight: 1.8,
+                }}
+              >
+                {selectedProject.description}
+              </Typography>
+
+              {/* Descrição longa */}
+              {selectedProject.longDescription && (
+                <Box sx={{ mb: 3 }}>
+                  {selectedProject.longDescription.split('\n').map((paragraph, index) => (
+                    <Typography
+                      key={index}
+                      variant="body2"
+                      sx={{
+                        mb: 2,
+                        color: 'text.secondary',
+                        lineHeight: 1.8,
+                        whiteSpace: 'pre-wrap',
+                      }}
+                    >
+                      {paragraph}
+                    </Typography>
+                  ))}
+                </Box>
+              )}
+
+              {/* Diagrama de Arquitetura */}
+              {selectedProject.architectureDiagramImage && (
+                <Box
+                  sx={{
+                    backgroundColor: darkMode ? 'rgba(100, 181, 246, 0.05)' : 'rgba(21, 101, 192, 0.05)',
+                    borderRadius: 2,
+                    p: 2,
+                    mb: 3,
+                    border: `1px solid ${darkMode ? 'rgba(100, 181, 246, 0.2)' : 'rgba(21, 101, 192, 0.1)'}`,
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: 'primary.main',
+                      fontWeight: 700,
+                      fontSize: '0.75rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: 0.5,
+                      mb: 1.5,
+                      display: 'block',
+                    }}
+                  >
+                    🏛️ Arquitetura do Projeto
+                  </Typography>
+                  <Box
+                    component="img"
+                    src={selectedProject.architectureDiagramImage}
+                    alt={`Arquitetura - ${selectedProject.title}`}
+                    sx={{
+                      width: '100%',
+                      height: 'auto',
+                      borderRadius: 1,
+                      backgroundColor: 'white',
+                      p: 1,
+                      boxShadow: darkMode
+                        ? '0 2px 8px rgba(0, 0, 0, 0.3)'
+                        : '0 2px 8px rgba(0, 0, 0, 0.1)',
+                    }}
+                  />
+                </Box>
+              )}
+
+              <Divider sx={{ my: 2 }} />
+
+              {/* Tecnologias */}
+              <Box sx={{ mb: 3 }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    color: 'text.primary',
+                    fontWeight: 700,
+                    mb: 1.5,
+                  }}
+                >
+                  🛠️ Tecnologias:
+                </Typography>
+                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                  {selectedProject.technologies?.map((tech, index) => (
+                    <Chip
+                      key={index}
+                      label={tech}
+                      variant="outlined"
+                      sx={{
+                        borderColor: 'primary.main',
+                        color: 'primary.main',
+                        '&:hover': {
+                          backgroundColor: 'primary.main',
+                          color: 'white',
+                        },
+                        transition: 'all 0.3s ease',
+                      }}
+                    />
+                  ))}
+                </Stack>
+              </Box>
+
+              {/* Métricas */}
+              {selectedProject.metrics && (
+                <Box sx={{ mb: 3 }}>
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <TrendingUp sx={{ fontSize: '1.2rem', color: 'primary.main' }} />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'primary.main',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {selectedProject.metrics}
+                    </Typography>
+                  </Stack>
+                </Box>
+              )}
+
+              <Divider sx={{ my: 2 }} />
+
+              {/* Botões de ação */}
+              <Stack direction="row" spacing={1} sx={{ mt: 3, flexWrap: 'wrap', useFlexGap: true }}>
+                {selectedProject.github && (
+                  <Button
+                    component="a"
+                    href={selectedProject.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="outlined"
+                    startIcon={<GitHub />}
+                    sx={{
+                      textTransform: 'none',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Ver Código
+                  </Button>
+                )}
+                {selectedProject.demo && (
+                  <Button
+                    component="a"
+                    href={selectedProject.demo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="contained"
+                    startIcon={<Launch />}
+                    sx={{
+                      textTransform: 'none',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Live Demo
+                  </Button>
+                )}
+              </Stack>
+            </Box>
+          )}
+        </Box>
+      </Modal>
     </Box>
   );
 };
