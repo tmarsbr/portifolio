@@ -554,7 +554,7 @@ export const projects = [
         demo: "",
         metrics: "4 camadas, 6 serviços AWS, múltiplas fontes, orquestração Airflow, governança IAM",
         featured: true,
-        hidden: true,
+        hidden: false,
         complexity: 5,
         date: "2024"
     }
