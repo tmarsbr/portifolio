@@ -46,6 +46,7 @@ const Projects = () => {
   const [categoryFilter, setCategoryFilter] = useState('Engenharia de Dados');
   const [subcategoryFilter, setSubcategoryFilter] = useState('Todos');
   const [techFilter, setTechFilter] = useState('');
+  const [expandedImage, setExpandedImage] = useState(null);
 
   // Ler parâmetros da querystring
   useEffect(() => {
@@ -92,6 +93,14 @@ const Projects = () => {
 
   const handleCloseModal = () => {
     setSelectedProject(null);
+  };
+
+  const handleImageClick = (imageSrc) => {
+    setExpandedImage(imageSrc);
+  };
+
+  const handleCloseImageModal = () => {
+    setExpandedImage(null);
   };
 
   // Estilos comuns para cards e efeitos
@@ -505,6 +514,7 @@ const Projects = () => {
                           component="img"
                           src={selectedProject.architectureDiagramImage}
                           alt={`Arquitetura - ${selectedProject.title}`}
+                          onClick={() => handleImageClick(selectedProject.architectureDiagramImage)}
                           sx={{
                             width: '100%',
                             height: 'auto',
@@ -513,6 +523,12 @@ const Projects = () => {
                             p: 2,
                             border: `1px solid ${theme.palette.divider}`,
                             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                              transform: 'scale(1.02)',
+                              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+                            }
                           }}
                         />
                       </Box>
@@ -583,6 +599,59 @@ const Projects = () => {
               </Box>
             </>
           )}
+        </Box>
+      </Modal>
+
+      {/* Modal de Expansão de Imagem */}
+      <Modal
+        open={Boolean(expandedImage)}
+        onClose={handleCloseImageModal}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          p: 2,
+        }}
+      >
+        <Box
+          sx={{
+            position: 'relative',
+            maxWidth: '95vw',
+            maxHeight: '95vh',
+            outline: 'none',
+          }}
+        >
+          <IconButton
+            onClick={handleCloseImageModal}
+            sx={{
+              position: 'absolute',
+              top: -16,
+              right: -16,
+              backgroundColor: theme.palette.background.paper,
+              color: theme.palette.text.primary,
+              zIndex: 1,
+              '&:hover': {
+                backgroundColor: theme.palette.error.main,
+                color: 'white',
+              },
+            }}
+          >
+            <Close />
+          </IconButton>
+          <Box
+            component="img"
+            src={expandedImage}
+            alt="Arquitetura expandida"
+            sx={{
+              maxWidth: '100%',
+              maxHeight: '95vh',
+              width: 'auto',
+              height: 'auto',
+              borderRadius: 2,
+              backgroundColor: 'white',
+              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+            }}
+          />
         </Box>
       </Modal>
     </>
