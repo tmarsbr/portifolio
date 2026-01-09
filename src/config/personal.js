@@ -47,8 +47,8 @@ export const experiences = [
     title: "Auxiliar de Produção",
     company: "LJ Correia Equipamentos LTDA",
     period: "01/02/2018 - 07/05/2021",
-    description: "Aprendi a operar sob pressão e garantir qualidade em escala — habilidades que hoje aplico no design de pipelines de dados confiáveis e processos automatizados.",
-    skills: ["Produção Industrial", "Controle de Qualidade", "Processos"],
+    description: "Operar sob pressão e garantir qualidade em escala — assim como um pipeline de ingestão de dados precisa processar milhões de registros com consistência. Desenvolvi disciplina para seguir processos padronizados, essencial para implementar workflows de ETL confiáveis e manuteníveis.",
+    skills: ["Produção Industrial", "Controle de Qualidade", "Processos Padronizados", "Trabalho sob Pressão"],
     icon: "⚡"
   },
   {
@@ -57,8 +57,8 @@ export const experiences = [
     title: "Torneiro Mecânico",
     company: "Cilintec Cilindros para Impressões LTDA",
     period: "15/07/2022 - 02/09/2023",
-    description: "Trabalhava com tolerâncias de centésimos de milímetro em peças de precisão. Esse rigor técnico hoje se traduz em validações de qualidade de dados e pipelines com zero margem para erro.",
-    skills: ["Precisão Técnica", "Especificações Rigorosas", "Qualidade"],
+    description: "Tolerâncias de centésimos de milímetro exigem validação constante — o mesmo rigor que aplico em Data Quality com Pydantic e pytest. Cada peça era inspecionada antes da entrega, assim como cada pipeline deve ter testes automatizados e constraints de validação.",
+    skills: ["Precisão Técnica", "Validações Rigorosas", "Controle Dimensional", "Qualidade Zero Defeito"],
     icon: "🔧"
   },
   {
@@ -67,8 +67,8 @@ export const experiences = [
     title: "Torneiro Mecânico Autônomo",
     company: "Trabalho Autônomo",
     period: "09/2023 - Presente",
-    description: "Responsável pelo ciclo completo: do planejamento à entrega. Essa visão end-to-end é a mesma que aplico em projetos de dados — entender o problema, desenhar a solução e entregar com qualidade.",
-    skills: ["Visão End-to-End", "Gestão de Projetos", "Entrega de Qualidade"],
+    description: "Gestão do ciclo completo: análise do desenho técnico, planejamento da usinagem, execução e entrega. Essa visão end-to-end é idêntica ao ciclo de um projeto de dados: entender o requisito, modelar a solução, implementar o pipeline e garantir a entrega contínua.",
+    skills: ["Visão End-to-End", "Gestão de Projetos", "Entrega Contínua", "Autonomia Técnica"],
     icon: "⚙️"
   },
   {
@@ -77,8 +77,8 @@ export const experiences = [
     title: "Transição para Data & Analytics",
     company: "Pod Academy",
     period: "12/2023 - 12/2025",
-    description: "Formação intensiva Full Stack em Dados: do básico ao especialista em Engenharia de Dados, Cloud AWS, Analytics e Ciência de Dados. Onde a precisão da mecânica encontrou o poder dos dados.",
-    skills: ["Engenharia de Dados", "Cloud AWS", "Analytics", "Python"],
+    description: "Formação intensiva Full Stack em Dados (550h): Engenharia de Dados, Cloud AWS, Analytics e Ciência de Dados. A precisão da mecânica se transformou em pipelines robustos — agora meço tolerâncias em schemas de dados, não em micrômetros.",
+    skills: ["Engenharia de Dados", "Cloud AWS", "Analytics", "Python", "SQL", "Airflow"],
     icon: "📊"
   }
 ];
