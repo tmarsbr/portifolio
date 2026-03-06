@@ -1,17 +1,14 @@
 /**
- * HeroSection aprimorada - Seção principal moderna e impactante
- * 
- * Melhorias implementadas:
- * - Animações fluidas e coordenadas
- * - Efeito de digitação (typing) no texto principal
- * - Avatar com animação de hover
- * - Background com gradiente dinâmico
- * - Particles animadas para efeito visual
- * - Botões com micro-interações
- * - Layout otimizado para diferentes telas
+ * HeroSection — Dark Premium Glass
+ *
+ * - Liquid blobs background + floating particles
+ * - Glass chips com border neon
+ * - Gradient text headings (IBM Plex Mono)
+ * - Neon glow avatar ring
+ * - Split-line reveal animations
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   Box,
   Container,
@@ -32,36 +29,27 @@ import {
   DeviceHub,
   Hub,
   Code,
-} from '@mui/icons-material';
-import {
   Storage,
 } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useTheme } from '../../contexts/ThemeContext';
 
 import { personalInfo } from '../../config/portfolio';
-// import HoverSkillChip from '../common/HoverSkillChip'; // Removido tooltip
 
-// Componente para efeito de digitação
+/* ── Sub-components ─────────────────────────────────────────── */
+
 const TypewriterEffect = ({ text, delay = 0 }) => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (currentIndex < text.length) {
-      const baseSpeed = 50; // velocidade inicial em ms
-      const minSpeed = 30; // velocidade mínima em ms
-      const letterDelay =
-        currentIndex === 0
-          ? delay
-          : Math.max(minSpeed, baseSpeed - currentIndex * 2); // leve aceleração
-
+      const speed = Math.max(30, 50 - currentIndex * 2);
+      const wait = currentIndex === 0 ? delay : speed;
       const timer = setTimeout(() => {
         setDisplayText(prev => prev + text[currentIndex]);
         setCurrentIndex(prev => prev + 1);
-      }, letterDelay);
-
+      }, wait);
       return () => clearTimeout(timer);
     }
   }, [currentIndex, text, delay]);
@@ -71,19 +59,8 @@ const TypewriterEffect = ({ text, delay = 0 }) => {
       {displayText}
       <motion.span
         animate={{ opacity: [1, 0] }}
-        transition={{
-          duration: 0.6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          repeatType: "reverse"
-        }}
-        style={{
-          color: 'currentColor',
-          fontSize: '1em',
-          fontWeight: 'bold',
-          marginLeft: '2px',
-          display: 'inline-block'
-        }}
+        transition={{ duration: 0.6, repeat: Infinity, repeatType: 'reverse' }}
+        style={{ color: '#007bff', fontWeight: 'bold', marginLeft: 2, display: 'inline-block' }}
       >
         |
       </motion.span>
@@ -91,171 +68,188 @@ const TypewriterEffect = ({ text, delay = 0 }) => {
   );
 };
 
-// Componente para efeito pisca-pisca (texto completo)
 const BlinkingText = ({ text, delay = 0 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, delay);
-
-    return () => clearTimeout(timer);
-  }, [delay]);
-
-  if (!isVisible) return null;
-
+  const [show, setShow] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setShow(true), delay); return () => clearTimeout(t); }, [delay]);
+  if (!show) return null;
   return (
     <motion.span
-      animate={{
-        opacity: [1, 0.1, 1, 0.1, 1],
-        scale: [1, 0.98, 1, 0.98, 1]
-      }}
-      transition={{
-        duration: 1.5,
-        repeat: Infinity,
-        ease: "easeInOut",
-        repeatDelay: 0.5
-      }}
-      style={{
-        display: 'inline-block'
-      }}
+      animate={{ opacity: [1, 0.15, 1, 0.15, 1], scale: [1, 0.98, 1, 0.98, 1] }}
+      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.5 }}
+      style={{ display: 'inline-block' }}
     >
       {text}
     </motion.span>
   );
 };
 
-// Componente para partículas flutuantes
 const FloatingParticles = () => {
-  const { darkMode } = useTheme();
-
-  const particles = Array.from({ length: 20 }, (_, i) => (
-    <motion.div
-      key={i}
-      className="particle"
-      initial={{
-        opacity: 0,
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      }}
-      animate={{
-        opacity: [0, 1, 0],
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-      }}
-      transition={{
-        duration: Math.random() * 10 + 10,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-      style={{
-        position: 'absolute',
-        width: Math.random() * 4 + 2,
-        height: Math.random() * 4 + 2,
-        backgroundColor: darkMode ? '#3b82f6' : '#3b82f6',
-        borderRadius: '50%',
-        zIndex: 1,
-      }}
-    />
-  ));
+  const particles = useMemo(() =>
+    Array.from({ length: 18 }, (_, i) => ({
+      id: i,
+      size: Math.random() * 3 + 1.5,
+      x1: Math.random() * 100,
+      y1: Math.random() * 100,
+      x2: Math.random() * 100,
+      y2: Math.random() * 100,
+      dur: Math.random() * 12 + 10,
+      color: ['#007bff', '#00d4ff', '#a855f7', '#ff2d78'][Math.floor(Math.random() * 4)],
+    })), []);
 
   return (
-    <Box
-      sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        overflow: 'hidden',
-        pointerEvents: 'none',
-      }}
-    >
-      {particles}
+    <Box sx={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 }}>
+      {particles.map(p => (
+        <motion.div
+          key={p.id}
+          initial={{ opacity: 0, left: `${p.x1}%`, top: `${p.y1}%` }}
+          animate={{ opacity: [0, 0.7, 0], left: `${p.x2}%`, top: `${p.y2}%` }}
+          transition={{ duration: p.dur, repeat: Infinity, ease: 'linear' }}
+          style={{
+            position: 'absolute',
+            width: p.size,
+            height: p.size,
+            backgroundColor: p.color,
+            borderRadius: '50%',
+            boxShadow: `0 0 6px ${p.color}`,
+          }}
+        />
+      ))}
     </Box>
   );
 };
 
+/* ── Liquid Blobs ───────────────────────────────────────────── */
+const LiquidBlobs = () => (
+  <Box sx={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 0 }}>
+    <div className="liquid-blob" style={{
+      width: 500, height: 500,
+      background: 'radial-gradient(circle, rgba(0,123,255,0.18) 0%, transparent 70%)',
+      top: '-10%', left: '-8%',
+    }} />
+    <div className="liquid-blob" style={{
+      width: 400, height: 400,
+      background: 'radial-gradient(circle, rgba(168,85,247,0.14) 0%, transparent 70%)',
+      bottom: '-5%', right: '-5%',
+      animationDelay: '-8s',
+    }} />
+    <div className="liquid-blob" style={{
+      width: 300, height: 300,
+      background: 'radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%)',
+      top: '40%', right: '20%',
+      animationDelay: '-15s',
+    }} />
+  </Box>
+);
+
+/* ── Main Component ─────────────────────────────────────────── */
+
 const HeroSection = () => {
-  const { darkMode } = useTheme();
   const [animationStarted, setAnimationStarted] = useState(false);
 
   const mainStacks = [
-    {
-      label: 'SQL',
-      icon: <Code fontSize="small" />,
-      items: ['PostgreSQL', 'MySQL', 'Consultas', 'Joins', 'Agregações'],
-    },
-    {
-      label: 'Python',
-      icon: <Code fontSize="small" />,
-      items: ['Pandas', 'Pydantic', 'Pytest', 'Requests', 'Automação'],
-    },
-    {
-      label: 'dbt',
-      icon: <Hub fontSize="small" />,
-      items: ['Modelagem', 'Testes', 'Documentação', 'Transformações SQL'],
-    },
-    {
-      label: 'Airflow',
-      icon: <DeviceHub fontSize="small" />,
-      items: ['DAGs', 'Scheduling', 'Orquestração', 'Monitoramento'],
-    },
-    {
-      label: 'AWS',
-      icon: <CloudQueue fontSize="small" />,
-      items: ['S3', 'Redshift', 'Athena', 'EC2'],
-    },
-    {
-      label: 'Docker',
-      icon: <Storage fontSize="small" />,
-      items: ['Containers', 'Docker Compose', 'Ambientes'],
-    },
+    { label: 'SQL', icon: <Code fontSize="small" /> },
+    { label: 'Python', icon: <Code fontSize="small" /> },
+    { label: 'dbt', icon: <Hub fontSize="small" /> },
+    { label: 'Airflow', icon: <DeviceHub fontSize="small" /> },
+    { label: 'AWS', icon: <CloudQueue fontSize="small" /> },
+    { label: 'Docker', icon: <Storage fontSize="small" /> },
   ];
 
-  // Iniciar animações
   useEffect(() => {
     const timer = setTimeout(() => setAnimationStarted(true), 500);
     return () => clearTimeout(timer);
   }, []);
 
-  // Variantes de animação
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2
-      }
-    }
+    visible: { opacity: 1, transition: { delayChildren: 0.3, staggerChildren: 0.15 } },
   };
-
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
+    hidden: { y: 24, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.6, ease: 'easeOut' } },
   };
-
   const avatarVariants = {
     hidden: { scale: 0, rotate: -180 },
-    visible: {
-      scale: 1,
-      rotate: 0,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-        duration: 0.8
-      }
-    }
+    visible: { scale: 1, rotate: 0, transition: { type: 'spring', stiffness: 260, damping: 20 } },
+  };
+
+  // ── Glass chip style ────────────────────────────────────────
+  const glassChipSx = {
+    fontFamily: "'IBM Plex Mono', monospace",
+    fontSize: '0.8rem',
+    fontWeight: 500,
+    color: '#e2e8f0',
+    backgroundColor: 'rgba(255,255,255,0.03)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    backdropFilter: 'blur(12px)',
+    transition: 'all 0.3s ease',
+    '& .MuiChip-icon': { color: '#00d4ff' },
+    '&:hover': {
+      transform: 'translateY(-2px)',
+      borderColor: 'rgba(0,123,255,0.5)',
+      boxShadow: '0 4px 16px rgba(0,123,255,0.15)',
+      backgroundColor: 'rgba(255,255,255,0.06)',
+    },
+  };
+
+  // ── Neon button styles ──────────────────────────────────────
+  const primaryBtnSx = {
+    background: 'linear-gradient(135deg, #007bff, #0056b3)',
+    color: '#fff',
+    fontFamily: "'IBM Plex Mono', monospace",
+    fontWeight: 600,
+    px: 4, py: 1.5,
+    borderRadius: '12px',
+    textTransform: 'none',
+    fontSize: '0.95rem',
+    boxShadow: '0 0 20px rgba(0,123,255,0.3)',
+    '& .MuiButton-endIcon': { transition: 'transform 0.3s ease' },
+    '&:hover': {
+      background: 'linear-gradient(135deg, #0056b3, #003d80)',
+      transform: 'translateY(-2px)',
+      boxShadow: '0 8px 30px rgba(0,123,255,0.45)',
+      '& .MuiButton-endIcon': { transform: 'translateX(4px)' },
+    },
+    transition: 'all 0.3s ease',
+  };
+
+  const outlineBtnSx = (borderColor, hoverGlow) => ({
+    borderColor: `${borderColor}55`,
+    color: borderColor,
+    fontFamily: "'IBM Plex Mono', monospace",
+    fontWeight: 600,
+    px: 4, py: 1.5,
+    borderRadius: '12px',
+    textTransform: 'none',
+    fontSize: '0.95rem',
+    borderWidth: '1.5px',
+    '& .MuiButton-endIcon': { transition: 'transform 0.3s ease' },
+    '&:hover': {
+      borderColor,
+      borderWidth: '1.5px',
+      backgroundColor: `${borderColor}12`,
+      transform: 'translateY(-2px)',
+      boxShadow: `0 0 20px ${hoverGlow}`,
+      '& .MuiButton-endIcon': { transform: 'translateX(4px)' },
+    },
+    transition: 'all 0.3s ease',
+  });
+
+  // ── Social icon style ──────────────────────────────────────
+  const socialBtnSx = {
+    minWidth: 'auto',
+    p: 1.5,
+    borderRadius: '12px',
+    border: '1px solid rgba(255,255,255,0.06)',
+    color: '#94a3b8',
+    '&:hover': {
+      backgroundColor: 'rgba(0,123,255,0.08)',
+      borderColor: 'rgba(0,123,255,0.3)',
+      color: '#00d4ff',
+      transform: 'translateY(-2px)',
+      boxShadow: '0 0 12px rgba(0,212,255,0.2)',
+    },
+    transition: 'all 0.3s ease',
   };
 
   return (
@@ -263,78 +257,69 @@ const HeroSection = () => {
       component="section"
       sx={{
         minHeight: '100vh',
-        background: darkMode
-          ? 'linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%)' // Midnight Gradient
-          : 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f1f5f9 100%)', // Gradiente azulado sutil (Sky/Slate)
+        background: 'linear-gradient(160deg, #020617 0%, #050a14 40%, #0d1117 100%)',
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
-        py: { xs: 4, md: 0 },
+        py: { xs: 10, md: 0 },
         overflow: 'hidden',
       }}
     >
-      {/* Partículas flutuantes */}
+      {/* Layers */}
+      <LiquidBlobs />
       <FloatingParticles />
 
-      {/* Background decorativo */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: darkMode
-            ? `radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-               radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%)`
-            : `radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
-               radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.05) 0%, transparent 50%)`,
-          zIndex: 1,
-        }}
-      />
+      {/* Radial glow */}
+      <Box sx={{
+        position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none',
+        background: `
+          radial-gradient(circle at 20% 50%, rgba(0,123,255,0.12) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(0,212,255,0.10) 0%, transparent 50%),
+          radial-gradient(circle at 60% 80%, rgba(168,85,247,0.06) 0%, transparent 40%)
+        `,
+      }} />
+
+      {/* Noise overlay */}
+      <div className="noise-overlay" />
 
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
         <Grid container spacing={4} alignItems="center">
-          {/* Coluna do texto principal */}
+          {/* ── Text column ──────────────────────────────────── */}
           <Grid item xs={12} md={7}>
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-            >
+            <motion.div variants={containerVariants} initial="hidden" animate="visible">
               <Stack spacing={{ xs: 1.5, md: 2 }}>
-                {/* Saudação */}
+                {/* Greeting */}
                 <motion.div variants={itemVariants}>
                   <Typography
                     variant="h6"
                     sx={{
-                      color: darkMode
-                        ? 'rgba(100, 181, 246, 0.9)'
-                        : 'rgba(21, 101, 192, 0.9)',
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      color: 'rgba(0,212,255,0.85)',
                       fontWeight: 500,
-                      letterSpacing: '0.02em',
+                      letterSpacing: '0.04em',
+                      fontSize: '0.9rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1.5,
                     }}
                   >
+                    <span className="pulsing-dot" />
                     {animationStarted && (
-                      <BlinkingText
-                        text="👋 Olá, seja bem-vindo(a) ao meu portifolio!"
-                        delay={200}
-                      />
+                      <BlinkingText text="// Olá, seja bem-vindo(a)" delay={200} />
                     )}
                   </Typography>
                 </motion.div>
 
-                {/* Nome */}
+                {/* Name — gradient text */}
                 <motion.div variants={itemVariants}>
                   <Typography
                     variant="h1"
                     sx={{
-                      fontSize: { xs: '2rem', md: '3.5rem', lg: '4rem' },
+                      fontSize: { xs: '2.2rem', md: '3.5rem', lg: '4rem' },
+                      fontFamily: "'IBM Plex Mono', monospace",
                       fontWeight: 700,
                       lineHeight: 1.1,
-                      background: darkMode
-                        ? 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)'
-                        : 'linear-gradient(135deg, #1e293b 0%, #334155 100%)',
+                      background: 'linear-gradient(135deg, #ffffff 0%, #94a3b8 100%)',
                       backgroundClip: 'text',
                       WebkitBackgroundClip: 'text',
                       color: 'transparent',
@@ -345,145 +330,83 @@ const HeroSection = () => {
                   </Typography>
                 </motion.div>
 
-                {/* Texto animado */}
+                {/* Typewriter */}
                 <motion.div variants={itemVariants}>
                   <Typography
                     variant="h4"
                     sx={{
-                      fontSize: { xs: '1.2rem', md: '2rem' },
-                      fontWeight: 600,
-                      color: darkMode ? '#94a3b8' : '#475569',
+                      fontSize: { xs: '1.2rem', md: '1.8rem' },
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontWeight: 500,
+                      color: '#94a3b8',
                       minHeight: '3rem',
                     }}
                   >
                     {animationStarted && (
-                      <TypewriterEffect
-                        text={personalInfo.title}
-                        delay={1800}
-                      />
+                      <TypewriterEffect text={personalInfo.title} delay={1800} />
                     )}
                   </Typography>
                 </motion.div>
 
-                {/* Descrição */}
+                {/* Description */}
                 <motion.div variants={itemVariants}>
                   <Typography
                     variant="body1"
                     sx={{
-                      fontSize: { xs: '1rem', md: '1.1rem' },
-                      color: darkMode ? '#cbd5e1' : '#64748b',
-                      lineHeight: 1.6,
-                      maxWidth: '600px',
+                      fontSize: { xs: '1rem', md: '1.05rem' },
+                      color: '#cbd5e1',
+                      lineHeight: 1.7,
+                      maxWidth: '580px',
                     }}
                   >
                     {personalInfo.homeIntro}
                   </Typography>
                 </motion.div>
 
-                {/* Especialidades */}
+                {/* Glass chips */}
                 <motion.div variants={itemVariants}>
-                  <Stack spacing={2}>
-                    {/* Stacks principais */}
-                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                      {/* Chip principal de Engenharia de Dados */}
+                  <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 2.5 }}
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <Chip
+                        label="Engenharia de Dados"
+                        icon={<Hub fontSize="small" />}
+                        sx={{
+                          ...glassChipSx,
+                          borderColor: 'rgba(0,212,255,0.25)',
+                          '& .MuiChip-icon': { color: '#00d4ff' },
+                        }}
+                      />
+                    </motion.div>
+
+                    {mainStacks.map((stack, index) => (
                       <motion.div
-                        key="engenharia-dados-main"
+                        key={stack.label}
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 2.5 }}
+                        transition={{ delay: 2.6 + index * 0.08 }}
                         whileHover={{ scale: 1.05 }}
                       >
-                        <Chip
-                          label="Engenharia de Dados"
-                          icon={<Hub fontSize="small" />}
-                          variant="filled"
-                          sx={{
-                            backgroundColor: darkMode
-                              ? 'rgba(77, 208, 225, 0.2)'
-                              : 'rgba(0, 137, 123, 0.1)',
-                            color: darkMode ? '#e2e8f0' : '#1e293b',
-                            fontWeight: 500,
-                            fontSize: '0.875rem',
-                            height: '32px',
-                            '&:hover': {
-                              backgroundColor: darkMode
-                                ? 'rgba(77, 208, 225, 0.3)'
-                                : 'rgba(0, 137, 123, 0.2)',
-                            }
-                          }}
-                        />
+                        <Chip icon={stack.icon} label={stack.label} sx={glassChipSx} />
                       </motion.div>
-
-                      {mainStacks.map((stack, index) => (
-                        <motion.div
-                          key={stack.label}
-                          initial={{ opacity: 0, scale: 0.8 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 2.6 + index * 0.1 }}
-                        >
-                          <Chip
-                            icon={stack.icon}
-                            label={stack.label}
-                            sx={{
-                              fontSize: '0.875rem',
-                              fontWeight: 500,
-                              backgroundColor: darkMode
-                                ? 'rgba(30, 41, 59, 0.8)'
-                                : 'rgba(255, 255, 255, 0.9)',
-                              color: darkMode ? '#e2e8f0' : '#334155',
-                              border: darkMode
-                                ? '1px solid rgba(100, 181, 246, 0.3)'
-                                : '1px solid rgba(21, 101, 192, 0.3)',
-                              backdropFilter: 'blur(10px)',
-                              transition: 'all 0.3s ease',
-                              '&:hover': {
-                                transform: 'translateY(-2px)',
-                                boxShadow: darkMode
-                                  ? '0 4px 12px rgba(100, 181, 246, 0.2)'
-                                  : '0 4px 12px rgba(21, 101, 192, 0.2)',
-                                borderColor: darkMode
-                                  ? 'rgba(100, 181, 246, 0.6)'
-                                  : 'rgba(21, 101, 192, 0.6)',
-                              },
-                            }}
-                          />
-                        </motion.div>
-                      ))}
-                    </Stack>
+                    ))}
                   </Stack>
                 </motion.div>
 
-                {/* Botões de ação */}
+                {/* CTA Buttons */}
                 <motion.div variants={itemVariants}>
-                  <Stack
-                    direction={{ xs: 'column', sm: 'row' }}
-                    spacing={2}
-                    sx={{ mt: 2 }}
-                  >
+                  <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mt: 2 }}>
                     <Button
                       component={Link}
                       to="/projects"
                       variant="contained"
                       size="large"
                       endIcon={<ArrowForward />}
-                      sx={{
-                        backgroundColor: darkMode ? '#3b82f6' : '#1565c0',
-                        color: '#ffffff',
-                        fontWeight: 600,
-                        px: 4,
-                        py: 1.5,
-                        borderRadius: '12px',
-                        textTransform: 'none',
-                        fontSize: '1rem',
-                        '&:hover': {
-                          backgroundColor: darkMode ? '#2563eb' : '#0d47a1',
-                          transform: 'translateY(-2px)',
-                          boxShadow: darkMode
-                            ? '0 10px 25px rgba(59, 130, 246, 0.4)'
-                            : '0 10px 25px rgba(21, 101, 192, 0.4)',
-                        },
-                        transition: 'all 0.3s ease',
-                      }}
+                      sx={primaryBtnSx}
                     >
                       Ver Projetos
                     </Button>
@@ -494,26 +417,7 @@ const HeroSection = () => {
                       variant="outlined"
                       size="large"
                       endIcon={<Download />}
-                      sx={{
-                        borderColor: darkMode ? '#10b981' : '#059669',
-                        color: darkMode ? '#10b981' : '#059669',
-                        fontWeight: 600,
-                        px: 4,
-                        py: 1.5,
-                        borderRadius: '12px',
-                        textTransform: 'none',
-                        fontSize: '1rem',
-                        borderWidth: '2px',
-                        '&:hover': {
-                          backgroundColor: darkMode
-                            ? 'rgba(16, 185, 129, 0.1)'
-                            : 'rgba(5, 150, 105, 0.1)',
-                          borderColor: darkMode ? '#059669' : '#047857',
-                          transform: 'translateY(-2px)',
-                          borderWidth: '2px',
-                        },
-                        transition: 'all 0.3s ease',
-                      }}
+                      sx={outlineBtnSx('#00e676', 'rgba(0,230,118,0.15)')}
                     >
                       Baixar CV
                     </Button>
@@ -524,99 +428,23 @@ const HeroSection = () => {
                       variant="outlined"
                       size="large"
                       endIcon={<Email />}
-                      sx={{
-                        borderColor: darkMode ? '#64b5f6' : '#1565c0',
-                        color: darkMode ? '#64b5f6' : '#1565c0',
-                        fontWeight: 600,
-                        px: 4,
-                        py: 1.5,
-                        borderRadius: '12px',
-                        textTransform: 'none',
-                        fontSize: '1rem',
-                        borderWidth: '2px',
-                        '&:hover': {
-                          backgroundColor: darkMode
-                            ? 'rgba(100, 181, 246, 0.1)'
-                            : 'rgba(21, 101, 192, 0.1)',
-                          borderColor: darkMode ? '#3b82f6' : '#0d47a1',
-                          transform: 'translateY(-2px)',
-                          borderWidth: '2px',
-                        },
-                        transition: 'all 0.3s ease',
-                      }}
+                      sx={outlineBtnSx('#00d4ff', 'rgba(0,212,255,0.15)')}
                     >
                       Contato
                     </Button>
                   </Stack>
                 </motion.div>
 
-                {/* Links sociais */}
+                {/* Social icons */}
                 <motion.div variants={itemVariants}>
-                  <Stack direction="row" spacing={{ xs: 1, md: 2 }} sx={{ mt: 3 }}>
-                    <Button
-                      href={personalInfo.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="GitHub"
-                      sx={{
-                        minWidth: 'auto',
-                        p: 1.5,
-                        borderRadius: '50%',
-                        color: darkMode ? '#94a3b8' : '#64748b',
-                        '&:hover': {
-                          backgroundColor: darkMode
-                            ? 'rgba(100, 181, 246, 0.1)'
-                            : 'rgba(21, 101, 192, 0.1)',
-                          color: darkMode ? '#64b5f6' : '#1565c0',
-                          transform: 'translateY(-2px)',
-                        },
-                        transition: 'all 0.3s ease',
-                      }}
-                    >
+                  <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
+                    <Button href={personalInfo.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" sx={socialBtnSx}>
                       <GitHub />
                     </Button>
-
-                    <Button
-                      href={personalInfo.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn"
-                      sx={{
-                        minWidth: 'auto',
-                        p: 1.5,
-                        borderRadius: '50%',
-                        color: darkMode ? '#94a3b8' : '#64748b',
-                        '&:hover': {
-                          backgroundColor: darkMode
-                            ? 'rgba(100, 181, 246, 0.1)'
-                            : 'rgba(21, 101, 192, 0.1)',
-                          color: darkMode ? '#64b5f6' : '#1565c0',
-                          transform: 'translateY(-2px)',
-                        },
-                        transition: 'all 0.3s ease',
-                      }}
-                    >
+                    <Button href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" sx={socialBtnSx}>
                       <LinkedIn />
                     </Button>
-
-                    <Button
-                      href={`mailto:${personalInfo.email}`}
-                      aria-label="Email"
-                      sx={{
-                        minWidth: 'auto',
-                        p: 1.5,
-                        borderRadius: '50%',
-                        color: darkMode ? '#94a3b8' : '#64748b',
-                        '&:hover': {
-                          backgroundColor: darkMode
-                            ? 'rgba(100, 181, 246, 0.1)'
-                            : 'rgba(21, 101, 192, 0.1)',
-                          color: darkMode ? '#64b5f6' : '#1565c0',
-                          transform: 'translateY(-2px)',
-                        },
-                        transition: 'all 0.3s ease',
-                      }}
-                    >
+                    <Button href={`mailto:${personalInfo.email}`} aria-label="Email" sx={socialBtnSx}>
                       <Email />
                     </Button>
                   </Stack>
@@ -625,55 +453,53 @@ const HeroSection = () => {
             </motion.div>
           </Grid>
 
-          {/* Coluna do avatar */}
+          {/* ── Avatar column ────────────────────────────────── */}
           <Grid item xs={12} md={5}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'relative',
-              }}
-            >
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
               <motion.div
                 variants={avatarVariants}
                 initial="hidden"
                 animate="visible"
-                whileHover={{
-                  scale: 1.05,
-                  rotate: 5,
-                  transition: { duration: 0.3 }
-                }}
+                whileHover={{ scale: 1.05, rotate: 3, transition: { duration: 0.3 } }}
               >
                 <Avatar
                   src={personalInfo.avatar}
                   alt={personalInfo.name}
                   sx={{
-                    width: { xs: 160, md: 280, lg: 320 },
-                    height: { xs: 160, md: 280, lg: 320 },
-                    border: `4px solid ${darkMode ? '#3b82f6' : '#2563eb'}`,
-                    boxShadow: darkMode
-                      ? '0 0 40px rgba(59, 130, 246, 0.6)' // Neon Glow
-                      : '0 20px 40px rgba(37, 99, 235, 0.2)',
+                    width: { xs: 180, md: 280, lg: 320 },
+                    height: { xs: 180, md: 280, lg: 320 },
+                    border: '3px solid rgba(0,123,255,0.5)',
+                    boxShadow: '0 0 50px rgba(0,123,255,0.4), 0 0 100px rgba(0,123,255,0.15)',
                   }}
                 />
               </motion.div>
 
-              {/* Elementos decorativos ao redor do avatar */}
+              {/* Decorative ring */}
               <motion.div
-                animate={{
-                  rotate: 360,
-                  scale: [1, 1.1, 1]
-                }}
+                animate={{ rotate: 360, scale: [1, 1.08, 1] }}
                 transition={{
-                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 4, repeat: Infinity }
+                  rotate: { duration: 25, repeat: Infinity, ease: 'linear' },
+                  scale: { duration: 5, repeat: Infinity },
                 }}
                 style={{
                   position: 'absolute',
-                  width: '100%',
-                  height: '100%',
-                  border: `2px dashed ${darkMode ? 'rgba(59, 130, 246, 0.5)' : 'rgba(37, 99, 235, 0.2)'}`,
+                  width: '110%',
+                  height: '110%',
+                  border: '1px dashed rgba(0,212,255,0.25)',
+                  borderRadius: '50%',
+                  zIndex: -1,
+                }}
+              />
+
+              {/* Second ring */}
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
+                style={{
+                  position: 'absolute',
+                  width: '125%',
+                  height: '125%',
+                  border: '1px dashed rgba(168,85,247,0.15)',
                   borderRadius: '50%',
                   zIndex: -1,
                 }}

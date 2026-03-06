@@ -1,222 +1,252 @@
 import { createTheme } from '@mui/material/styles';
 import { themeConfig } from '../config/portfolio';
 
-// Criação do tema personalizado para Data & Analytics
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       main: themeConfig.primaryColor,
-      light: '#42a5f5',
-      dark: '#1565c0',
+      light: '#3d9bff',
+      dark: '#0056b3',
       contrastText: '#ffffff',
     },
     secondary: {
       main: themeConfig.secondaryColor,
-      light: '#ff5983',
-      dark: '#9a0036',
+      light: '#33ddff',
+      dark: '#009bb8',
       contrastText: '#ffffff',
     },
     accent: {
       main: themeConfig.accentColor,
-      light: '#4dd0e1',
-      dark: '#00838f',
+      light: '#22d3ee',
+      dark: '#0891b2',
     },
     background: {
       default: themeConfig.backgroundColor,
-      paper: '#ffffff',
+      paper: themeConfig.paperColor,
     },
     text: {
       primary: themeConfig.textColor,
-      secondary: themeConfig.darkGray,
+      secondary: themeConfig.textSecondary,
     },
     grey: {
-      50: '#fafafa',
-      100: '#f5f5f5',
-      200: '#eeeeee',
-      300: '#e0e0e0',
-      400: '#bdbdbd',
+      50: '#f8fafc',
+      100: '#f1f5f9',
+      200: '#e2e8f0',
+      300: '#cbd5e1',
+      400: '#94a3b8',
       500: themeConfig.darkGray,
-      600: '#666666',
-      700: '#424242',
-      800: '#212121',
-      900: '#111111',
+      600: '#475569',
+      700: '#334155',
+      800: '#1e293b',
+      900: '#0f172a',
     },
+    divider: 'rgba(255, 255, 255, 0.08)',
   },
   typography: {
     fontFamily: themeConfig.fontFamily,
     h1: {
+      fontFamily: themeConfig.fontFamilyMono,
       fontSize: themeConfig.fontSize.xxlarge,
       fontWeight: 700,
-      lineHeight: 1.2,
-      letterSpacing: '-0.02em',
+      lineHeight: 1.1,
+      letterSpacing: '-0.04em',
+      color: themeConfig.textColor,
     },
     h2: {
+      fontFamily: themeConfig.fontFamilyMono,
       fontSize: themeConfig.fontSize.xlarge,
       fontWeight: 600,
-      lineHeight: 1.3,
-      letterSpacing: '-0.01em',
+      lineHeight: 1.2,
+      letterSpacing: '-0.03em',
+      color: themeConfig.textColor,
     },
     h3: {
+      fontFamily: themeConfig.fontFamilyMono,
       fontSize: '1.75rem',
       fontWeight: 600,
-      lineHeight: 1.4,
+      lineHeight: 1.3,
+      letterSpacing: '-0.02em',
+      color: themeConfig.textColor,
     },
     h4: {
+      fontFamily: themeConfig.fontFamilyMono,
       fontSize: themeConfig.fontSize.large,
       fontWeight: 500,
       lineHeight: 1.4,
+      letterSpacing: '-0.01em',
+      color: themeConfig.textColor,
     },
     h5: {
       fontSize: '1.125rem',
       fontWeight: 500,
       lineHeight: 1.5,
+      color: themeConfig.textColor,
     },
     h6: {
       fontSize: themeConfig.fontSize.medium,
       fontWeight: 500,
       lineHeight: 1.6,
+      textTransform: 'uppercase',
+      letterSpacing: '0.1em',
+      color: themeConfig.textSecondary,
     },
     body1: {
       fontSize: themeConfig.fontSize.medium,
       lineHeight: 1.7,
-      color: themeConfig.textColor,
+      color: 'rgba(255, 255, 255, 0.8)',
     },
     body2: {
       fontSize: themeConfig.fontSize.small,
       lineHeight: 1.6,
-      color: themeConfig.darkGray,
+      color: themeConfig.textSecondary,
     },
     subtitle1: {
       fontSize: '1.125rem',
       fontWeight: 400,
       lineHeight: 1.5,
+      color: 'rgba(255, 255, 255, 0.7)',
     },
     subtitle2: {
-      fontSize: themeConfig.fontSize.small,
-      fontWeight: 500,
+      fontSize: '0.625rem',
+      fontWeight: 600,
       lineHeight: 1.4,
       textTransform: 'uppercase',
-      letterSpacing: '0.5px',
+      letterSpacing: '0.2em',
+      color: themeConfig.textSecondary,
     },
     button: {
       fontSize: themeConfig.fontSize.small,
-      fontWeight: 500,
-      textTransform: 'none',
-      letterSpacing: '0.3px',
+      fontWeight: 600,
+      textTransform: 'uppercase',
+      letterSpacing: '0.15em',
     },
     caption: {
       fontSize: '0.75rem',
+      fontFamily: themeConfig.fontFamilyMono,
       lineHeight: 1.4,
-      color: themeConfig.darkGray,
+      color: themeConfig.textSecondary,
+      letterSpacing: '0.05em',
     },
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: 16,
   },
-  shadows: [
-    'none',
-    '0px 2px 1px -1px rgba(0,0,0,0.05),0px 1px 1px 0px rgba(0,0,0,0.05),0px 1px 3px 0px rgba(0,0,0,0.05)',
-    '0px 3px 1px -2px rgba(0,0,0,0.05),0px 2px 2px 0px rgba(0,0,0,0.05),0px 1px 5px 0px rgba(0,0,0,0.05)',
-    '0px 3px 3px -2px rgba(0,0,0,0.05),0px 3px 4px 0px rgba(0,0,0,0.05),0px 1px 8px 0px rgba(0,0,0,0.05)',
-    '0px 2px 4px -1px rgba(0,0,0,0.05),0px 4px 5px 0px rgba(0,0,0,0.05),0px 1px 10px 0px rgba(0,0,0,0.05)',
-    '0px 3px 5px -1px rgba(0,0,0,0.05),0px 5px 8px 0px rgba(0,0,0,0.05),0px 1px 14px 0px rgba(0,0,0,0.05)',
-    '0px 3px 5px -1px rgba(0,0,0,0.05),0px 6px 10px 0px rgba(0,0,0,0.05),0px 1px 18px 0px rgba(0,0,0,0.05)',
-    '0px 4px 5px -2px rgba(0,0,0,0.05),0px 7px 10px 1px rgba(0,0,0,0.05),0px 2px 16px 1px rgba(0,0,0,0.05)',
-    '0px 5px 5px -3px rgba(0,0,0,0.05),0px 8px 10px 1px rgba(0,0,0,0.05),0px 3px 14px 2px rgba(0,0,0,0.05)',
-    '0px 5px 6px -3px rgba(0,0,0,0.05),0px 9px 12px 1px rgba(0,0,0,0.05),0px 3px 16px 2px rgba(0,0,0,0.05)',
-    '0px 6px 6px -3px rgba(0,0,0,0.05),0px 10px 14px 1px rgba(0,0,0,0.05),0px 4px 18px 3px rgba(0,0,0,0.05)',
-    '0px 6px 7px -4px rgba(0,0,0,0.05),0px 11px 15px 1px rgba(0,0,0,0.05),0px 4px 20px 3px rgba(0,0,0,0.05)',
-    '0px 7px 8px -4px rgba(0,0,0,0.05),0px 12px 17px 2px rgba(0,0,0,0.05),0px 5px 22px 4px rgba(0,0,0,0.05)',
-    '0px 7px 8px -4px rgba(0,0,0,0.05),0px 13px 19px 2px rgba(0,0,0,0.05),0px 5px 24px 4px rgba(0,0,0,0.05)',
-    '0px 7px 9px -4px rgba(0,0,0,0.05),0px 14px 21px 2px rgba(0,0,0,0.05),0px 5px 26px 4px rgba(0,0,0,0.05)',
-    '0px 8px 9px -5px rgba(0,0,0,0.05),0px 15px 22px 2px rgba(0,0,0,0.05),0px 6px 28px 5px rgba(0,0,0,0.05)',
-    '0px 8px 10px -5px rgba(0,0,0,0.05),0px 16px 24px 2px rgba(0,0,0,0.05),0px 6px 30px 5px rgba(0,0,0,0.05)',
-    '0px 8px 11px -5px rgba(0,0,0,0.05),0px 17px 26px 2px rgba(0,0,0,0.05),0px 6px 32px 5px rgba(0,0,0,0.05)',
-    '0px 9px 11px -5px rgba(0,0,0,0.05),0px 18px 28px 2px rgba(0,0,0,0.05),0px 7px 34px 6px rgba(0,0,0,0.05)',
-    '0px 9px 12px -6px rgba(0,0,0,0.05),0px 19px 29px 2px rgba(0,0,0,0.05),0px 7px 36px 6px rgba(0,0,0,0.05)',
-    '0px 10px 13px -6px rgba(0,0,0,0.05),0px 20px 31px 3px rgba(0,0,0,0.05),0px 8px 38px 7px rgba(0,0,0,0.05)',
-    '0px 10px 13px -6px rgba(0,0,0,0.05),0px 21px 33px 3px rgba(0,0,0,0.05),0px 8px 40px 7px rgba(0,0,0,0.05)',
-    '0px 10px 14px -6px rgba(0,0,0,0.05),0px 22px 35px 3px rgba(0,0,0,0.05),0px 8px 42px 7px rgba(0,0,0,0.05)',
-    '0px 11px 14px -7px rgba(0,0,0,0.05),0px 23px 36px 3px rgba(0,0,0,0.05),0px 9px 44px 8px rgba(0,0,0,0.05)',
-    '0px 11px 15px -7px rgba(0,0,0,0.05),0px 24px 38px 3px rgba(0,0,0,0.05),0px 9px 46px 8px rgba(0,0,0,0.05)',
-  ],
   spacing: 8,
   components: {
-    // Botões personalizados
-    MuiButton: {
+    MuiCssBaseline: {
       styleOverrides: {
-        root: {
-          borderRadius: 25,
-          padding: '12px 32px',
-          fontSize: '0.95rem',
-          fontWeight: 500,
-          textTransform: 'none',
-          boxShadow: 'none',
-          transition: 'all 0.3s ease-in-out',
-          '&:hover': {
-            transform: 'translateY(-2px)',
-            boxShadow: '0 8px 25px rgba(25, 118, 210, 0.3)',
-          },
-        },
-        contained: {
-          background: `linear-gradient(45deg, ${themeConfig.primaryColor} 30%, ${themeConfig.accentColor} 90%)`,
-          '&:hover': {
-            background: `linear-gradient(45deg, ${themeConfig.primaryColor} 60%, ${themeConfig.accentColor} 100%)`,
-          },
-        },
-        outlined: {
-          borderWidth: 2,
-          '&:hover': {
-            borderWidth: 2,
-            backgroundColor: 'rgba(25, 118, 210, 0.04)',
-          },
-        },
-      },
-    },
-    
-    // Cards personalizados
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          borderRadius: 16,
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-          transition: 'all 0.3s ease-in-out',
-          '&:hover': {
-            transform: 'translateY(-4px)',
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
-          },
-        },
-      },
-    },
-    
-    // Chips personalizados
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          borderRadius: 20,
-          fontWeight: 500,
-          fontSize: '0.8rem',
-          '&.MuiChip-filled': {
-            backgroundColor: 'rgba(25, 118, 210, 0.1)',
-            color: themeConfig.primaryColor,
-          },
-        },
-      },
-    },
-    
-    // AppBar personalizada
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: 'rgba(255, 255, 255, 0.95)',
-          backdropFilter: 'blur(20px)',
-          boxShadow: '0 2px 20px rgba(0, 0, 0, 0.1)',
+        body: {
+          backgroundColor: themeConfig.backgroundColor,
           color: themeConfig.textColor,
         },
       },
     },
-    
-    // Timeline personalizada
+
+    // Botões — glass pill style
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: '9999px',
+          padding: '12px 28px',
+          fontSize: '0.7rem',
+          fontWeight: 600,
+          textTransform: 'uppercase',
+          letterSpacing: '0.15em',
+          boxShadow: 'none',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          position: 'relative',
+          overflow: 'hidden',
+          '&:hover': {
+            transform: 'translateY(-2px)',
+            boxShadow: `0 8px 25px rgba(0, 123, 255, 0.25)`,
+          },
+        },
+        contained: {
+          background: themeConfig.glass.bg,
+          backdropFilter: `blur(${themeConfig.glass.blur})`,
+          border: `1px solid ${themeConfig.glass.border}`,
+          color: themeConfig.textColor,
+          '&:hover': {
+            background: '#ffffff',
+            color: '#000000',
+            borderColor: 'transparent',
+          },
+        },
+        outlined: {
+          borderWidth: 1,
+          borderColor: 'rgba(255, 255, 255, 0.2)',
+          color: 'rgba(255, 255, 255, 0.8)',
+          backdropFilter: `blur(${themeConfig.glass.blur})`,
+          '&:hover': {
+            borderWidth: 1,
+            borderColor: 'rgba(255, 255, 255, 0.4)',
+            backgroundColor: 'rgba(255, 255, 255, 0.05)',
+          },
+        },
+      },
+    },
+
+    // Cards — glass panel
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 24,
+          background: themeConfig.glass.bg,
+          backdropFilter: `blur(${themeConfig.glass.blur}) saturate(${themeConfig.glass.saturate})`,
+          WebkitBackdropFilter: `blur(${themeConfig.glass.blur}) saturate(${themeConfig.glass.saturate})`,
+          borderTop: `1px solid ${themeConfig.glass.borderTop}`,
+          borderLeft: `1px solid ${themeConfig.glass.border}`,
+          borderRight: `1px solid ${themeConfig.glass.border}`,
+          borderBottom: `1px solid rgba(255, 255, 255, 0.05)`,
+          boxShadow: themeConfig.glass.shadow,
+          transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+          '&:hover': {
+            background: themeConfig.glass.bgHover,
+            borderColor: themeConfig.glass.borderHover,
+            transform: 'translateY(-5px)',
+            boxShadow: themeConfig.glass.shadowHover,
+          },
+        },
+      },
+    },
+
+    // Chips — neon badges
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: '9999px',
+          fontWeight: 500,
+          fontSize: '0.7rem',
+          fontFamily: themeConfig.fontFamilyMono,
+          letterSpacing: '0.05em',
+          backdropFilter: `blur(${themeConfig.glass.blur})`,
+          border: `1px solid ${themeConfig.glass.border}`,
+          '&.MuiChip-filled': {
+            backgroundColor: 'rgba(0, 123, 255, 0.15)',
+            color: themeConfig.primaryColor,
+          },
+          '&.MuiChip-outlined': {
+            borderColor: 'rgba(255, 255, 255, 0.15)',
+            color: themeConfig.textSecondary,
+          },
+        },
+      },
+    },
+
+    // AppBar — glass navbar
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent',
+          backdropFilter: 'none',
+          boxShadow: 'none',
+          color: themeConfig.textColor,
+        },
+      },
+    },
+
+    // Timeline
     MuiTimelineItem: {
       styleOverrides: {
         root: {
@@ -226,43 +256,62 @@ const theme = createTheme({
         },
       },
     },
-    
+
     MuiTimelineDot: {
       styleOverrides: {
         root: {
           backgroundColor: themeConfig.primaryColor,
           border: `3px solid ${themeConfig.accentColor}`,
-          boxShadow: '0 0 0 4px rgba(25, 118, 210, 0.2)',
+          boxShadow: `0 0 15px rgba(0, 123, 255, 0.4)`,
         },
       },
     },
-    
-    // Tooltip personalizado
+
+    // Tooltip
     MuiTooltip: {
       styleOverrides: {
         tooltip: {
-          backgroundColor: themeConfig.textColor,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(10px)',
           fontSize: themeConfig.fontSize.small,
-          borderRadius: 8,
-          padding: '8px 12px',
+          borderRadius: 12,
+          border: `1px solid ${themeConfig.glass.border}`,
+          padding: '8px 16px',
+          fontFamily: themeConfig.fontFamilyMono,
         },
       },
     },
-    
-    // Paper personalizado
+
+    // Paper — glass surface
     MuiPaper: {
       styleOverrides: {
         root: {
           backgroundImage: 'none',
+          backgroundColor: themeConfig.glass.bg,
+          backdropFilter: `blur(${themeConfig.glass.blur})`,
         },
-        elevation1: {
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+      },
+    },
+
+    // Divider
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          borderColor: 'rgba(255, 255, 255, 0.08)',
         },
-        elevation2: {
-          boxShadow: '0 4px 16px rgba(0, 0, 0, 0.12)',
-        },
-        elevation3: {
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.15)',
+      },
+    },
+
+    // IconButton
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: 'rgba(255, 255, 255, 0.7)',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            color: themeConfig.primaryColor,
+            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+          },
         },
       },
     },
@@ -277,13 +326,5 @@ const theme = createTheme({
     },
   },
 });
-
-// Adicionando cores customizadas ao tema
-theme.palette.accent = theme.palette.accent || {
-  main: themeConfig.accentColor,
-  light: '#4dd0e1',
-  dark: '#00838f',
-  contrastText: '#ffffff',
-};
 
 export default theme;

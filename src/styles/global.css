@@ -1,11 +1,59 @@
 /* ===================================================================
-   ESTILOS GLOBAIS APRIMORADOS - DATA & ANALYTICS PORTFOLIO
+   DARK PREMIUM GLASS — DESIGN SYSTEM
+   Inspired by: glass-effect2, fluxora, parallax-clean, design-system
    =================================================================== */
 
-/* Importando Google Fonts para tipografia moderna */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Reset CSS moderno */
+/* ===================================================================
+   CSS CUSTOM PROPERTIES
+   =================================================================== */
+:root {
+  /* Core palette */
+  --c-bg: #050a14;
+  --c-bg-paper: #0d1117;
+  --c-primary: #007bff;
+  --c-secondary: #00d4ff;
+  --c-accent-pink: #ff2d78;
+  --c-accent-yellow: #ffd600;
+  --c-accent-green: #00e676;
+  --c-accent-purple: #a855f7;
+
+  /* Text */
+  --c-text: #f0f0f0;
+  --c-text-muted: #94a3b8;
+  --c-text-dim: rgba(255, 255, 255, 0.5);
+
+  /* Glass tokens */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-bg-hover: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-top: rgba(255, 255, 255, 0.15);
+  --glass-border-hover: rgba(255, 255, 255, 0.3);
+  --glass-blur: 16px;
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --glass-shadow-hover: 0 15px 40px rgba(0, 123, 255, 0.1);
+
+  /* Typography */
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Fira Code', monospace;
+
+  /* Spacing */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================================================================
+   RESET
+   =================================================================== */
 *,
 *::before,
 *::after {
@@ -14,16 +62,14 @@
   box-sizing: border-box;
 }
 
-/* Configurações base do HTML */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Compensa header fixo */
+  scroll-padding-top: 80px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
-/* Body global */
 html, body {
   width: 100%;
   overflow-x: hidden;
@@ -31,183 +77,344 @@ html, body {
 }
 
 body {
-  font-family: 'Inter', 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family: var(--font-body);
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: var(--c-bg);
+  color: var(--c-text);
 }
 
-/* ===================================================================
-   SCROLLBAR PERSONALIZADA
-   =================================================================== */
-
-/* Scrollbar base */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #1565c0, #00897b);
-  border-radius: 4px;
-  transition: background 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #0d47a1, #00695c);
-}
-
-/* Firefox scrollbar */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #1565c0 transparent;
-}
-
-/* ===================================================================
-   ANIMAÇÕES E TRANSIÇÕES GLOBAIS
-   =================================================================== */
-
-/* Animação fade-in */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animação fade-up */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animação scale-in */
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Animação bounce-in */
-@keyframes bounceIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* ===================================================================
-   UTILITÁRIOS DE ANIMAÇÃO
-   =================================================================== */
-
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-.fade-up {
-  animation: fadeUp 0.8s ease-out;
-}
-
-.scale-in {
-  animation: scaleIn 0.5s ease-out;
-}
-
-.bounce-in {
-  animation: bounceIn 0.8s ease-out;
-}
-
-/* ===================================================================
-   SEÇÕES COM ALTERNÂNCIA DE CORES
-   =================================================================== */
-
-.section-alternate {
-  background-color: var(--alternate-bg, #f5f7fa);
-  transition: background-color 0.3s ease;
-}
-
-/* Modo escuro */
-[data-theme="dark"] .section-alternate {
-  background-color: var(--alternate-bg-dark, #1a202c);
-}
-
-/* ===================================================================
-   EFEITOS DE HOVER APRIMORADOS
-   =================================================================== */
-
-/* Efeito de elevação para cards */
-.hover-elevate {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-elevate:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-[data-theme="dark"] .hover-elevate:hover {
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-}
-
-/* Efeito de destaque para texto */
-.highlight-on-hover {
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.highlight-on-hover:hover {
-  color: #1565c0;
-}
-
-[data-theme="dark"] .highlight-on-hover:hover {
-  color: #64b5f6;
-}
-
-/* ===================================================================
-   COMPONENTES CUSTOMIZADOS
-   =================================================================== */
-
-/* Container responsivo aprimorado */
-.container-custom {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* Prevenir overflow horizontal em todos os elementos */
 #root {
   width: 100%;
   overflow-x: hidden;
   position: relative;
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 123, 255, 0.4);
+  color: #fff;
+}
+
+/* ===================================================================
+   SCROLLBAR — DARK NEON
+   =================================================================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-primary);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) var(--c-bg);
+}
+
+/* ===================================================================
+   GLASS PANEL — CORE COMPONENT
+   =================================================================== */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border-top: 1px solid var(--glass-border-top);
+  border-left: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s var(--ease-smooth);
+}
+
+/* Sweep shine effect on hover */
+.glass-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: 0.5s;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.glass-panel:hover {
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
+  transform: translateY(-5px);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+.glass-panel:hover::before {
+  left: 100%;
+  transition: 0.7s ease-in-out;
+}
+
+/* ===================================================================
+   BORDER GRADIENT (FLUXORA)
+   =================================================================== */
+.border-gradient {
+  position: relative;
+}
+
+.border-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  background: linear-gradient(225deg, rgba(255, 255, 255, 0.0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.0) 100%);
+  pointer-events: none;
+}
+
+/* ===================================================================
+   NOISE OVERLAY
+   =================================================================== */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ===================================================================
+   LIQUID BLOBS — AMBIENT BACKGROUND
+   =================================================================== */
+.liquid-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+  z-index: -1;
+  animation: float 10s infinite alternate var(--ease-smooth);
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 50px) scale(1.1); }
+}
+
+/* ===================================================================
+   ANIMATIONS
+   =================================================================== */
+
+/* FadeSlideIn — com blur (Fluxora) */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+/* Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scale In */
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Pulse soft */
+@keyframes pulseSoft {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 10px var(--c-primary); }
+  50% { box-shadow: 0 0 20px var(--c-primary), 0 0 40px rgba(0, 123, 255, 0.3); }
+}
+
+/* ===================================================================
+   MARQUEE / TICKER
+   =================================================================== */
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 12px;
+  animation: marqueeScroll 35s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+.marquee-reverse .marquee-content {
+  animation-direction: reverse;
+}
+
+/* ===================================================================
+   SCROLL PROGRESS BAR
+   =================================================================== */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--c-primary), var(--c-secondary), var(--c-accent-pink));
+  z-index: 9999;
+  transform-origin: left;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  border-radius: 0 2px 2px 0;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+}
+
+/* ===================================================================
+   PULSING DOT — LIVE INDICATOR
+   =================================================================== */
+.pulsing-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c-accent-green);
+  box-shadow: 0 0 6px var(--c-accent-green);
+  animation: dotPulse 2s ease-in-out infinite;
+  vertical-align: middle;
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    box-shadow: 0 0 6px var(--c-accent-green);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 16px var(--c-accent-green), 0 0 30px rgba(0, 230, 118, 0.3);
+    opacity: 0.8;
+  }
+}
+
+/* ===================================================================
+   ANIMATION UTILITIES
+   =================================================================== */
+.fade-in { animation: fadeIn 0.6s ease-out; }
+.fade-slide-in { animation: fadeSlideIn 0.8s ease-out both; }
+.scale-in { animation: scaleIn 0.5s ease-out; }
+
+/* Split line reveal */
+.split-line {
+  overflow: hidden;
+  display: block;
+}
+
+.split-line span {
+  display: block;
+  transform: translateY(100%);
+  transition: transform 1.2s var(--ease-spring);
+}
+
+.revealed .split-line span {
+  transform: translateY(0);
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s var(--ease-smooth);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===================================================================
+   TEXT UTILITIES
+   =================================================================== */
+
+/* Gradient text — neon blue/cyan */
+.gradient-text {
+  background: linear-gradient(135deg, var(--c-primary), var(--c-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Gradient text — multi neon */
+.gradient-text-neon {
+  background: linear-gradient(90deg, var(--c-primary), var(--c-accent-pink), var(--c-accent-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Mono label */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--c-text-muted);
+}
+
+/* Section index marker ([ 01. label ]) */
+.section-marker {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--c-text-dim);
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+}
+
+/* ===================================================================
+   LAYOUT UTILITIES
+   =================================================================== */
+.container-custom {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 @media (max-width: 768px) {
@@ -216,52 +423,39 @@ html {
   }
 }
 
-/* Gradiente de texto */
-.gradient-text {
-  background: linear-gradient(45deg, #1565c0, #00897b);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
-}
-
-[data-theme="dark"] .gradient-text {
-  background: linear-gradient(45deg, #64b5f6, #4db6ac);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Divider estilizado */
+/* Divider */
 .custom-divider {
-  height: 2px;
-  background: linear-gradient(45deg, #1565c0, #00897b);
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
   border: none;
-  border-radius: 1px;
   margin: 32px 0;
-  opacity: 0.6;
-}
-
-[data-theme="dark"] .custom-divider {
-  background: linear-gradient(45deg, #64b5f6, #4db6ac);
 }
 
 /* ===================================================================
-   ESTILOS PARA MELHORAR ACESSIBILIDADE
+   HOVER EFFECTS
    =================================================================== */
+.hover-elevate {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-/* Foco visível melhorado */
+.hover-elevate:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+}
+
+/* ===================================================================
+   ACCESSIBILITY
+   =================================================================== */
 *:focus-visible {
-  outline: 2px solid #1565c0;
+  outline: 2px solid var(--c-primary);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-[data-theme="dark"] *:focus-visible {
-  outline-color: #64b5f6;
-}
-
-/* Reduzir movimentos para usuários sensíveis */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -274,34 +468,34 @@ html {
 }
 
 /* ===================================================================
-   ESTILOS PARA IMPRESSÃO
+   PRINT
    =================================================================== */
-
 @media print {
   * {
     color: #000 !important;
     background: #fff !important;
     box-shadow: none !important;
   }
-  
-  .no-print {
+
+  .no-print,
+  .noise-overlay,
+  .liquid-blob {
     display: none !important;
   }
-  
+
   body {
     font-size: 12pt;
     line-height: 1.4;
   }
-  
+
   h1, h2, h3 {
     page-break-after: avoid;
   }
 }
 
 /* ===================================================================
-   EXTRA RESPONSIVE RULES
+   RESPONSIVE
    =================================================================== */
-
 @media (max-width: 480px) {
   .app-header .header-toolbar {
     padding-top: 4px;

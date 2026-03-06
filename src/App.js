@@ -13,6 +13,7 @@ import './styles/global.css';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 import ScrollToTop from './components/common/ScrollToTop';
+import ScrollProgress from './components/common/ScrollProgress';
 import ThemeHelper from './components/common/ThemeHelper';
 import LoadingSpinner from './components/common/LoadingSpinner';
 
@@ -129,6 +130,7 @@ function AppContent() {
 
       <div className="App">
         <ThemeHelper />
+        <ScrollProgress />
         <Header />
         <main>
           <Suspense fallback={<LoadingSpinner />}>

@@ -6,6 +6,7 @@ import HeroSection from '../components/sections/HeroSection';
 // import AboutPreview from '../components/sections/AboutPreview'; // Removido da Home
 import ProjectsPreview from '../components/sections/ProjectsPreview';
 import ContactSection from '../components/sections/ContactSection';
+import SkillsMarquee from '../components/common/SkillsMarquee';
 
 // Configurações
 import { seoConfig } from '../config/portfolio';
@@ -46,6 +47,7 @@ const Home = () => {
 
       {/* Página Home principal */}
       <HeroSection />
+      <SkillsMarquee />
       {/* <AboutPreview /> - Removido da Home */}
       <ProjectsPreview />
       <ContactSection />

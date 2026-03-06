@@ -25,6 +25,15 @@ import { Link as RouterLink } from 'react-router-dom';
 import { personalInfo } from '../../config/portfolio';
 import VisitorCounter from './VisitorCounter';
 
+/**
+ * Footer — Glass Panel Grid
+ *
+ * - Glass background com border top sutil
+ * - Links com hover neon
+ * - Tech chips glass
+ * - Social icons com glow hover
+ */
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -37,22 +46,22 @@ const Footer = () => {
 
   const navLinks = [
     { name: 'Início', path: '/' },
-    { name: 'Sobre', path: '/sobre' },
-    { name: 'Projetos', path: '/projetos' },
+    { name: 'Sobre', path: '/about' },
+    { name: 'Projetos', path: '/projects' },
     { name: 'Certificações', path: '/certificacoes' },
-    { name: 'Contato', path: '/contato' },
+    { name: 'Contato', path: '/contact' },
   ];
 
   const socialLinks = [
     {
       name: 'GitHub',
       icon: <GitHub />,
-      url: personalInfo.social?.github || 'https://github.com/tmarsbr',
+      url: personalInfo.social?.github || personalInfo.github || 'https://github.com/tmarsbr',
     },
     {
       name: 'LinkedIn',
       icon: <LinkedIn />,
-      url: personalInfo.social?.linkedin || 'https://linkedin.com/in/tmarsbr',
+      url: personalInfo.social?.linkedin || personalInfo.linkedin || 'https://linkedin.com/in/tmarsbr',
     },
     {
       name: 'Email',
@@ -67,32 +76,28 @@ const Footer = () => {
       sx={{
         py: 6,
         mt: 'auto',
-        background: (theme) =>
-          theme.palette.mode === 'dark'
-            ? 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.4) 100%)'
-            : 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.03) 100%)',
-        borderTop: '1px solid',
-        borderColor: (theme) =>
-          theme.palette.mode === 'dark'
-            ? 'rgba(255,255,255,0.05)'
-            : 'rgba(0,0,0,0.08)',
+        background: 'linear-gradient(180deg, transparent 0%, rgba(5,10,20,0.6) 100%)',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
+        position: 'relative',
       }}
     >
       <Container maxWidth="lg">
         <Grid container spacing={4}>
-          {/* Coluna 1: Sobre */}
+          {/* Col 1: Sobre */}
           <Grid item xs={12} md={4}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
             >
               <Typography
                 variant="h6"
                 fontWeight={700}
                 gutterBottom
                 sx={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  background: 'linear-gradient(135deg, #007bff 0%, #00d4ff 100%)',
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -100,42 +105,52 @@ const Footer = () => {
               >
                 {personalInfo.name || 'Tiago Mars'}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography variant="body2" sx={{ color: '#94a3b8', mb: 2, lineHeight: 1.6 }}>
                 Engenheiro de Dados Junior focado em construir pipelines
                 robustos e escaláveis.
               </Typography>
-              {/* Contador de Visitas */}
               <VisitorCounter />
             </motion.div>
           </Grid>
 
-          {/* Coluna 2: Navegação */}
+          {/* Col 2: Navegação */}
           <Grid item xs={12} sm={6} md={2}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
+              viewport={{ once: true }}
             >
               <Typography
                 variant="subtitle2"
                 fontWeight={600}
                 gutterBottom
-                color="text.primary"
+                sx={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  color: '#f0f0f0',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  fontSize: '0.7rem',
+                }}
               >
                 Navegação
               </Typography>
-              <Stack spacing={1}>
+              <Stack spacing={0.8}>
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     component={RouterLink}
                     to={link.path}
-                    color="text.secondary"
-                    underline="hover"
+                    underline="none"
                     sx={{
-                      fontSize: '0.875rem',
-                      transition: 'color 0.2s',
-                      '&:hover': { color: 'primary.main' },
+                      color: '#94a3b8',
+                      fontSize: '0.85rem',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        color: '#00d4ff',
+                        transform: 'translateX(4px)',
+                        display: 'inline-block',
+                      },
                     }}
                   >
                     {link.name}
@@ -145,18 +160,25 @@ const Footer = () => {
             </motion.div>
           </Grid>
 
-          {/* Coluna 3: Tech Stack */}
+          {/* Col 3: Tech Stack */}
           <Grid item xs={12} sm={6} md={3}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
             >
               <Typography
                 variant="subtitle2"
                 fontWeight={600}
                 gutterBottom
-                color="text.primary"
+                sx={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  color: '#f0f0f0',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  fontSize: '0.7rem',
+                }}
               >
                 Tech Stack
               </Typography>
@@ -169,11 +191,17 @@ const Footer = () => {
                     size="small"
                     variant="outlined"
                     sx={{
-                      fontSize: '0.75rem',
-                      borderColor: (theme) =>
-                        theme.palette.mode === 'dark'
-                          ? 'rgba(255,255,255,0.2)'
-                          : 'rgba(0,0,0,0.15)',
+                      fontFamily: "'IBM Plex Mono', monospace",
+                      fontSize: '0.7rem',
+                      color: '#cbd5e1',
+                      borderColor: 'rgba(255,255,255,0.1)',
+                      backgroundColor: 'rgba(255,255,255,0.03)',
+                      '& .MuiChip-icon': { color: '#00d4ff' },
+                      '&:hover': {
+                        borderColor: 'rgba(0,123,255,0.4)',
+                        backgroundColor: 'rgba(255,255,255,0.06)',
+                      },
+                      transition: 'all 0.3s ease',
                     }}
                   />
                 ))}
@@ -181,18 +209,25 @@ const Footer = () => {
             </motion.div>
           </Grid>
 
-          {/* Coluna 4: Social */}
+          {/* Col 4: Social */}
           <Grid item xs={12} md={3}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
             >
               <Typography
                 variant="subtitle2"
                 fontWeight={600}
                 gutterBottom
-                color="text.primary"
+                sx={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  color: '#f0f0f0',
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  fontSize: '0.7rem',
+                }}
               >
                 Conecte-se
               </Typography>
@@ -205,17 +240,16 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     size="small"
                     sx={{
-                      color: 'text.secondary',
-                      border: '1px solid',
-                      borderColor: (theme) =>
-                        theme.palette.mode === 'dark'
-                          ? 'rgba(255,255,255,0.1)'
-                          : 'rgba(0,0,0,0.1)',
+                      color: '#94a3b8',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      borderRadius: '10px',
                       transition: 'all 0.3s ease',
                       '&:hover': {
-                        color: 'primary.main',
-                        borderColor: 'primary.main',
+                        color: '#00d4ff',
+                        borderColor: 'rgba(0,212,255,0.4)',
+                        backgroundColor: 'rgba(0,212,255,0.06)',
                         transform: 'translateY(-2px)',
+                        boxShadow: '0 0 12px rgba(0,212,255,0.15)',
                       },
                     }}
                   >
@@ -228,15 +262,7 @@ const Footer = () => {
         </Grid>
 
         {/* Divider */}
-        <Divider
-          sx={{
-            my: 4,
-            borderColor: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'rgba(255,255,255,0.05)'
-                : 'rgba(0,0,0,0.08)',
-          }}
-        />
+        <Divider sx={{ my: 4, borderColor: 'rgba(255,255,255,0.06)' }} />
 
         {/* Copyright */}
         <Box
@@ -250,14 +276,19 @@ const Footer = () => {
         >
           <Typography
             variant="body2"
-            color="text.secondary"
-            sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}
+            sx={{
+              color: '#64748b',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 0.5,
+              fontSize: '0.8rem',
+            }}
           >
             © {currentYear} {personalInfo.name || 'Tiago Mars'}. Feito com
-            <Favorite sx={{ fontSize: 14, color: 'error.main', mx: 0.5 }} />
+            <Favorite sx={{ fontSize: 14, color: '#ff2d78', mx: 0.5 }} />
             usando React & Material-UI
           </Typography>
-          <Typography variant="caption" color="text.disabled">
+          <Typography variant="caption" sx={{ color: '#475569', fontSize: '0.75rem' }}>
             Engenheiro de Dados Junior • São Paulo, Brasil
           </Typography>
         </Box>

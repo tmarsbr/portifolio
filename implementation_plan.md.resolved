@@ -1,0 +1,181 @@
+# Refatoração Visual do Portfólio — Dark Premium Glass Theme
+
+Transformar o portfólio atual (estilo corporativo light, Inter, MUI padrão) em um design **dark premium** inspirado nos exemplos analisados: glassmorphism, neon accents, liquid blobs, bento grids e micro-animações sofisticadas.
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Decisão de Direção Visual**: O plano propõe **abandonar o tema light e ir 100% dark** (fundo `#050a14`/`#0a0a14`), com glassmorphism e acentos neon azul/ciano inspirados nos exemplos `glass-effect2` e `fluxora`. O toggle light/dark será removido. Confirme se deseja manter a opção de toggle ou ir full dark.
+
+> [!WARNING]
+> **Tipografia**: O plano propõe trocar Inter por **IBM Plex Mono** (headings/code) + **Inter** (body text), mesclando o design-system monospaced com a legibilidade atual. Confirme a preferência.
+
+> [!CAUTION]
+> **Escopo Grande**: São ~15 arquivos modificados. Sugiro executar em 3 fases incrementais (fundação → componentes → páginas), validando visualmente cada fase antes de prosseguir.
+
+---
+
+## Proposed Changes
+
+### Fase 1: Fundação — Design System
+
+#### [MODIFY] [theme.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/styles/theme.js)
+
+Nova paleta MUI baseada nos exemplos:
+
+```diff
+- primary: '#2196F3'         // Azul corporativo
++ primary: '#007bff'         // Neon Blue (glass-effect2)
+- secondary: '#FF4081'
++ secondary: '#00d4ff'       // Ciano (fluxora)
+- background.default: '#fafafa'
++ background.default: '#050a14'  // Dark space (glass-effect2)
++ background.paper: '#0d1117'
+```
+
+- Tipografia: `IBM Plex Mono` para `h1-h6`, `Inter` para body/paragraphs
+- Border radius: `16px` (cards) / `9999px` (pills/buttons)
+- Componentes MUI: Cards com `backdrop-filter: blur(16px)`, bordas `rgba(255,255,255,0.08)`
+
+---
+
+#### [MODIFY] [global.css](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/styles/global.css)
+
+Adicionar design tokens e efeitos:
+
+- **Variáveis CSS**: `--c-bg`, `--c-accent`, `--glass-bg`, `--glass-border`
+- **Glass Panel**: `.glass-panel` com `backdrop-filter: blur(16px) saturate(180%)`, bordas semi-transparentes, hover com `translateY(-5px)` e sweep shine effect (`::before`)
+- **Border Gradient**: `.border-gradient` com máscara CSS e gradiente sutil (padrão Fluxora)
+- **Liquid Blobs**: `@keyframes float` para blobs desfocados no background
+- **Noise Overlay**: Camada `position: fixed` com SVG noise a `opacity: 0.04`
+- **FadeSlideIn**: `@keyframes fadeSlideIn` com blur(8px) → blur(0)
+- **Scrollbar**: Dark theme com thumb `rgba(255,255,255,0.2)`, hover `#007bff`
+- Remover estilos do tema light
+
+---
+
+### Fase 2: Componentes Core
+
+#### [MODIFY] [Header.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/components/common/Header.js)
+
+- Navbar **glass pill flutuante** (`glass-panel rounded-full`, `position: fixed`) — inspirada no glass-effect2
+- Logo à esquerda, links uppercase `tracking-widest` à direita
+- `mix-blend-mode: difference` no scroll (parallax-clean)
+- Menu mobile: overlay full-screen glass
+
+---
+
+#### [MODIFY] [HeroSection.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/components/sections/HeroSection.js)
+
+- **Background**: 3 liquid blobs (`blur(80px)`, cores `#007bff`, `purple-600`, `cyan-600`) com animação `float`
+- **Texto Principal**: Split-line reveal animation (Framer Motion `translateY(100%)` → `0`)
+- **Subtítulo**: Typewriter mantido, porém com `text-transparent bg-clip-text bg-gradient-to-b`
+- **Tech Chips**: Glass panels com border-gradient, ícone + texto
+- **Badge pill**: `glass-panel` com sphere pulsante (`animate-pulse`) + texto "Data Engineer"
+- **Scroll indicator**: Linha vertical gradiente na parte inferior
+- Partículas flutuantes: manter mas com opacidade reduzida
+
+---
+
+#### [MODIFY] [Footer.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/components/common/Footer.js)
+
+- Glass panel com grid 4 colunas (Brand, Links, Social, Contact)
+- Links com `hover:text-white transition-colors`
+- Divider `h-px bg-white/10`
+- Social icons com hover glow
+
+---
+
+#### [MODIFY] [ProjectsPreview.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/components/sections/ProjectsPreview.js)
+
+- **Bento Grid** layout (Fluxora) ou **Stacked Carousel** (glass-effect2)
+- Cards `glass-panel rounded-2xl` com gradient de fundo por projeto
+- Stats de cada projeto (convertions, impact)
+- Hover: `scale(1.05)`, sweep shine effect
+- Progress bars coloridas por projeto
+
+---
+
+#### [MODIFY] [ContactSection.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/components/sections/ContactSection.js)
+
+- Glass panel central com floating label inputs (glass-effect2 pattern)
+- Focus: `border-bottom-color: #007bff`
+- CTA button glass com hover inversion (→ bg-white text-black)
+
+---
+
+### Fase 3: Páginas
+
+#### [MODIFY] [About.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/pages/About.js)
+
+- Layout 2 colunas: imagem glass-framed + texto com stats (Fluxora pattern)
+- Certificações em grid de glass cards com hover scale
+- Timeline de experiências com linhas conectoras
+
+---
+
+#### [MODIFY] [Projects.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/pages/Projects.js)
+
+- Filter pills glass (como portfolio-filter do glass-effect2)
+- Bento grid com `auto-rows-[250px]`, spanning variado
+- Hover: grayscale → colorido + overlay info
+- Animação staggered (fadeSlideIn com delay incremental)
+
+---
+
+#### [MODIFY] [Certificacoes.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/pages/Certificacoes.js)
+
+- Cards glass com ícone de instituição, gradiente por área
+- Hover: sweep shine + `translateY(-5px)` + shadow glow
+- Chips de skills com border-gradient
+
+---
+
+#### [MODIFY] [Home.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/pages/Home.js)
+
+- Noise overlay layer (`position: fixed`)
+- Liquid blobs layer (`position: fixed`)
+- Composição: [HeroSection](file:///c:/Users/tiago/%C3%81rea%20de%20Trabalho/meus%20cursos/portifolio_data_analytcs/src/components/sections/HeroSection.js#180-688) → `ProjectsPreview` → `ContactSection`
+
+---
+
+#### [MODIFY] [config/theme.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/config/theme.js)
+
+- Atualizar configuração de tema para refletir novos tokens (se existir separado)
+
+---
+
+#### [MODIFY] [ThemeToggle.js](file:///c:/Users/tiago/Área de Trabalho/meus cursos/portifolio_data_analytcs/src/components/common/ThemeToggle.js)
+
+- Remover componente ou converter para toggle de efeitos (particles on/off)
+
+---
+
+## Verification Plan
+
+### Build Automatizado
+```bash
+cd "c:\Users\tiago\Área de Trabalho\meus cursos\portifolio_data_analytcs"
+npm run build
+```
+- Deve completar sem erros
+- Warnings aceitáveis (deprecation, unused vars menores)
+
+### Teste Visual no Browser
+```bash
+cd "c:\Users\tiago\Área de Trabalho\meus cursos\portifolio_data_analytcs"
+npm start
+```
+- Verificar via browser subagent:
+  1. **Home** — fundo dark, liquid blobs visíveis, hero com split-line text, chips glass
+  2. **About** — layout 2 colunas, cards glass, stats
+  3. **Projects** — bento grid, filter pills, hover effects
+  4. **Contact** — form glass, floating labels
+  5. **Footer** — glass panel, links, social icons
+
+### Responsividade
+- Redimensionar browser para 375px (mobile), 768px (tablet), 1440px (desktop)
+- Verificar que glass effects, layout e tipografia se adaptam
+
+### Verificação Manual (Usuário)
+- Após cada fase concluída, pedir ao usuário para verificar no browser local e dar feedback visual

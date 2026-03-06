@@ -1,106 +1,86 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-} from '@mui/material';
+import { Box, Button } from '@mui/material';
 import {
   DataObject,
   Analytics,
   Engineering,
   Code,
+  Storage,
+  Api,
+  Psychology,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { useTheme } from '../../contexts/ThemeContext';
+
+/* ── neon palette per category ─────────────────────────── */
+const categoryConfig = {
+  Todos:                  { icon: <DataObject />,  color: '#007bff' },
+  'Análise Exploratória': { icon: <Analytics />,   color: '#007bff' },
+  'Engenharia de Dados':  { icon: <Engineering />, color: '#00e676' },
+  'API & Web Scraping':   { icon: <Api />,         color: '#ffd600' },
+  'API & Scraping':       { icon: <Code />,        color: '#ffd600' },
+  'Machine Learning':     { icon: <Psychology />,  color: '#ff2d78' },
+  'Data Storage':         { icon: <Storage />,     color: '#a855f7' },
+};
 
 /**
- * CategoryPills - Componente reutilizável para filtros de categoria
- *
- * Renderiza botões em formato de "pills" para seleção de categorias,
- * com ícones, cores e animações consistentes.
- *
- * @param {Object} props
- * @param {string[]} props.categories - Lista de categorias (ex.: ['Todos', 'Análise de Dados', ...])
- * @param {string} props.active - Categoria ativa atualmente
- * @param {Function} props.onChange - Callback para mudança de categoria
- * @component
+ * CategoryPills — glass neon filter pills
  */
-const CategoryPills = ({ categories, active, onChange }) => {
-  const { theme } = useTheme();
+const CategoryPills = ({ categories, active, onChange }) => (
+  <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 1, mb: 6 }}>
+    {categories.map((category, index) => {
+      const cfg = categoryConfig[category] || { icon: <DataObject />, color: '#007bff' };
+      const isActive = active === category;
 
-  // Mapeamento de categorias para chaves, ícones e cores
-  const categoryConfig = {
-    'Engenharia de Dados': {
-      key: 'Engenharia de Dados',
-      icon: <Engineering />,
-      color: '#4caf50',
-    },
-    'API & Scraping': {
-      key: 'API & Scraping',
-      icon: <Code />,
-      color: '#ff9800',
-    },
-  };
-
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        gap: 1,
-        mb: 6,
-      }}
-    >
-      {categories.map((category, index) => {
-        const config = categoryConfig[category];
-        if (!config) return null;
-
-        return (
-          <motion.div
-            key={config.key}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+      return (
+        <motion.div
+          key={category}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.35, delay: index * 0.07 }}
+          whileHover={{ scale: 1.06 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Button
+            onClick={() => onChange(category)}
+            startIcon={cfg.icon}
+            variant="outlined"
+            sx={{
+              minWidth: 'auto',
+              textTransform: 'none',
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              px: 2.5,
+              py: 1.2,
+              borderRadius: '999px',
+              transition: 'all 0.3s ease',
+              ...(isActive
+                ? {
+                    background: `${cfg.color}18`,
+                    color: cfg.color,
+                    border: `1.5px solid ${cfg.color}`,
+                    boxShadow: `0 0 18px ${cfg.color}30, inset 0 0 12px ${cfg.color}10`,
+                  }
+                : {
+                    background: 'rgba(255,255,255,0.03)',
+                    color: '#94a3b8',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    backdropFilter: 'blur(8px)',
+                    '&:hover': {
+                      background: `${cfg.color}12`,
+                      borderColor: cfg.color,
+                      color: cfg.color,
+                      boxShadow: `0 0 14px ${cfg.color}20`,
+                    },
+                  }),
+            }}
           >
-            <Button
-              onClick={() => onChange(config.key)}
-              startIcon={config.icon}
-              variant={active === config.key ? 'contained' : 'outlined'}
-              sx={{
-                minWidth: 'auto',
-                textTransform: 'none',
-                fontWeight: 600,
-                fontSize: '0.9rem',
-                px: 3,
-                py: 1.5,
-                borderRadius: 3,
-                transition: 'all 0.3s ease',
-                ...(active === config.key ? {
-                  background: `linear-gradient(45deg, ${config.color} 30%, ${theme.palette.primary.main} 90%)`,
-                  color: 'white',
-                  border: 'none',
-                  boxShadow: `0 4px 15px ${config.color}30`,
-                } : {
-                  borderColor: config.color,
-                  color: config.color,
-                  '&:hover': {
-                    backgroundColor: `${config.color}10`,
-                    borderColor: config.color,
-                    transform: 'translateY(-2px)',
-                    boxShadow: `0 4px 15px ${config.color}20`,
-                  },
-                }),
-              }}
-            >
-              {category}
-            </Button>
-          </motion.div>
-        );
-      })}
-    </Box>
-  );
-};
+            {category}
+          </Button>
+        </motion.div>
+      );
+    })}
+  </Box>
+);
 
 export default CategoryPills;

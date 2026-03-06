@@ -9,11 +9,9 @@ import {
     CardMedia,
     Chip,
     Button,
-    useTheme,
     alpha,
     Tabs,
     Tab,
-    Divider,
 } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import {
@@ -27,95 +25,156 @@ import {
 import { studies, COURSES, FORMATIONS, getCoursesByFormation, studiesPageConfig } from '../config/studies';
 import { personalInfo } from '../config/portfolio';
 
+/* ── glass base ──────────────────────────────────────── */
+const glass = {
+    background: 'rgba(255,255,255,0.03)',
+    backdropFilter: 'blur(16px)',
+    border: '1px solid rgba(255,255,255,0.06)',
+    borderRadius: '16px',
+};
+
+/* ── type neon map ───────────────────────────────────── */
+const typeNeon = {
+    'Laboratório': '#00d4ff',
+    'Projeto':     '#00e676',
+    'Estudo de Caso': '#ffd600',
+};
+const getTypeColor = (type) => typeNeon[type] || '#007bff';
+
+/* ── stat neon map ───────────────────────────────────── */
+const statNeon = { primary: '#007bff', secondary: '#a855f7', info: '#00d4ff', success: '#00e676' };
+
 /**
- * Studies - Página de Estudos com estrutura hierárquica
+ * Studies — Página de Estudos (glass dark design)
  * Formações > Cursos > Labs/Projetos
  */
 const Studies = () => {
-    const theme = useTheme();
     const [selectedFormation, setSelectedFormation] = useState('engenharia-dados-4');
     const [selectedCourse, setSelectedCourse] = useState('iac-terraform');
 
-    const placeholderImage = "data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='%231a1a2e'/%3e%3ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' font-family='Arial' font-size='12' fill='%23666'%3eData Engineering%3c/text%3e%3c/svg%3e";
+    const placeholderImage = "data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='%230d1117'/%3e%3ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' font-family='monospace' font-size='12' fill='%23475569'%3eData Engineering%3c/text%3e%3c/svg%3e";
 
-    // Filtrar estudos por formação e curso
+    /* ── helpers ──────────────────────────────────────── */
     const getFilteredStudies = () => {
-        let filtered = studies;
-        
-        const formationCourses = getCoursesByFormation(selectedFormation);
-        const courseIds = formationCourses.map(c => c.id);
-        filtered = filtered.filter(study => courseIds.includes(study.course));
-        
-        filtered = filtered.filter(study => study.course === selectedCourse);
-        
-        return filtered;
+        const courseIds = getCoursesByFormation(selectedFormation).map(c => c.id);
+        return studies.filter(s => courseIds.includes(s.course) && s.course === selectedCourse);
     };
-
     const filteredStudies = getFilteredStudies();
-
-    // Cursos disponíveis baseado na formação selecionada
     const availableCourses = getCoursesByFormation(selectedFormation);
 
-    // Agrupar estudos por curso para exibição
-    const getStudiesByCourse = (courseId) => {
-        return studies.filter(study => study.course === courseId);
+    const getStudiesByCourse = (cid) => studies.filter(s => s.course === cid);
+
+    const getStudiesForFormation = (fid) => {
+        const cids = getCoursesByFormation(fid).map(c => c.id);
+        return studies.filter(s => cids.includes(s.course));
     };
 
-    // Contadores baseados na seleção atual
-    const getStudiesForFormation = (formationId) => {
-        const formationCourses = getCoursesByFormation(formationId);
-        const courseIds = formationCourses.map(c => c.id);
-        return studies.filter(study => courseIds.includes(study.course));
-    };
-
-    // Contadores
     const totalStudies = studies.length;
     const labCount = studies.filter(s => s.type === 'Laboratório').length;
     const projectCount = studies.filter(s => s.type === 'Projeto').length;
 
-    // Cor do tipo de estudo
-    const getTypeColor = (type) => {
-        switch (type) {
-            case 'Laboratório': return theme.palette.info.main;
-            case 'Projeto': return theme.palette.success.main;
-            case 'Estudo de Caso': return theme.palette.warning.main;
-            default: return theme.palette.primary.main;
-        }
-    };
-
-    // Estilos para cards
+    /* ── card style ──────────────────────────────────── */
     const cardStyle = {
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        borderRadius: 3,
         overflow: 'hidden',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-        backgroundColor: theme.palette.mode === 'dark'
-            ? alpha(theme.palette.background.paper, 0.6)
-            : theme.palette.background.paper,
-        backdropFilter: 'blur(10px)',
+        ...glass,
+        transition: 'all 0.35s ease',
         '&:hover': {
-            transform: 'translateY(-6px)',
-            boxShadow: `0 16px 32px ${alpha(theme.palette.primary.main, 0.12)}`,
-            borderColor: alpha(theme.palette.primary.main, 0.3),
-            '& .study-image': {
-                transform: 'scale(1.05)',
-            },
+            transform: 'translateY(-8px)',
+            boxShadow: '0 16px 40px rgba(0,123,255,0.12)',
+            borderColor: 'rgba(0,123,255,0.35)',
+            '& .study-image': { transform: 'scale(1.06)' },
         },
     };
 
-    const handleFormationChange = (event, newValue) => {
-        setSelectedFormation(newValue);
-        // Set course to first available course of new formation
-        const firstCourse = getCoursesByFormation(newValue)[0];
-        setSelectedCourse(firstCourse?.id || 'iac-terraform');
+    const handleFormationChange = (_, v) => {
+        setSelectedFormation(v);
+        const first = getCoursesByFormation(v)[0];
+        setSelectedCourse(first?.id || 'iac-terraform');
     };
+    const handleCourseChange = (_, v) => setSelectedCourse(v);
 
-    const handleCourseChange = (event, newValue) => {
-        setSelectedCourse(newValue);
-    };
+    /* ── render study card (reusable) ────────────────── */
+    const renderCard = (study, course, imgH = 180) => (
+        <Card sx={cardStyle}>
+            <Box sx={{ position: 'relative', height: imgH, overflow: 'hidden' }}>
+                <CardMedia
+                    component="img"
+                    image={study.image || placeholderImage}
+                    alt={study.title}
+                    className="study-image"
+                    onError={(e) => { e.target.src = placeholderImage; }}
+                    sx={{ height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                />
+                <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.85) 100%)' }} />
+                <Chip
+                    label={study.type}
+                    size="small"
+                    sx={{
+                        position: 'absolute',
+                        top: 12,
+                        left: 12,
+                        backgroundColor: `${getTypeColor(study.type)}dd`,
+                        color: '#fff',
+                        fontWeight: 700,
+                        fontSize: '0.72rem',
+                        fontFamily: '"IBM Plex Mono", monospace',
+                    }}
+                />
+            </Box>
+
+            <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, lineHeight: 1.3, color: '#e2e8f0' }}>
+                    {study.title}
+                </Typography>
+
+                <Typography variant="body2" sx={{ color: '#94a3b8', mb: 3, flex: 1, lineHeight: 1.6 }}>
+                    {study.description}
+                </Typography>
+
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.6, mb: 2 }}>
+                    {study.technologies.slice(0, 4).map((tech, i) => (
+                        <Chip
+                            key={i}
+                            label={tech}
+                            size="small"
+                            sx={{
+                                height: 24,
+                                fontSize: '0.68rem',
+                                fontFamily: '"IBM Plex Mono", monospace',
+                                backgroundColor: alpha(course?.color || '#007bff', 0.12),
+                                color: course?.color || '#007bff',
+                                fontWeight: 600,
+                                border: `1px solid ${alpha(course?.color || '#007bff', 0.2)}`,
+                            }}
+                        />
+                    ))}
+                </Box>
+
+                <Button
+                    startIcon={<GitHub />}
+                    href={study.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                        mt: 'auto',
+                        borderRadius: '10px',
+                        textTransform: 'none',
+                        fontWeight: 600,
+                        fontFamily: '"IBM Plex Mono", monospace',
+                        border: '1.5px solid #007bff',
+                        color: '#007bff',
+                        transition: 'all .3s ease',
+                        '&:hover': { background: 'rgba(0,123,255,0.1)', boxShadow: '0 0 20px rgba(0,123,255,0.2)' },
+                    }}
+                >
+                    Ver Mais
+                </Button>
+            </CardContent>
+        </Card>
+    );
 
     return (
         <>
@@ -124,50 +183,21 @@ const Studies = () => {
                 <meta name="description" content={studiesPageConfig.description} />
             </Helmet>
 
-            {/* Hero Section */}
-            <Box
-                sx={{
-                    pt: { xs: 14, md: 18 },
-                    pb: { xs: 6, md: 10 },
-                    position: 'relative',
-                    overflow: 'hidden',
-                    background: theme.palette.mode === 'dark'
-                        ? `linear-gradient(180deg, ${alpha(theme.palette.background.default, 0.95)} 0%, ${alpha('#1a237e', 0.1)} 100%)`
-                        : `linear-gradient(180deg, ${alpha(theme.palette.background.default, 0.95)} 0%, ${alpha('#e3f2fd', 0.5)} 100%)`,
-                }}
-            >
-                {/* Background Elements */}
-                <Box sx={{ position: 'absolute', top: '10%', right: '-5%', width: 500, height: 500, borderRadius: '50%', background: `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.08)} 0%, transparent 70%)`, filter: 'blur(40px)' }} />
-                <Box sx={{ position: 'absolute', bottom: '10%', left: '-5%', width: 400, height: 400, borderRadius: '50%', background: `radial-gradient(circle, ${alpha(theme.palette.secondary.main, 0.08)} 0%, transparent 70%)`, filter: 'blur(40px)' }} />
+            {/* ── Hero ────────────────────────────────── */}
+            <Box sx={{ pt: { xs: 14, md: 18 }, pb: { xs: 6, md: 10 }, position: 'relative', overflow: 'hidden' }}>
+                {/* radial glows */}
+                <Box sx={{ position: 'absolute', top: '10%', right: '-5%', width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,123,255,0.07) 0%, transparent 70%)', filter: 'blur(50px)' }} />
+                <Box sx={{ position: 'absolute', bottom: '10%', left: '-5%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%)', filter: 'blur(50px)' }} />
 
                 <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-                    <Box sx={{ textAlign: 'center', mb: 6 }} data-aos="fade-up">
-                        {/* Institution Label */}
-                        <Typography
-                            variant="caption"
-                            sx={{
-                                display: 'block',
-                                mb: 2,
-                                textTransform: 'uppercase',
-                                letterSpacing: 1.5,
-                                fontWeight: 700,
-                                color: 'text.secondary',
-                                fontSize: '0.75rem',
-                            }}
-                        >
-                            {studiesPageConfig.institutionsLabel}
+                    <Box sx={{ textAlign: 'center', mb: 6 }}>
+                        {/* code label */}
+                        <Typography sx={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '0.75rem', fontWeight: 600, letterSpacing: 3, color: '#007bff', mb: 2 }}>
+                            {'// estudos'}
                         </Typography>
 
                         {/* Institution Badges */}
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                justifyContent: 'center',
-                                gap: 1.5,
-                                mb: 3,
-                            }}
-                        >
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 1.5, mb: 3 }}>
                             {studiesPageConfig.institutions?.map((inst, idx) => (
                                 <Box
                                     key={idx}
@@ -177,13 +207,13 @@ const Studies = () => {
                                         gap: 1,
                                         px: 2,
                                         py: 0.5,
-                                        borderRadius: 2,
-                                        backgroundColor: alpha(theme.palette.primary.main, 0.1),
-                                        border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                                        borderRadius: '10px',
+                                        background: 'rgba(0,123,255,0.08)',
+                                        border: '1px solid rgba(0,123,255,0.18)',
                                     }}
                                 >
                                     <Typography sx={{ fontSize: 16 }}>{inst.icon}</Typography>
-                                    <Typography variant="caption" sx={{ fontWeight: 700, letterSpacing: 1, color: 'primary.main', textTransform: 'uppercase' }}>
+                                    <Typography variant="caption" sx={{ fontWeight: 700, letterSpacing: 1, color: '#007bff', textTransform: 'uppercase', fontFamily: '"IBM Plex Mono", monospace' }}>
                                         {inst.name}
                                     </Typography>
                                 </Box>
@@ -194,11 +224,10 @@ const Studies = () => {
                             variant="h2"
                             component="h1"
                             sx={{
+                                fontFamily: '"IBM Plex Mono", monospace',
                                 fontWeight: 800,
                                 mb: 2,
-                                background: theme.palette.mode === 'dark'
-                                    ? `linear-gradient(135deg, #fff 0%, ${theme.palette.primary.light} 50%, ${theme.palette.secondary.main} 100%)`
-                                    : `linear-gradient(135deg, ${theme.palette.text.primary} 0%, ${theme.palette.primary.main} 50%, ${theme.palette.secondary.main} 100%)`,
+                                background: 'linear-gradient(135deg, #e2e8f0 0%, #007bff 50%, #a855f7 100%)',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
                                 letterSpacing: '-0.02em',
@@ -208,85 +237,52 @@ const Studies = () => {
                             {studiesPageConfig.title}
                         </Typography>
 
-                        <Typography
-                            variant="h5"
-                            sx={{
-                                color: 'text.secondary',
-                                mb: 2,
-                                fontWeight: 600,
-                                fontFamily: 'monospace',
-                                fontSize: { xs: '0.9rem', md: '1.1rem' },
-                            }}
-                        >
+                        <Typography variant="h5" sx={{ color: '#94a3b8', mb: 2, fontWeight: 600, fontFamily: '"IBM Plex Mono", monospace', fontSize: { xs: '0.9rem', md: '1.1rem' } }}>
                             {studiesPageConfig.subtitle}
                         </Typography>
 
-                        <Typography
-                            variant="body1"
-                            sx={{
-                                fontSize: '1rem',
-                                color: 'text.secondary',
-                                maxWidth: '800px',
-                                mx: 'auto',
-                                lineHeight: 1.7,
-                                mb: 5,
-                            }}
-                        >
+                        <Typography variant="body1" sx={{ fontSize: '1rem', color: '#94a3b8', maxWidth: 800, mx: 'auto', lineHeight: 1.7, mb: 5 }}>
                             {studiesPageConfig.description}
                         </Typography>
 
-                        {/* Stats */}
+                        {/* stats */}
                         <Grid container spacing={2} justifyContent="center" sx={{ mb: 4 }}>
                             {[
                                 { number: totalStudies, label: 'Total', icon: <MenuBook />, color: 'primary' },
                                 { number: COURSES.length, label: 'Cursos', icon: <School />, color: 'secondary' },
                                 { number: labCount, label: 'Labs', icon: <Science />, color: 'info' },
                                 { number: projectCount, label: 'Projetos', icon: <Code />, color: 'success' },
-                            ].map((stat, index) => (
-                                <Grid item xs={6} sm={3} key={index}>
-                                    <Box
-                                        sx={{
-                                            p: 2,
-                                            borderRadius: 2,
-                                            backgroundColor: alpha(theme.palette.background.paper, 0.5),
-                                            border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-                                            transition: 'all 0.3s ease',
-                                            '&:hover': {
-                                                transform: 'translateY(-3px)',
-                                                borderColor: alpha(theme.palette[stat.color].main, 0.3),
-                                            }
-                                        }}
-                                    >
-                                        <Box sx={{ color: `${stat.color}.main`, mb: 0.5 }}>{stat.icon}</Box>
-                                        <Typography variant="h4" sx={{ fontWeight: 800 }}>{stat.number}</Typography>
-                                        <Typography variant="caption" sx={{ textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600, color: 'text.secondary' }}>
-                                            {stat.label}
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                            ))}
+                            ].map((stat, index) => {
+                                const nc = statNeon[stat.color] || '#007bff';
+                                return (
+                                    <Grid item xs={6} sm={3} key={index}>
+                                        <Box
+                                            sx={{
+                                                p: 2,
+                                                borderRadius: '14px',
+                                                ...glass,
+                                                transition: 'all 0.3s ease',
+                                                '&:hover': { transform: 'translateY(-3px)', borderColor: `${nc}50` },
+                                            }}
+                                        >
+                                            <Box sx={{ color: nc, mb: 0.5 }}>{stat.icon}</Box>
+                                            <Typography variant="h4" sx={{ fontWeight: 800, color: nc, fontFamily: '"IBM Plex Mono", monospace' }}>{stat.number}</Typography>
+                                            <Typography variant="caption" sx={{ textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600, color: '#64748b' }}>
+                                                {stat.label}
+                                            </Typography>
+                                        </Box>
+                                    </Grid>
+                                );
+                            })}
                         </Grid>
                     </Box>
                 </Container>
             </Box>
 
-            {/* Navigation Tabs - Container único sticky */}
-            <Box
-                sx={{
-                    // Mantém estilo visual, mas deixa de ser sticky para acompanhar o scroll
-                    backgroundColor: theme.palette.background.default,
-                    borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
-                }}
-            >
+            {/* ── Navigation Tabs ─────────────────────── */}
+            <Box sx={{ background: 'rgba(5,10,20,0.92)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
                 {/* Formation Tabs - Nível 1 */}
-                <Box
-                    sx={{
-                        py: 1.5,
-                        backgroundColor: alpha(theme.palette.background.default, 0.98),
-                        backdropFilter: 'blur(10px)',
-                        borderBottom: `1px solid ${alpha(theme.palette.divider, 0.05)}`,
-                    }}
-                >
+                <Box sx={{ py: 1.5, background: 'rgba(5,10,20,0.98)', backdropFilter: 'blur(14px)', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
                     <Container maxWidth="lg">
                         <Tabs
                             value={selectedFormation}
@@ -295,47 +291,20 @@ const Studies = () => {
                             scrollButtons="auto"
                             sx={{
                                 minHeight: 44,
-                                '& .MuiTab-root': {
-                                    textTransform: 'none',
-                                    fontWeight: 700,
-                                    fontSize: '0.9rem',
-                                    minHeight: 44,
-                                    px: 2.5,
-                                },
-                                '& .Mui-selected': {
-                                    color: 'primary.main',
-                                },
+                                '& .MuiTab-root': { textTransform: 'none', fontWeight: 700, fontSize: '0.9rem', minHeight: 44, px: 2.5, color: '#94a3b8', fontFamily: '"IBM Plex Mono", monospace' },
+                                '& .Mui-selected': { color: '#007bff !important' },
+                                '& .MuiTabs-indicator': { backgroundColor: '#007bff' },
                             }}
                         >
                             {FORMATIONS.map((formation) => (
-                                <Tab
-                                    key={formation.id}
-                                    label={`${formation.icon} ${formation.name} (${getStudiesForFormation(formation.id).length})`}
-                                    value={formation.id}
-                                />
+                                <Tab key={formation.id} label={`${formation.icon} ${formation.name} (${getStudiesForFormation(formation.id).length})`} value={formation.id} />
                             ))}
                         </Tabs>
 
-                        {/* Sub-Formações (quando disponíveis) */}
+                        {/* Sub-Formações */}
                         {FORMATIONS.find(f => f.id === selectedFormation)?.subFormations && (
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    gap: 1,
-                                    mt: 1.5,
-                                    pl: 1,
-                                }}
-                            >
-                                <Typography
-                                    variant="caption"
-                                    sx={{
-                                        color: 'text.secondary',
-                                        fontWeight: 600,
-                                        alignSelf: 'center',
-                                        mr: 0.5,
-                                    }}
-                                >
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1.5, pl: 1 }}>
+                                <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 600, alignSelf: 'center', mr: 0.5, fontFamily: '"IBM Plex Mono", monospace' }}>
                                     Inclui:
                                 </Typography>
                                 {FORMATIONS.find(f => f.id === selectedFormation)?.subFormations.map((sub) => (
@@ -344,12 +313,7 @@ const Studies = () => {
                                         label={`${sub.icon} ${sub.name}`}
                                         size="small"
                                         variant="outlined"
-                                        sx={{
-                                            fontSize: '0.7rem',
-                                            height: 24,
-                                            borderColor: alpha(theme.palette.primary.main, 0.3),
-                                            color: 'text.secondary',
-                                        }}
+                                        sx={{ fontSize: '0.7rem', height: 24, borderColor: 'rgba(0,123,255,0.25)', color: '#94a3b8', fontFamily: '"IBM Plex Mono", monospace' }}
                                     />
                                 ))}
                             </Box>
@@ -358,13 +322,7 @@ const Studies = () => {
                 </Box>
 
                 {/* Course Tabs - Nível 2 */}
-                <Box
-                    sx={{
-                        py: 1,
-                        backgroundColor: alpha(theme.palette.background.paper, 0.95),
-                        backdropFilter: 'blur(10px)',
-                    }}
-                >
+                <Box sx={{ py: 1, background: 'rgba(13,17,23,0.95)', backdropFilter: 'blur(14px)' }}>
                     <Container maxWidth="lg">
                         <Tabs
                             value={selectedCourse}
@@ -373,161 +331,57 @@ const Studies = () => {
                             scrollButtons="auto"
                             sx={{
                                 minHeight: 36,
-                                '& .MuiTab-root': {
-                                    textTransform: 'none',
-                                    fontWeight: 600,
-                                    fontSize: '0.8rem',
-                                    minHeight: 36,
-                                    px: 1.5,
-                                    py: 0.5,
-                                },
-                                '& .Mui-selected': {
-                                    color: 'secondary.main',
-                                },
-                                '& .MuiTabs-indicator': {
-                                    backgroundColor: 'secondary.main',
-                                },
+                                '& .MuiTab-root': { textTransform: 'none', fontWeight: 600, fontSize: '0.8rem', minHeight: 36, px: 1.5, py: 0.5, color: '#64748b', fontFamily: '"IBM Plex Mono", monospace' },
+                                '& .Mui-selected': { color: '#a855f7 !important' },
+                                '& .MuiTabs-indicator': { backgroundColor: '#a855f7' },
                             }}
                         >
                             {availableCourses.map((course) => (
-                            <Tab
-                                key={course.id}
-                                label={`${course.icon} ${course.name} (${getStudiesByCourse(course.id).length})`}
-                                value={course.id}
-                                sx={{
-                                    '&.Mui-selected': {
-                                        color: course.color,
-                                    },
-                                }}
-                            />
+                                <Tab
+                                    key={course.id}
+                                    label={`${course.icon} ${course.name} (${getStudiesByCourse(course.id).length})`}
+                                    value={course.id}
+                                    sx={{ '&.Mui-selected': { color: `${course.color} !important` } }}
+                                />
                             ))}
                         </Tabs>
                     </Container>
                 </Box>
             </Box>
 
-            {/* Studies Content */}
-            <Box sx={{ py: 6, backgroundColor: 'background.default', minHeight: '60vh' }}>
+            {/* ── Studies Content ─────────────────────── */}
+            <Box sx={{ py: 6, minHeight: '60vh' }}>
                 <Container maxWidth="lg">
                     {selectedCourse === 'all' ? (
-                        // Exibir todos agrupados por curso (filtrado por formação se necessário)
                         availableCourses.map((course) => {
                             const courseStudies = getStudiesByCourse(course.id);
                             if (courseStudies.length === 0) return null;
                             return (
-                                <Box key={course.id} sx={{ mb: 8 }} data-aos="fade-up">
+                                <Box key={course.id} sx={{ mb: 8 }}>
                                     {/* Course Header */}
                                     <Box sx={{ mb: 4 }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 1 }}>
-                                            <Typography variant="h4" sx={{ fontSize: '1.5rem' }}>
-                                                {course.icon}
-                                            </Typography>
-                                            <Typography 
-                                                variant="h5" 
-                                                sx={{ 
-                                                    fontWeight: 700,
-                                                    color: course.color,
-                                                }}
-                                            >
+                                            <Typography variant="h4" sx={{ fontSize: '1.5rem' }}>{course.icon}</Typography>
+                                            <Typography variant="h5" sx={{ fontWeight: 700, color: course.color, fontFamily: '"IBM Plex Mono", monospace' }}>
                                                 {course.name}
                                             </Typography>
-                                            <Chip 
-                                                label={`${courseStudies.length} estudos`} 
-                                                size="small" 
-                                                sx={{ 
-                                                    backgroundColor: alpha(course.color, 0.1),
-                                                    color: course.color,
-                                                    fontWeight: 600,
-                                                }} 
+                                            <Chip
+                                                label={`${courseStudies.length} estudos`}
+                                                size="small"
+                                                sx={{ backgroundColor: alpha(course.color, 0.12), color: course.color, fontWeight: 600, border: `1px solid ${alpha(course.color, 0.2)}`, fontFamily: '"IBM Plex Mono", monospace' }}
                                             />
                                         </Box>
                                         <Box sx={{ ml: 6, mt: 1 }}>
-                                            <Typography variant="subtitle1" sx={{ color: 'text.primary', fontWeight: 600, mb: 1 }}>
-                                                {course.fullName}
-                                            </Typography>
-                                            <Typography variant="body1" sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}>
-                                                {course.description}
-                                            </Typography>
+                                            <Typography variant="subtitle1" sx={{ color: '#e2e8f0', fontWeight: 600, mb: 1 }}>{course.fullName}</Typography>
+                                            <Typography variant="body1" sx={{ color: '#94a3b8', whiteSpace: 'pre-line' }}>{course.description}</Typography>
                                         </Box>
-                                        <Divider sx={{ mt: 2, borderColor: alpha(course.color, 0.2) }} />
+                                        <Box sx={{ mt: 2, height: '1px', background: `linear-gradient(90deg, ${alpha(course.color, 0.3)}, transparent)` }} />
                                     </Box>
 
-                                    {/* Course Studies Grid */}
                                     <Grid container spacing={3}>
-                                        {courseStudies.map((study, index) => (
+                                        {courseStudies.map((study) => (
                                             <Grid item xs={12} sm={6} lg={4} key={study.id}>
-                                                <Card sx={cardStyle}>
-                                                    <Box sx={{ position: 'relative', height: 160, overflow: 'hidden' }}>
-                                                        <CardMedia
-                                                            component="img"
-                                                            image={study.image || placeholderImage}
-                                                            alt={study.title}
-                                                            className="study-image"
-                                                            onError={(e) => { e.target.src = placeholderImage; }}
-                                                            sx={{ height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
-                                                        />
-                                                        <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.8) 100%)' }} />
-                                                        <Chip
-                                                            label={study.type}
-                                                            size="small"
-                                                            sx={{
-                                                                position: 'absolute',
-                                                                top: 12,
-                                                                left: 12,
-                                                                backgroundColor: alpha(getTypeColor(study.type), 0.9),
-                                                                color: '#fff',
-                                                                fontWeight: 700,
-                                                                fontSize: '0.7rem',
-                                                            }}
-                                                        />
-                                                    </Box>
-
-                                                    <CardContent sx={{ p: 2.5, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                                        <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1.5, lineHeight: 1.3, fontSize: '0.95rem' }}>
-                                                            {study.title}
-                                                        </Typography>
-
-                                                        <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2, flex: 1, lineHeight: 1.5, fontSize: '0.85rem' }}>
-                                                            {study.description}
-                                                        </Typography>
-
-                                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mb: 2 }}>
-                                                            {study.technologies.slice(0, 3).map((tech, i) => (
-                                                                <Chip
-                                                                    key={i}
-                                                                    label={tech}
-                                                                    size="small"
-                                                                    sx={{
-                                                                        height: 22,
-                                                                        fontSize: '0.65rem',
-                                                                        backgroundColor: alpha(course.color, 0.1),
-                                                                        color: course.color,
-                                                                        fontWeight: 600,
-                                                                    }}
-                                                                />
-                                                            ))}
-                                                        </Box>
-
-                                                        <Button
-                                                            variant="contained"
-                                                            size="small"
-                                                            startIcon={<GitHub sx={{ fontSize: 16 }} />}
-                                                            href={study.github}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            sx={{
-                                                                mt: 'auto',
-                                                                borderRadius: 2,
-                                                                textTransform: 'none',
-                                                                fontWeight: 600,
-                                                                fontSize: '0.8rem',
-                                                                py: 0.8,
-                                                            }}
-                                                        >
-                                                            Ver Mais
-                                                        </Button>
-                                                    </CardContent>
-                                                </Card>
+                                                {renderCard(study, course, 160)}
                                             </Grid>
                                         ))}
                                     </Grid>
@@ -535,104 +389,29 @@ const Studies = () => {
                             );
                         })
                     ) : (
-                        // Exibir apenas o curso selecionado
                         <>
                             {COURSES.filter(c => c.id === selectedCourse).map((course) => (
-                                <Box key={course.id} sx={{ mb: 4 }} data-aos="fade-up">
+                                <Box key={course.id} sx={{ mb: 4 }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-                                        <Typography variant="h3" sx={{ fontSize: '2rem' }}>
-                                            {course.icon}
-                                        </Typography>
+                                        <Typography variant="h3" sx={{ fontSize: '2rem' }}>{course.icon}</Typography>
                                         <Box>
-                                            <Typography variant="h4" sx={{ fontWeight: 700, color: course.color, mb: 1 }}>
+                                            <Typography variant="h4" sx={{ fontWeight: 700, color: course.color, mb: 1, fontFamily: '"IBM Plex Mono", monospace' }}>
                                                 {course.name}
                                             </Typography>
-                                            <Typography variant="subtitle1" sx={{ color: 'text.primary', fontWeight: 600, mb: 1 }}>
-                                                {course.fullName}
-                                            </Typography>
-                                            <Typography variant="body1" sx={{ color: 'text.secondary', whiteSpace: 'pre-line' }}>
-                                                {course.description}
-                                            </Typography>
+                                            <Typography variant="subtitle1" sx={{ color: '#e2e8f0', fontWeight: 600, mb: 1 }}>{course.fullName}</Typography>
+                                            <Typography variant="body1" sx={{ color: '#94a3b8', whiteSpace: 'pre-line' }}>{course.description}</Typography>
                                         </Box>
                                     </Box>
-                                    <Divider sx={{ mb: 4, borderColor: alpha(course.color, 0.3) }} />
+                                    <Box sx={{ mb: 4, height: '1px', background: `linear-gradient(90deg, ${alpha(course.color, 0.35)}, transparent)` }} />
                                 </Box>
                             ))}
 
                             <Grid container spacing={3}>
-                                {filteredStudies.map((study, index) => {
+                                {filteredStudies.map((study) => {
                                     const course = COURSES.find(c => c.id === study.course);
                                     return (
-                                        <Grid item xs={12} sm={6} lg={4} key={study.id} data-aos="fade-up" data-aos-delay={index * 30}>
-                                            <Card sx={cardStyle}>
-                                                <Box sx={{ position: 'relative', height: 180, overflow: 'hidden' }}>
-                                                    <CardMedia
-                                                        component="img"
-                                                        image={study.image || placeholderImage}
-                                                        alt={study.title}
-                                                        className="study-image"
-                                                        onError={(e) => { e.target.src = placeholderImage; }}
-                                                        sx={{ height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
-                                                    />
-                                                    <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.8) 100%)' }} />
-                                                    <Chip
-                                                        label={study.type}
-                                                        size="small"
-                                                        sx={{
-                                                            position: 'absolute',
-                                                            top: 12,
-                                                            left: 12,
-                                                            backgroundColor: alpha(getTypeColor(study.type), 0.9),
-                                                            color: '#fff',
-                                                            fontWeight: 700,
-                                                            fontSize: '0.75rem',
-                                                        }}
-                                                    />
-                                                </Box>
-
-                                                <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 2, lineHeight: 1.3 }}>
-                                                        {study.title}
-                                                    </Typography>
-
-                                                    <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3, flex: 1, lineHeight: 1.6 }}>
-                                                        {study.description}
-                                                    </Typography>
-
-                                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.6, mb: 2 }}>
-                                                        {study.technologies.slice(0, 4).map((tech, i) => (
-                                                            <Chip
-                                                                key={i}
-                                                                label={tech}
-                                                                size="small"
-                                                                sx={{
-                                                                    height: 24,
-                                                                    fontSize: '0.7rem',
-                                                                    backgroundColor: alpha(course?.color || theme.palette.primary.main, 0.1),
-                                                                    color: course?.color || theme.palette.primary.main,
-                                                                    fontWeight: 600,
-                                                                }}
-                                                            />
-                                                        ))}
-                                                    </Box>
-
-                                                    <Button
-                                                        variant="contained"
-                                                        startIcon={<GitHub />}
-                                                        href={study.github}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        sx={{
-                                                            mt: 'auto',
-                                                            borderRadius: 2,
-                                                            textTransform: 'none',
-                                                            fontWeight: 600,
-                                                        }}
-                                                    >
-                                                        Ver Mais
-                                                    </Button>
-                                                </CardContent>
-                                            </Card>
+                                        <Grid item xs={12} sm={6} lg={4} key={study.id}>
+                                            {renderCard(study, course)}
                                         </Grid>
                                     );
                                 })}
