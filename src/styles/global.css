@@ -45,6 +45,7 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --radius-pill: 9999px;
+  --footer-reveal-height: clamp(420px, 60vh, 560px);
 
   /* Transitions */
   --ease-spring: cubic-bezier(0.23, 1, 0.32, 1);
@@ -87,6 +88,31 @@ body {
   width: 100%;
   overflow-x: hidden;
   position: relative;
+}
+
+.App {
+  position: relative;
+}
+
+.footer-reveal-page {
+  background: transparent;
+}
+
+.footer-reveal-content {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, #020611 0%, #050a14 100%);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+  margin-bottom: var(--footer-reveal-height);
+}
+
+.footer-reveal-fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--footer-reveal-height);
+  z-index: 1;
 }
 
 /* Selection */
@@ -421,6 +447,10 @@ html {
   .container-custom {
     padding: 0 16px;
   }
+
+  .footer-reveal-content {
+    margin-bottom: clamp(360px, 72vh, 520px);
+  }
 }
 
 /* Divider */
@@ -468,6 +498,77 @@ html {
 }
 
 /* ===================================================================
+   BEAM BORDER — animated conic-gradient sweeping on card hover
+   =================================================================== */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beamSweep {
+  to { --beam-angle: 360deg; }
+}
+
+.beam-border {
+  position: relative;
+}
+
+.beam-border::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--beam-angle) at 50% 50%,
+    transparent 72%,
+    #007bff 87%,
+    #00d4ff 93%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: beamSweep 3.5s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+
+.beam-border:hover::after {
+  opacity: 1;
+}
+
+/* ===================================================================
+   CUSTOM CURSOR — hide native cursor on pointer devices
+   =================================================================== */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+/* ===================================================================
+   SNAP SCROLL — home page section anchoring (proximity mode)
+   =================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  html.snap-active {
+    scroll-snap-type: y proximity;
+  }
+
+  .snap-section {
+    scroll-snap-align: start;
+  }
+}
+
+/* ===================================================================
    PRINT
    =================================================================== */
 @media print {
@@ -491,6 +592,139 @@ html {
   h1, h2, h3 {
     page-break-after: avoid;
   }
+}
+
+/* ===================================================================
+   SECTION TRANSITIONS — smooth dissolve/reveal between sections
+   =================================================================== */
+
+/* Section dissolve overlay: gradient fade at section bottom */
+.section-dissolve {
+  position: relative;
+}
+
+.section-dissolve::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(5, 10, 20, 0.4) 35%,
+    rgba(5, 10, 20, 0.85) 70%,
+    var(--c-bg) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Section emerge overlay: gradient at section top */
+.section-emerge {
+  position: relative;
+}
+
+.section-emerge::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    to top,
+    transparent 0%,
+    rgba(5, 10, 20, 0.6) 50%,
+    var(--c-bg) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Animated horizontal line divider between sections */
+.section-divider-animated {
+  position: relative;
+  height: 1px;
+  margin: 0 auto;
+  max-width: 1200px;
+  overflow: hidden;
+}
+
+.section-divider-animated::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 123, 255, 0.5) 20%,
+    rgba(0, 212, 255, 0.8) 50%,
+    rgba(0, 123, 255, 0.5) 80%,
+    transparent 100%
+  );
+  animation: dividerShimmer 3s ease-in-out infinite;
+}
+
+@keyframes dividerShimmer {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.6); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+
+/* Contact-to-footer dissolve (stronger effect) */
+.contact-footer-bridge {
+  position: relative;
+}
+
+.contact-footer-bridge::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 240px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(5, 10, 20, 0.3) 20%,
+    rgba(5, 10, 20, 0.7) 50%,
+    rgba(3, 9, 19, 0.96) 85%,
+    rgba(2, 6, 17, 1) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Blur-in scroll animation (from references) */
+.animate-blur-in {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-blur-in.in-view {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+/* Morph blob between sections */
+@keyframes morphBlob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  33% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  66% { border-radius: 50% 40% 60% 30% / 40% 50% 60% 50%; }
+}
+
+.morph-blob {
+  animation: morphBlob 12s ease-in-out infinite;
+}
+
+/* Clip-path reveal for section backgrounds */
+@keyframes clipReveal {
+  0% { clip-path: inset(100% 0 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
 }
 
 /* ===================================================================

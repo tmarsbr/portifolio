@@ -18,7 +18,8 @@ import {
   LocationOn,
   Phone,
 } from '@mui/icons-material';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import SpotlightCard from '../common/SpotlightCard';
 import { personalInfo } from '../../config/portfolio';
 
 /* ── Neon-color map for each contact method ── */
@@ -45,7 +46,37 @@ const glassCardSx = {
   position: 'relative',
 };
 
+/* ── Stagger variants with blur (inspired by references) ── */
+const sectionVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.15 },
+  },
+};
+
+const blurUpVariant = {
+  hidden: { opacity: 0, y: 40, filter: 'blur(10px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] },
+  },
+};
+
 const ContactSection = () => {
+  const sectionRef = React.useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'end start'],
+  });
+
+  // Parallax for decorative elements
+  const blobY = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const blobScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1.1, 0.9]);
+  const fadeOut = useTransform(scrollYProgress, [0.7, 1], [1, 0.3]);
+
   const contactMethods = [
     {
       icon: <Email />,
@@ -84,111 +115,168 @@ const ContactSection = () => {
 
   return (
     <Box
+      ref={sectionRef}
+      className="contact-footer-bridge"
       sx={{
         py: { xs: 8, md: 12 },
+        pb: { xs: 14, md: 20 },
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
-      <Container maxWidth="lg">
-        {/* ── Header ── */}
+      {/* ── Parallax decorative blobs ── */}
+      <motion.div
+        style={{ y: blobY, scale: blobScale }}
+      >
+        <Box
+          className="morph-blob"
+          sx={{
+            position: 'absolute',
+            top: '5%',
+            left: '-5%',
+            width: 400,
+            height: 400,
+            borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%',
+            background: 'radial-gradient(circle, rgba(0,123,255,0.08) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            pointerEvents: 'none',
+            zIndex: 0,
+          }}
+        />
+      </motion.div>
+
+      <motion.div
+        style={{ y: useTransform(scrollYProgress, [0, 1], [-40, 60]) }}
+      >
+        <Box
+          className="morph-blob"
+          sx={{
+            position: 'absolute',
+            bottom: '10%',
+            right: '-8%',
+            width: 350,
+            height: 350,
+            borderRadius: '40% 60% 70% 30% / 50% 40% 60% 50%',
+            background: 'radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            pointerEvents: 'none',
+            zIndex: 0,
+            animationDelay: '-6s',
+          }}
+        />
+      </motion.div>
+
+      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
+        {/* ── Header with blur-up animation ── */}
         <Box sx={{ textAlign: 'center', mb: 8 }}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            variants={sectionVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
           >
-            <Typography
-              variant="subtitle2"
-              sx={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                color: '#00d4ff',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.12em',
-                fontSize: '0.75rem',
-                mb: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 1.5,
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  color: 'rgba(255,255,255,0.2)',
-                  fontWeight: 700,
-                  fontSize: '0.7rem',
-                }}
-              >
-                02/
-              </Box>
-              {'// contato'}
-            </Typography>
-
-            <Typography
-              variant="h3"
-              component="h2"
-              sx={{
-                fontFamily: "'IBM Plex Mono', monospace",
-                fontWeight: 700,
-                mb: 3,
-                color: '#f0f0f0',
-              }}
-            >
-              Vamos Conversar sobre{' '}
+            <motion.div variants={blurUpVariant}>
               <Typography
-                component="span"
-                variant="inherit"
+                variant="subtitle2"
                 sx={{
-                  background: 'linear-gradient(135deg, #007bff 0%, #00d4ff 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  color: '#00d4ff',
+                  fontWeight: 600,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.12em',
+                  fontSize: '0.75rem',
+                  mb: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 1.5,
                 }}
               >
-                Data & Analytics
+                <Box
+                  component="span"
+                  sx={{
+                    color: 'rgba(255,255,255,0.2)',
+                    fontWeight: 700,
+                    fontSize: '0.7rem',
+                  }}
+                >
+                  02/
+                </Box>
+                {'// contato'}
               </Typography>
-            </Typography>
+            </motion.div>
 
-            <Typography
-              variant="body1"
-              sx={{
-                fontSize: '1.05rem',
-                color: '#94a3b8',
-                maxWidth: '600px',
-                mx: 'auto',
-                lineHeight: 1.7,
-              }}
-            >
-              Estou sempre aberto para discussões sobre projetos, oportunidades
-              de colaboração ou apenas para trocar experiências na área de dados.
-            </Typography>
+            <motion.div variants={blurUpVariant}>
+              <Typography
+                variant="h3"
+                component="h2"
+                sx={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontWeight: 700,
+                  mb: 3,
+                  color: '#f0f0f0',
+                }}
+              >
+                Vamos Conversar sobre{' '}
+                <Typography
+                  component="span"
+                  variant="inherit"
+                  sx={{
+                    background: 'linear-gradient(135deg, #007bff 0%, #00d4ff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  Data & Analytics
+                </Typography>
+              </Typography>
+            </motion.div>
+
+            <motion.div variants={blurUpVariant}>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: '1.05rem',
+                  color: '#94a3b8',
+                  maxWidth: '600px',
+                  mx: 'auto',
+                  lineHeight: 1.7,
+                }}
+              >
+                Estou sempre aberto para discussões sobre projetos, oportunidades
+                de colaboração ou apenas para trocar experiências na área de dados.
+              </Typography>
+            </motion.div>
           </motion.div>
         </Box>
 
-        <Grid container spacing={4}>
-          {/* ── Contact Cards ── */}
-          <Grid item xs={12} md={8}>
-            <Grid container spacing={3}>
-              {contactMethods.map((method, index) => {
-                const accent = neonMap[method.title] || neonMap.Email;
-                return (
-                  <Grid item xs={12} sm={6} key={index}>
-                    <motion.div
-                      initial={{ opacity: 0, y: 24 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.45, delay: index * 0.08 }}
-                      viewport={{ once: true }}
-                      style={{ height: '100%' }}
-                    >
-                      <Paper
+        <motion.div style={{ opacity: fadeOut }}>
+          <Grid container spacing={4}>
+            {/* ── Contact Cards ── */}
+            <Grid item xs={12} md={8}>
+              <Grid container spacing={3}>
+                {contactMethods.map((method, index) => {
+                  const accent = neonMap[method.title] || neonMap.Email;
+                  return (
+                    <Grid item xs={12} sm={6} key={index}>
+                      <motion.div
+                        initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+                        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                        transition={{
+                          duration: 0.6,
+                          delay: index * 0.1,
+                          ease: [0.25, 0.46, 0.45, 0.94],
+                        }}
+                        viewport={{ once: true }}
+                        style={{ height: '100%' }}
+                      >
+                      <SpotlightCard
                         component="a"
                         href={method.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        elevation={0}
+                        spotlightColor={`rgba(${accent.rgb},0.18)`}
                         sx={{
                           ...glassCardSx,
                           '&:hover': {
@@ -254,7 +342,7 @@ const ContactSection = () => {
                             </Typography>
                           </Box>
                         </Box>
-                      </Paper>
+                      </SpotlightCard>
                     </motion.div>
                   </Grid>
                 );
@@ -265,14 +353,16 @@ const ContactSection = () => {
           {/* ── Sidebar: Quick Info + Availability ── */}
           <Grid item xs={12} md={4}>
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              initial={{ opacity: 0, x: 30, filter: 'blur(8px)' }}
+              whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+              transition={{ duration: 0.6, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
               viewport={{ once: true }}
             >
               {/* Quick Info */}
-              <Paper
+              <SpotlightCard
+                component={Paper}
                 elevation={0}
+                spotlightColor="rgba(0, 123, 255, 0.14)"
                 sx={{
                   ...glassCardSx,
                   mb: 3,
@@ -335,11 +425,13 @@ const ContactSection = () => {
                     </Box>
                   </Box>
                 ))}
-              </Paper>
+              </SpotlightCard>
 
               {/* Availability */}
-              <Paper
+              <SpotlightCard
+                component={Paper}
                 elevation={0}
+                spotlightColor="rgba(0, 230, 118, 0.16)"
                 sx={{
                   ...glassCardSx,
                   border: '1px solid rgba(0,230,118,0.2)',
@@ -381,10 +473,11 @@ const ContactSection = () => {
                 <Typography variant="body2" sx={{ lineHeight: 1.6, color: '#94a3b8', fontSize: '0.85rem' }}>
                   Abertura para freelance ou posições fixas em Data & Analytics.
                 </Typography>
-              </Paper>
+              </SpotlightCard>
             </motion.div>
           </Grid>
         </Grid>
+        </motion.div>
       </Container>
     </Box>
   );

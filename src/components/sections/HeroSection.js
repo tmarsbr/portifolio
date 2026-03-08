@@ -315,10 +315,12 @@ const HeroSection = () => {
                   <Typography
                     variant="h1"
                     sx={{
-                      fontSize: { xs: '2.2rem', md: '3.5rem', lg: '4rem' },
+                      fontSize: { xs: '2.2rem', md: '2.55rem', lg: '3.15rem' },
                       fontFamily: "'IBM Plex Mono', monospace",
                       fontWeight: 700,
                       lineHeight: 1.1,
+                      letterSpacing: { md: '-0.05em' },
+                      whiteSpace: { xs: 'normal', md: 'nowrap' },
                       background: 'linear-gradient(135deg, #ffffff 0%, #94a3b8 100%)',
                       backgroundClip: 'text',
                       WebkitBackgroundClip: 'text',

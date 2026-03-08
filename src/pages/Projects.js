@@ -26,17 +26,20 @@ import {
   ArrowForward,
 } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 
-import { projects, personalInfo, PROJECT_CATEGORIES, projectsPageConfig } from '../config/portfolio';
+import { projects, personalInfo, PROJECT_CATEGORIES, PROJECT_SUBCATEGORIES, projectsPageConfig } from '../config/portfolio';
 import CategoryPills from '../components/common/CategoryPills';
+import TiltCard from '../components/common/TiltCard';
 import { useProjectFilter } from '../hooks/useProjectFilter';
 
 /* ── neon accent map ─────────────────────────────────── */
 const catColor = {
-  'Análise Exploratória': '#007bff',
+  'Todos':               '#007bff',
   'Engenharia de Dados': '#00e676',
-  'API & Web Scraping': '#ffd600',
-  'Machine Learning': '#ff2d78',
+  'API & Scraping':      '#ffd600',
+  'Análise de Dados':    '#00d4ff',
+  'Ciência de Dados':    '#a855f7',
 };
 const accent = (cat) => catColor[cat] || '#007bff';
 
@@ -67,7 +70,7 @@ const neonBtn = (c) => ({
 const Projects = () => {
   const location = useLocation();
   const [selectedProject, setSelectedProject] = useState(null);
-  const [categoryFilter, setCategoryFilter] = useState('Engenharia de Dados');
+  const [categoryFilter, setCategoryFilter] = useState('Todos');
   const [subcategoryFilter, setSubcategoryFilter] = useState('Todos');
   const [techFilter, setTechFilter] = useState('');
   const [expandedImage, setExpandedImage] = useState(null);
@@ -82,7 +85,7 @@ const Projects = () => {
   const placeholderImage =
     "data:image/svg+xml,%3csvg width='400' height='300' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='400' height='300' fill='%230d1117'/%3e%3ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' font-family='monospace' font-size='14' fill='%23475569'%3eImagem do Projeto%3c/text%3e%3c/svg%3e";
 
-  const categories = PROJECT_CATEGORIES;
+  const categories = ['Todos', ...PROJECT_CATEGORIES];
 
   const { filtered: baseFilteredProjects, total } = useProjectFilter(
     projects, categoryFilter, subcategoryFilter,
@@ -95,6 +98,7 @@ const Projects = () => {
   const count = filteredProjects.length;
 
   const handleCategoryChange = (c) => { setCategoryFilter(c); setSubcategoryFilter('Todos'); setTechFilter(''); };
+  const handleSubcategoryChange = (s) => setSubcategoryFilter(s);
   const handleProjectClick = (p) => setSelectedProject(p);
   const handleCloseModal = () => setSelectedProject(null);
   const handleImageClick = (src) => setExpandedImage(src);
@@ -225,7 +229,7 @@ const Projects = () => {
         </Container>
       </Box>
 
-      {/* ── Sticky filters ───────────────────────────── */}
+      {/* ── Filters ──────────────────────────────────── */}
       <Box
         sx={{
           py: 4,
@@ -239,6 +243,39 @@ const Projects = () => {
       >
         <Container maxWidth="lg">
           <CategoryPills categories={categories} active={categoryFilter} onChange={handleCategoryChange} />
+
+          {/* subcategory pills */}
+          {categoryFilter !== 'Todos' && PROJECT_SUBCATEGORIES[categoryFilter]?.length > 0 && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 1, mb: 3 }}>
+              {['Todos', ...PROJECT_SUBCATEGORIES[categoryFilter]].map((sub) => {
+                const ac = accent(categoryFilter);
+                const isActiveSub = subcategoryFilter === sub;
+                return (
+                  <Box
+                    key={sub}
+                    component="button"
+                    onClick={() => handleSubcategoryChange(sub)}
+                    sx={{
+                      px: 2,
+                      py: 0.6,
+                      borderRadius: '999px',
+                      border: `1px solid ${isActiveSub ? ac + '60' : 'rgba(255,255,255,0.08)'}`,
+                      background: isActiveSub ? `${ac}15` : 'rgba(255,255,255,0.03)',
+                      color: isActiveSub ? ac : '#64748b',
+                      fontFamily: '"IBM Plex Mono", monospace',
+                      fontSize: '0.72rem',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      transition: 'all .25s ease',
+                      '&:hover': { borderColor: `${ac}40`, color: ac },
+                    }}
+                  >
+                    {sub}
+                  </Box>
+                );
+              })}
+            </Box>
+          )}
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center', gap: 1 }}>
             <Speed sx={{ fontSize: 16, color: '#64748b' }} />
             <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 500, fontFamily: '"IBM Plex Mono", monospace' }}>
@@ -254,14 +291,28 @@ const Projects = () => {
           {filteredProjects.length === 0 ? (
             <Box sx={{ textAlign: 'center', py: 12 }}>
               <Typography variant="h5" sx={{ mb: 2, fontWeight: 600, color: '#94a3b8' }}>Nenhum projeto encontrado</Typography>
-              <Button sx={neonBtn('#007bff')} onClick={() => handleCategoryChange('all')}>Limpar Filtros</Button>
+              <Button sx={neonBtn('#007bff')} onClick={() => handleCategoryChange('Todos')}>Limpar Filtros</Button>
             </Box>
           ) : (
             <Grid container spacing={4}>
+              <AnimatePresence mode="wait">
               {filteredProjects.map((project, index) => {
                 const ac = accent(project.category);
                 return (
                   <Grid item xs={12} md={6} lg={4} key={project.id}>
+                    <TiltCard
+                      maxTilt={8}
+                      scale={1.02}
+                      className="beam-border"
+                      sx={{ borderRadius: '16px', height: '100%' }}
+                    >
+                    <motion.div
+                      initial={{ opacity: 0, y: 28 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{ duration: 0.4, delay: index * 0.07, ease: [0.4, 0, 0.2, 1] }}
+                      style={{ height: '100%' }}
+                    >
                     <Card sx={cardSx} onClick={() => handleProjectClick(project)}>
                       {/* image */}
                       <Box sx={{ position: 'relative', height: 200, overflow: 'hidden' }}>
@@ -365,9 +416,12 @@ const Projects = () => {
                         </Box>
                       </CardContent>
                     </Card>
+                    </motion.div>
+                    </TiltCard>
                   </Grid>
                 );
               })}
+              </AnimatePresence>
             </Grid>
           )}
         </Container>

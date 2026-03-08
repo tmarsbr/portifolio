@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import { Helmet } from 'react-helmet';
 
@@ -16,6 +16,8 @@ import ScrollToTop from './components/common/ScrollToTop';
 import ScrollProgress from './components/common/ScrollProgress';
 import ThemeHelper from './components/common/ThemeHelper';
 import LoadingSpinner from './components/common/LoadingSpinner';
+import AnimatedPreloader from './components/common/AnimatedPreloader';
+import CustomCursor from './components/common/CustomCursor';
 
 // Configurações
 import { seoConfig, personalInfo } from './config/portfolio';
@@ -75,6 +77,10 @@ function App() {
  * )
  */
 function AppContent() {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const [showPreloader, setShowPreloader] = React.useState(true);
+
   return (
     <>
       <Helmet>
@@ -128,22 +134,46 @@ function AppContent() {
         </script>
       </Helmet>
 
-      <div className="App">
+      {showPreloader && <AnimatedPreloader onComplete={() => setShowPreloader(false)} />}
+      <CustomCursor />
+
+      <div className={`App ${isHome ? 'footer-reveal-page' : ''}`}>
         <ThemeHelper />
         <ScrollProgress />
         <Header />
-        <main>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/certificacoes" element={<Certificacoes />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
-          </Suspense>
-        </main>
-        <Footer />
+        {isHome ? (
+          <>
+            <main className="footer-reveal-content">
+              <Suspense fallback={<LoadingSpinner />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/certificacoes" element={<Certificacoes />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <div className="footer-reveal-fixed">
+              <Footer mode="reveal" />
+            </div>
+          </>
+        ) : (
+          <>
+            <main>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/projects" element={<Projects />} />
+                  <Route path="/certificacoes" element={<Certificacoes />} />
+                  <Route path="/contact" element={<Contact />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+          </>
+        )}
         <ScrollToTop />
       </div>
     </>

@@ -34,18 +34,22 @@ import {
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import SpotlightCard from '../common/SpotlightCard';
+import TiltCard from '../common/TiltCard';
 import { projects, projectsConfig } from '../../config/portfolio';
 
 /* ── Category colors (neon palette) ── */
 const catColors = {
   'Análise Exploratória': { neon: '#007bff', rgb: '0,123,255' },
   'Engenharia de Dados': { neon: '#00e676', rgb: '0,230,118' },
+  'API & Scraping': { neon: '#ffd600', rgb: '255,214,0' },
   'API & Web Scraping': { neon: '#ffd600', rgb: '255,214,0' },
   'Machine Learning': { neon: '#ff2d78', rgb: '255,45,120' },
 };
 const catIcons = {
   'Análise Exploratória': <Analytics />,
   'Engenharia de Dados': <Engineering />,
+  'API & Scraping': <Code />,
   'API & Web Scraping': <Code />,
   'Machine Learning': <TrendingUp />,
 };
@@ -84,18 +88,25 @@ const ProjectCard = ({ project, index, onProjectClick }) => {
   const accent = getCatColor(project.category);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
-      whileHover={{ y: -6 }}
-      style={{ height: '100%' }}
+    <TiltCard
+      maxTilt={8}
+      scale={1.02}
+      className="beam-border"
+      sx={{ borderRadius: '16px', height: '100%' }}
     >
-      <Card
+      <motion.div
+        initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        transition={{ duration: 0.65, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+        style={{ height: '100%' }}
+      >
+      <SpotlightCard
+        component={Card}
         onClick={() => onProjectClick(project)}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         elevation={0}
+        spotlightColor={`rgba(${accent.rgb},0.18)`}
         sx={{
           ...glassCard,
           height: '100%',
@@ -540,8 +551,9 @@ const ProjectCard = ({ project, index, onProjectClick }) => {
             </Box>
           </Stack>
         </CardContent>
-      </Card>
+      </SpotlightCard>
     </motion.div>
+    </TiltCard>
   );
 };
 
@@ -584,9 +596,9 @@ const ProjectsPreview = () => {
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           viewport={{ once: true }}
         >
           <Box sx={{ textAlign: 'center', mb: 8 }}>
@@ -716,9 +728,9 @@ const ProjectsPreview = () => {
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          initial={{ opacity: 0, y: 30, filter: 'blur(8px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           viewport={{ once: true }}
         >
           <Box sx={{ textAlign: 'center', mt: 10 }}>

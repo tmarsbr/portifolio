@@ -34,8 +34,9 @@ import VisitorCounter from './VisitorCounter';
  * - Social icons com glow hover
  */
 
-const Footer = () => {
+const Footer = ({ mode = 'default' }) => {
   const currentYear = new Date().getFullYear();
+  const isRevealMode = mode === 'reveal';
 
   const techStack = [
     { name: 'Python', icon: <Code fontSize="small" /> },
@@ -74,13 +75,47 @@ const Footer = () => {
     <Box
       component="footer"
       sx={{
-        py: 6,
+        py: isRevealMode ? { xs: 6, md: 8 } : 6,
+        minHeight: isRevealMode ? '100%' : 'auto',
         mt: 'auto',
-        background: 'linear-gradient(180deg, transparent 0%, rgba(5,10,20,0.6) 100%)',
+        display: 'flex',
+        alignItems: isRevealMode ? 'center' : 'stretch',
+        background: isRevealMode
+          ? 'radial-gradient(circle at top, rgba(0,123,255,0.12) 0%, transparent 30%), linear-gradient(180deg, rgba(3,9,19,0.96) 0%, rgba(2,6,17,1) 100%)'
+          : 'linear-gradient(180deg, transparent 0%, rgba(5,10,20,0.6) 100%)',
         borderTop: '1px solid rgba(255,255,255,0.06)',
         position: 'relative',
+        overflow: 'hidden',
       }}
     >
+      {isRevealMode && (
+        <>
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 'auto auto -20% -10%',
+              width: 320,
+              height: 320,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(0,123,255,0.22) 0%, transparent 72%)',
+              filter: 'blur(18px)',
+              pointerEvents: 'none',
+            }}
+          />
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: '10% -12% auto auto',
+              width: 280,
+              height: 280,
+              borderRadius: '50%',
+              background: 'radial-gradient(circle, rgba(0,230,118,0.12) 0%, transparent 72%)',
+              filter: 'blur(18px)',
+              pointerEvents: 'none',
+            }}
+          />
+        </>
+      )}
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           {/* Col 1: Sobre */}
