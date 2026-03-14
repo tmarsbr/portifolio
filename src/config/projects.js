@@ -575,8 +575,9 @@ export const projectsConfig = {
  * @description Textos e storytelling da página de projetos
  */
 export const projectsPageConfig = {
-    title: "Engenharia de Dados Aplicada",
-    subtitle: "Coleta • Transformação • Qualidade • Entrega",
-    description: "Mais do que escrever código, meu objetivo é garantir que os dados fluam de forma segura e eficiente. Aqui apresento como utilizo padrões de mercado para resolver gargalos de performance e garantir a qualidade da informação que chega à ponta final.",
-    philosophy: "Código testável, dados validados e pipelines confiáveis. O objetivo é entregar valor através de dados íntegros e processos automatizados."
+    title: "Onde Dados Ganham Forma",
+    subtitle: "Cada projeto aqui nasceu de um problema real.",
+    description: "Não escrevo código por escrever. Construo pipelines que transformam dados brutos em decisões confiáveis. Da extração à entrega, cada etapa é pensada para ser testável, rastreável e resiliente.",
+    philosophy: "Dados íntegros. Processos automatizados. Resultados mensuráveis.",
+    marqueeItems: ['Python', 'SQL', 'Apache Airflow', 'dbt', 'AWS', 'Docker', 'Pandas', 'Pydantic', 'Pytest', 'PostgreSQL', 'Apache Spark', 'ETL', 'Data Quality', 'Star Schema'],
 };

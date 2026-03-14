@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   Container,
@@ -19,14 +19,13 @@ import {
   Launch,
   TrendingUp,
   Close,
-  Code,
   Storage,
-  Speed,
   AutoGraph,
   ArrowForward,
+  East,
 } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
 import { projects, personalInfo, PROJECT_CATEGORIES, PROJECT_SUBCATEGORIES, projectsPageConfig } from '../config/portfolio';
 import CategoryPills from '../components/common/CategoryPills';
@@ -64,6 +63,101 @@ const neonBtn = (c) => ({
   '&:hover': { background: `${c}18`, boxShadow: `0 0 18px ${c}30` },
 });
 
+/* ── Marquee component ───────────────────────────────── */
+const TechMarquee = ({ items }) => {
+  const doubled = [...items, ...items];
+  return (
+    <Box
+      sx={{
+        overflow: 'hidden',
+        py: 3,
+        position: 'relative',
+        '&::before, &::after': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          width: '120px',
+          zIndex: 2,
+          pointerEvents: 'none',
+        },
+        '&::before': {
+          left: 0,
+          background: 'linear-gradient(90deg, #050a14 0%, transparent 100%)',
+        },
+        '&::after': {
+          right: 0,
+          background: 'linear-gradient(270deg, #050a14 0%, transparent 100%)',
+        },
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 4,
+          width: 'max-content',
+          animation: 'marqueeScroll 35s linear infinite',
+          '@keyframes marqueeScroll': {
+            '0%': { transform: 'translateX(0)' },
+            '100%': { transform: 'translateX(-50%)' },
+          },
+        }}
+      >
+        {doubled.map((item, i) => (
+          <Typography
+            key={i}
+            sx={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '0.8rem',
+              fontWeight: 500,
+              color: 'rgba(255,255,255,0.15)',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              whiteSpace: 'nowrap',
+              userSelect: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              '&::after': {
+                content: '"·"',
+                fontSize: '1.2rem',
+                color: 'rgba(255,255,255,0.08)',
+              },
+            }}
+          >
+            {item}
+          </Typography>
+        ))}
+      </Box>
+    </Box>
+  );
+};
+
+/* ── Section label component ─────────────────────────── */
+const SectionLabel = ({ number, text }) => (
+  <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+    <Box
+      sx={{
+        width: 32,
+        height: '1px',
+        background: 'linear-gradient(90deg, #007bff, transparent)',
+      }}
+    />
+    <Typography
+      sx={{
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: '0.7rem',
+        fontWeight: 600,
+        letterSpacing: '0.15em',
+        textTransform: 'uppercase',
+        color: '#007bff',
+      }}
+    >
+      {number} {text}
+    </Typography>
+  </Box>
+);
+
 /**
  * Projects — página completa de projetos (glass dark design)
  */
@@ -74,6 +168,14 @@ const Projects = () => {
   const [subcategoryFilter, setSubcategoryFilter] = useState('Todos');
   const [techFilter, setTechFilter] = useState('');
   const [expandedImage, setExpandedImage] = useState(null);
+  const heroRef = useRef(null);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   useEffect(() => {
     const sp = new URLSearchParams(location.search);
@@ -130,106 +232,275 @@ const Projects = () => {
         <meta name="description" content={projectsPageConfig.description} />
       </Helmet>
 
-      {/* ── Hero ──────────────────────────────────────── */}
+      {/* ── HERO ─────────────────────────────────────── */}
       <Box
+        ref={heroRef}
         sx={{
-          pt: { xs: 14, md: 20 },
-          pb: { xs: 8, md: 12 },
+          pt: { xs: 16, md: 24 },
+          pb: { xs: 6, md: 10 },
           position: 'relative',
           overflow: 'hidden',
+          minHeight: { xs: 'auto', md: '70vh' },
+          display: 'flex',
+          alignItems: 'center',
         }}
       >
-        {/* radial glow */}
-        <Box sx={{ position: 'absolute', top: '15%', right: '-8%', width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,123,255,0.08) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-        <Box sx={{ position: 'absolute', bottom: '10%', left: '-5%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%)', filter: 'blur(50px)' }} />
+        {/* Decorative grid lines */}
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            opacity: 0.03,
+            backgroundImage:
+              'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)',
+            backgroundSize: '80px 80px',
+          }}
+        />
+
+        {/* Radial glow — right */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '10%',
+            right: '-15%',
+            width: 700,
+            height: 700,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(0,123,255,0.06) 0%, transparent 70%)',
+            filter: 'blur(80px)',
+            pointerEvents: 'none',
+          }}
+        />
+        {/* Radial glow — left */}
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: '5%',
+            left: '-10%',
+            width: 500,
+            height: 500,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(0,230,118,0.04) 0%, transparent 70%)',
+            filter: 'blur(60px)',
+            pointerEvents: 'none',
+          }}
+        />
 
         <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
-          <Box sx={{ textAlign: 'center', mb: 8 }}>
-            {/* code label */}
-            <Typography
-              sx={{
-                fontFamily: '"IBM Plex Mono", monospace',
-                fontSize: '0.75rem',
-                fontWeight: 600,
-                letterSpacing: 3,
-                color: '#007bff',
-                mb: 2,
-              }}
-            >
-              {'// projetos'}
-            </Typography>
+          <motion.div style={{ opacity: heroOpacity, y: heroY }}>
+            <Grid container spacing={6} alignItems="center">
+              {/* Left — Text */}
+              <Grid item xs={12} md={7}>
+                <SectionLabel number="01" text="Projetos" />
 
-            <Typography
-              variant="h2"
-              component="h1"
-              sx={{
-                fontFamily: '"IBM Plex Mono", monospace',
-                fontWeight: 800,
-                mb: 2,
-                background: 'linear-gradient(135deg, #007bff 0%, #00d4ff 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                letterSpacing: '-0.02em',
-                fontSize: { xs: '2.4rem', md: '3.75rem' },
-              }}
-            >
-              {projectsPageConfig.title}
-            </Typography>
-
-            <Typography
-              variant="h5"
-              sx={{
-                color: '#94a3b8',
-                mb: 4,
-                fontWeight: 500,
-                maxWidth: 800,
-                mx: 'auto',
-                fontFamily: '"IBM Plex Mono", monospace',
-                fontSize: { xs: '0.95rem', md: '1.15rem' },
-              }}
-            >
-              {projectsPageConfig.subtitle}
-            </Typography>
-
-            <Typography
-              variant="body1"
-              sx={{ fontSize: '1.05rem', color: '#94a3b8', maxWidth: 700, mx: 'auto', lineHeight: 1.8, mb: 6 }}
-            >
-              {projectsPageConfig.description}
-            </Typography>
-
-            {/* Stats */}
-            <Grid container spacing={3} justifyContent="center" sx={{ mb: 6 }}>
-              {[
-                { n: projects.filter((p) => !p.hidden).length, l: 'Soluções', icon: <Storage />, c: '#007bff' },
-                { n: categories.length, l: 'Áreas', icon: <AutoGraph />, c: '#00d4ff' },
-                { n: '40+', l: 'Ferramentas', icon: <Code />, c: '#a855f7' },
-              ].map((s, i) => (
-                <Grid item xs={12} sm={4} md={3} key={i}>
-                  <Box
+                <motion.div
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Typography
+                    variant="h1"
                     sx={{
-                      p: 3,
-                      ...glass,
-                      transition: 'all .3s ease',
-                      '&:hover': { transform: 'translateY(-5px)', borderColor: `${s.c}50`, boxShadow: `0 0 24px ${s.c}18` },
+                      fontFamily: '"IBM Plex Mono", monospace',
+                      fontWeight: 800,
+                      fontSize: { xs: '2.8rem', sm: '3.5rem', md: '4.5rem' },
+                      lineHeight: 0.95,
+                      letterSpacing: '-0.03em',
+                      mb: 3,
+                      background: 'linear-gradient(160deg, #ffffff 0%, #007bff 50%, #00d4ff 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
                     }}
                   >
-                    <Box sx={{ color: s.c, mb: 1 }}>{s.icon}</Box>
-                    <Typography variant="h4" sx={{ fontWeight: 800, fontFamily: '"IBM Plex Mono", monospace', color: '#e2e8f0' }}>
-                      {s.n}
-                    </Typography>
-                    <Typography variant="caption" sx={{ textTransform: 'uppercase', letterSpacing: 1, fontWeight: 600, color: '#64748b' }}>
-                      {s.l}
+                    {projectsPageConfig.title}
+                  </Typography>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: '"IBM Plex Mono", monospace',
+                      fontWeight: 500,
+                      fontSize: { xs: '1rem', md: '1.25rem' },
+                      color: '#e2e8f0',
+                      mb: 3,
+                      maxWidth: 560,
+                    }}
+                  >
+                    {projectsPageConfig.subtitle}
+                  </Typography>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 25 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontSize: '1.05rem',
+                      color: '#94a3b8',
+                      maxWidth: 520,
+                      lineHeight: 1.8,
+                      mb: 4,
+                    }}
+                  >
+                    {projectsPageConfig.description}
+                  </Typography>
+                </motion.div>
+
+                {/* Philosophy quote */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Box
+                    sx={{
+                      pl: 3,
+                      borderLeft: '2px solid rgba(0,123,255,0.3)',
+                      py: 0.5,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: '"IBM Plex Mono", monospace',
+                        fontSize: '0.85rem',
+                        fontWeight: 500,
+                        color: '#64748b',
+                        fontStyle: 'italic',
+                        letterSpacing: '0.02em',
+                      }}
+                    >
+                      {projectsPageConfig.philosophy}
                     </Typography>
                   </Box>
-                </Grid>
-              ))}
+                </motion.div>
+              </Grid>
+
+              {/* Right — Visual element */}
+              <Grid item xs={12} md={5} sx={{ display: { xs: 'none', md: 'block' } }}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      width: '100%',
+                      height: 380,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {/* Geometric decorative element */}
+                    <Box
+                      sx={{
+                        width: 280,
+                        height: 280,
+                        border: '1px solid rgba(0,123,255,0.12)',
+                        borderRadius: '24px',
+                        transform: 'rotate(45deg)',
+                        position: 'relative',
+                        '&::before': {
+                          content: '""',
+                          position: 'absolute',
+                          inset: 20,
+                          border: '1px solid rgba(0,212,255,0.08)',
+                          borderRadius: '20px',
+                        },
+                        '&::after': {
+                          content: '""',
+                          position: 'absolute',
+                          inset: 44,
+                          border: '1px solid rgba(0,230,118,0.06)',
+                          borderRadius: '16px',
+                        },
+                      }}
+                    />
+                    {/* Center stats */}
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontFamily: '"IBM Plex Mono", monospace',
+                          fontSize: '3.5rem',
+                          fontWeight: 800,
+                          color: '#e2e8f0',
+                          lineHeight: 1,
+                        }}
+                      >
+                        {projects.filter((p) => !p.hidden).length}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: '"IBM Plex Mono", monospace',
+                          fontSize: '0.7rem',
+                          fontWeight: 600,
+                          letterSpacing: '0.2em',
+                          textTransform: 'uppercase',
+                          color: '#64748b',
+                          mt: 0.5,
+                        }}
+                      >
+                        Projetos
+                      </Typography>
+                    </Box>
+                    {/* Floating dots */}
+                    {[
+                      { top: '15%', left: '10%', color: '#007bff', size: 6 },
+                      { top: '75%', left: '20%', color: '#00e676', size: 4 },
+                      { top: '25%', right: '15%', color: '#00d4ff', size: 5 },
+                      { bottom: '20%', right: '10%', color: '#ffd600', size: 4 },
+                    ].map((dot, i) => (
+                      <Box
+                        key={i}
+                        sx={{
+                          position: 'absolute',
+                          width: dot.size,
+                          height: dot.size,
+                          borderRadius: '50%',
+                          background: dot.color,
+                          opacity: 0.5,
+                          filter: `blur(0.5px)`,
+                          animation: `float ${3 + i * 0.5}s ease-in-out infinite alternate`,
+                          ...dot,
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </motion.div>
+              </Grid>
             </Grid>
-          </Box>
+          </motion.div>
         </Container>
       </Box>
 
-      {/* ── Filters ──────────────────────────────────── */}
+      {/* ── TECH MARQUEE ─────────────────────────────── */}
+      <Box
+        sx={{
+          borderTop: '1px solid rgba(255,255,255,0.04)',
+          borderBottom: '1px solid rgba(255,255,255,0.04)',
+          background: 'rgba(255,255,255,0.01)',
+        }}
+      >
+        <TechMarquee items={projectsPageConfig.marqueeItems || []} />
+      </Box>
+
+      {/* ── FILTERS ──────────────────────────────────── */}
       <Box
         sx={{
           py: 4,
@@ -242,6 +513,22 @@ const Projects = () => {
         }}
       >
         <Container maxWidth="lg">
+          {/* Filter label */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+            <Typography
+              sx={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '0.65rem',
+                fontWeight: 600,
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                color: '#475569',
+              }}
+            >
+              Filtrar por especialidade
+            </Typography>
+          </Box>
+
           <CategoryPills categories={categories} active={categoryFilter} onChange={handleCategoryChange} />
 
           {/* subcategory pills */}
@@ -276,22 +563,66 @@ const Projects = () => {
               })}
             </Box>
           )}
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2, alignItems: 'center', gap: 1 }}>
-            <Speed sx={{ fontSize: 16, color: '#64748b' }} />
-            <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 500, fontFamily: '"IBM Plex Mono", monospace' }}>
-              {count === total ? `Exibindo todos os ${total} projetos` : `${count} projetos encontrados`}
+
+          {/* count */}
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ width: 4, height: 4, borderRadius: '50%', background: '#007bff', opacity: 0.6 }} />
+            <Typography
+              variant="caption"
+              sx={{
+                color: '#475569',
+                fontWeight: 500,
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '0.7rem',
+              }}
+            >
+              {count === total ? `${total} projetos` : `${count} de ${total}`}
             </Typography>
           </Box>
         </Container>
       </Box>
 
-      {/* ── Grid ─────────────────────────────────────── */}
-      <Box sx={{ py: 8, minHeight: '60vh' }}>
-        <Container maxWidth="lg">
+      {/* ── PROJECTS GRID ────────────────────────────── */}
+      <Box sx={{ py: { xs: 6, md: 10 }, minHeight: '60vh', position: 'relative' }}>
+        {/* Subtle background accent */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '30%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 800,
+            height: 800,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(0,123,255,0.03) 0%, transparent 60%)',
+            filter: 'blur(100px)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+          {/* Section header */}
+          <Box sx={{ mb: 6 }}>
+            <SectionLabel number="02" text="Portfólio" />
+          </Box>
+
           {filteredProjects.length === 0 ? (
             <Box sx={{ textAlign: 'center', py: 12 }}>
-              <Typography variant="h5" sx={{ mb: 2, fontWeight: 600, color: '#94a3b8' }}>Nenhum projeto encontrado</Typography>
-              <Button sx={neonBtn('#007bff')} onClick={() => handleCategoryChange('Todos')}>Limpar Filtros</Button>
+              <Typography
+                variant="h5"
+                sx={{ mb: 2, fontWeight: 600, color: '#94a3b8' }}
+              >
+                Nenhum projeto encontrado
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ color: '#64748b', mb: 4 }}
+              >
+                Tente ajustar os filtros para ver mais resultados.
+              </Typography>
+              <Button sx={neonBtn('#007bff')} onClick={() => handleCategoryChange('Todos')}>
+                Limpar Filtros
+              </Button>
             </Box>
           ) : (
             <Grid container spacing={4}>
@@ -424,6 +755,95 @@ const Projects = () => {
               </AnimatePresence>
             </Grid>
           )}
+        </Container>
+      </Box>
+
+      {/* ── CTA SECTION ──────────────────────────────── */}
+      <Box
+        sx={{
+          py: { xs: 8, md: 12 },
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 600,
+            height: 600,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(0,123,255,0.04) 0%, transparent 60%)',
+            filter: 'blur(80px)',
+            pointerEvents: 'none',
+          }}
+        />
+        <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Box
+              sx={{
+                width: 40,
+                height: '1px',
+                background: 'rgba(255,255,255,0.15)',
+                mx: 'auto',
+                mb: 4,
+              }}
+            />
+            <Typography
+              sx={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: { xs: '1.5rem', md: '2rem' },
+                fontWeight: 700,
+                color: '#e2e8f0',
+                mb: 2,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              Quer saber mais?
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: '0.95rem',
+                color: '#64748b',
+                mb: 5,
+                lineHeight: 1.7,
+              }}
+            >
+              Cada projeto tem seu repositório aberto. Explore o código, a arquitetura e os testes.
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Button
+                href="https://github.com/tmarsbr"
+                target="_blank"
+                startIcon={<GitHub />}
+                sx={{
+                  ...neonBtn('#007bff'),
+                  px: 4,
+                  py: 1.4,
+                }}
+              >
+                GitHub
+              </Button>
+              <Button
+                href="/portifolio/contato"
+                endIcon={<East />}
+                sx={{
+                  ...neonBtn('#00d4ff'),
+                  px: 4,
+                  py: 1.4,
+                }}
+              >
+                Contato
+              </Button>
+            </Box>
+          </motion.div>
         </Container>
       </Box>
 
