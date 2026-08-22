@@ -575,9 +575,9 @@ export const projectsConfig = {
  * @description Textos e storytelling da página de projetos
  */
 export const projectsPageConfig = {
-    title: "Onde Dados Ganham Forma",
-    subtitle: "Cada projeto aqui nasceu de um problema real.",
-    description: "Não escrevo código por escrever. Construo pipelines que transformam dados brutos em decisões confiáveis. Da extração à entrega, cada etapa é pensada para ser testável, rastreável e resiliente.",
-    philosophy: "Dados íntegros. Processos automatizados. Resultados mensuráveis.",
+    title: "Dados Brutos, Decisões Confiáveis",
+    subtitle: "Cada projeto aqui resolveu um problema que travava algo — um relatório que ninguém confiava, um pipeline que vivia quebrando, um dado que nunca chegava a tempo.",
+    description: "Meu trabalho como engenheiro de dados começa onde o dado ainda está sujo, fragmentado e desconfiado. Construo pipelines que extraem, validam e entregam informação pronta pra decisão — com testes automatizados, arquitetura documentada e observabilidade em cada etapa. Nada de caixa preta: cada transformação é rastreável do destino de volta à origem.",
+    philosophy: "Transformar dado em confiança. Não em dashboard bonito — em decisão que não precisa ser justificada.",
     marqueeItems: ['Python', 'SQL', 'Apache Airflow', 'dbt', 'AWS', 'Docker', 'Pandas', 'Pydantic', 'Pytest', 'PostgreSQL', 'Apache Spark', 'ETL', 'Data Quality', 'Star Schema'],
 };

@@ -806,7 +806,7 @@ const Projects = () => {
                 letterSpacing: '-0.02em',
               }}
             >
-              Quer saber mais?
+              Tem um dado que precisa chegar inteiro?
             </Typography>
             <Typography
               sx={{
@@ -816,7 +816,7 @@ const Projects = () => {
                 lineHeight: 1.7,
               }}
             >
-              Cada projeto tem seu repositório aberto. Explore o código, a arquitetura e os testes.
+              Cada projeto aqui tem repositório aberto. Leia o código, rode localmente, veja os testes passando. Se fizer sentido, conversamos.
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
               <Button

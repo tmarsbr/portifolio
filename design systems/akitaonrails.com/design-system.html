@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html class="aor-index-enhanced light" data-aor-index-view="list" dir="ltr" lang="en" style="color-scheme: light;">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <title>AkitaOnRails — Living Design System & Pattern Library</title>
+  <meta content="Canonical Design System and Component Pattern Library for AkitaOnRails.com, built with Hugo, Hextra, Tailwind and custom typography." name="description"/>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Source+Sans+3:wght@600;700&display=swap" rel="stylesheet"/>
+  
+  <!-- Original Compiled Stylesheet -->
+  <link href="https://akitaonrails.com/css/compiled/main.min.860421afd86baea436520550e3f5b912c5d0ca8bfec32b073ac5871b3ae0ca74.css" rel="stylesheet"/>
+
+  <!-- Design System Core Tokens & Styles -->
+  <style>
+    :root {
+      --hx-color-white: #faf7f0;
+      --hx-color-gray-100: #f1ece0;
+      --hx-color-gray-200: #e8e2d2;
+      --aor-accent: #a63a1e;
+      --aor-accent-strong: #7f2a12;
+      --aor-accent-soft: rgba(166, 58, 30, 0.13);
+      --primary-hue: 20deg;
+      --primary-saturation: 62%;
+      --primary-lightness: 44%;
+      --navbar-height: 4rem;
+    }
+
+    html.dark {
+      --hx-color-dark: #1a1714;
+      --hx-color-neutral-800: #2a2520;
+      --hx-color-neutral-900: #23201c;
+      --aor-accent: #e2a05a;
+      --aor-accent-strong: #f2bd82;
+      --aor-accent-soft: rgba(226, 160, 90, 0.16);
+      --primary-hue: 32deg;
+      --primary-saturation: 68%;
+      --primary-lightness: 62%;
+    }
+
+    body {
+      color: #2a2622;
+      background-color: var(--hx-color-white, #faf7f0);
+      margin: 0;
+      padding: 0;
+      font-family: "source serif 4", charter, bitstream charter, georgia, cambria, times new roman, serif;
+      line-height: 1.7;
+      font-size: 19px;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+      hyphens: auto;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    html.dark body {
+      color: #e8e2d6;
+      background-color: var(--hx-color-dark, #1a1714);
+    }
+
+    /* Content & Headings */
+    .content {
+      max-width: 68ch;
+      margin-inline: auto;
+    }
+    .content :where(h1,h2,h3,h4,h5,h6) {
+      font-family: "source sans 3", helvetica neue, segoe ui, arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.012em;
+      line-height: 1.15;
+    }
+    .content :where(p,li) {
+      text-wrap: pretty;
+    }
+    .content :where(a) {
+      text-decoration-thickness: from-font;
+      text-underline-offset: 0.12em;
+      text-decoration-skip-ink: auto;
+    }
+    .content :where(pre,code,kbd,samp) {
+      hyphens: none;
+    }
+
+    /* Links & Accents */
+    .content a:not(.lang-toggle-link):not(.aor-featured__toggle):not(.aor-post-card__title-link):not(.aor-tag-link):not(.ds-nav__link) {
+      color: var(--aor-accent);
+      text-decoration-color: color-mix(in srgb, var(--aor-accent) 32%, transparent);
+      text-underline-offset: 0.15em;
+      text-decoration-thickness: 0.06em;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+    .content a:not(.lang-toggle-link):not(.aor-featured__toggle):not(.aor-post-card__title-link):not(.aor-tag-link):not(.ds-nav__link):hover {
+      color: var(--aor-accent-strong);
+      text-decoration-color: initial;
+    }
+    .content a:not(.lang-toggle-link):focus-visible {
+      outline: 2px solid var(--aor-accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    ::selection {
+      background: var(--aor-accent-soft);
+    }
+
+    /* Blockquote & HR */
+    .content blockquote {
+      border-inline-start: 2px solid color-mix(in srgb, var(--aor-accent) 55%, transparent);
+      color: color-mix(in srgb, currentColor 78%, transparent);
+      font-style: italic;
+      margin: 1.5rem 0;
+      padding-left: 1.25rem;
+    }
+    .content hr {
+      border: 0;
+      height: 1px;
+      width: 60%;
+      margin-inline: auto;
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, currentColor 24%, transparent), transparent);
+    }
+
+    /* Diamond Bullets */
+    .content ul:not(.contains-task-list):not(.ds-raw-list) {
+      list-style: none;
+      padding-inline-start: 1.4em;
+    }
+    .content ul:not(.contains-task-list):not(.ds-raw-list) > li {
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    .content ul:not(.contains-task-list):not(.ds-raw-list) > li::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: -1.15em;
+      top: 0.7em;
+      width: 0.4em;
+      height: 0.4em;
+      background: var(--aor-accent);
+      border-radius: 0.5px;
+      transform: rotate(45deg);
+      opacity: 0.9;
+    }
+    .content ul:not(.contains-task-list):not(.ds-raw-list) ul > li::before {
+      background: 0 0;
+      border: 1px solid var(--aor-accent);
+      opacity: 0.7;
+    }
+    .aor-featured ul {
+      list-style: none;
+      padding-inline-start: 0;
+    }
+    .aor-featured ul > li::before {
+      content: none;
+    }
+    .content ol > li::marker {
+      color: var(--aor-accent);
+      font-weight: 600;
+    }
+
+    /* Language Toggle */
+    .lang-toggle {
+      align-items: center;
+      color: #6b7280;
+      display: inline-flex;
+      flex: none;
+      font-family: "source sans 3", helvetica neue, segoe ui, arial, sans-serif;
+      font-size: 0.8rem;
+      gap: 0.25rem;
+      letter-spacing: 0;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .lang-toggle-link {
+      color: inherit;
+      font-weight: 600;
+      padding: 0.4rem 0.1rem;
+      text-decoration: none;
+    }
+    .lang-toggle-link:hover {
+      color: var(--aor-accent, #b84a2f);
+    }
+    .lang-toggle-link:focus-visible {
+      border-radius: 2px;
+      outline: 2px solid var(--aor-accent, #b84a2f);
+      outline-offset: 2px;
+    }
+    .lang-toggle-active {
+      border-bottom: 1px solid;
+      color: #1f2937;
+      font-weight: 700;
+    }
+    .lang-toggle-unavailable {
+      cursor: not-allowed;
+      opacity: 0.38;
+    }
+    html.dark .lang-toggle-active {
+      color: #f3f4f6;
+    }
+    .lang-toggle-separator {
+      opacity: 0.55;
+    }
+
+    /* Code Block */
+    .hextra-code-block pre:not(.lntable pre) {
+      font-size: 0.9em;
+      line-height: 1.65;
+      background: #f1ece0;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    html.dark .hextra-code-block pre:not(.lntable pre) {
+      background: #23201c;
+      border-color: rgba(255,255,255,0.08);
+    }
+    .hextra-code-block code {
+      font-variant-ligatures: none;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    :where(.content code):not(.hextra-code-block code) {
+      font-size: 0.85em;
+      padding: 0.15em 0.35em;
+      background: rgba(0,0,0,0.05);
+      border-radius: 4px;
+    }
+    html.dark :where(.content code):not(.hextra-code-block code) {
+      background: rgba(255,255,255,0.08);
+    }
+    .hextra-code-block pre::-webkit-scrollbar {
+      height: 10px;
+    }
+    .hextra-code-block pre::-webkit-scrollbar-thumb {
+      background-color: rgba(0,0,0,0.18);
+      border-radius: 999px;
+    }
+    html.dark .hextra-code-block pre::-webkit-scrollbar-thumb {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    /* View Toggle */
+    .aor-index-view-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin: 1.25rem 0 0.5rem;
+      gap: 0.2rem;
+      width: fit-content;
+      margin-inline-start: auto;
+      padding: 0.2rem;
+      border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+      border-radius: 8px;
+      background: color-mix(in srgb, currentColor 3%, transparent);
+    }
+    .aor-index-view-toggle button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      min-width: 5.25rem;
+      min-height: 2.25rem;
+      padding: 0.35rem 0.7rem;
+      border: 0;
+      border-radius: 5px;
+      background: 0 0;
+      color: color-mix(in srgb, currentColor 66%, transparent);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      transition: all 0.15s ease;
+    }
+    .aor-index-view-toggle button:hover {
+      color: currentColor;
+    }
+    .aor-index-view-toggle button[aria-pressed="true"] {
+      background: color-mix(in srgb, var(--aor-accent) 13%, transparent);
+      color: var(--aor-accent-strong);
+      box-shadow: 0 1px 2px color-mix(in srgb, currentColor 12%, transparent);
+    }
+    .aor-index-view-toggle button:focus-visible {
+      outline: 2px solid var(--aor-accent);
+      outline-offset: 2px;
+    }
+    .aor-index-view-toggle svg {
+      flex: none;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* View Switching Logic */
+    .aor-index-grid { display: none; }
+    html[data-aor-index-view="grid"] .aor-index-list { display: none; }
+    html[data-aor-index-view="grid"] .aor-index-grid { display: block; }
+    html[data-aor-index-view="grid"] .aor-featured__list { display: none; }
+    html[data-aor-index-view="grid"] .aor-featured__grid { display: grid; }
+
+    /* Featured Accordion */
+    .aor-featured {
+      margin: 1.5rem 0;
+      padding: 0.75rem 1rem;
+      border: 1px solid color-mix(in srgb, var(--aor-accent) 18%, transparent);
+      border-radius: 0.75rem;
+      background: color-mix(in srgb, var(--aor-accent) 2%, transparent);
+      transition: border-color 0.2s ease;
+    }
+    .aor-featured__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .aor-featured__header h2 {
+      margin: 0;
+      font-size: 1.15rem;
+    }
+    .aor-featured__toggle {
+      cursor: pointer;
+      border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+      border-radius: 999px;
+      padding: 0.25rem 0.7rem;
+      background: 0 0;
+      color: inherit;
+      font: inherit;
+      font-size: 0.9rem;
+      transition: background 0.15s ease;
+    }
+    .aor-featured__toggle:hover {
+      background: color-mix(in srgb, currentColor 6%, transparent);
+    }
+    .aor-featured__body {
+      overflow: hidden;
+      transition: max-height 220ms ease, opacity 160ms ease, margin-top 220ms ease;
+      max-height: 2000px;
+      opacity: 1;
+      margin-top: 0.75rem;
+    }
+    .aor-featured.is-collapsed .aor-featured__body {
+      max-height: 0 !important;
+      opacity: 0;
+      margin-top: 0;
+    }
+    .aor-featured li code {
+      background: 0 0 !important;
+      border: 0 !important;
+      padding: 0 !important;
+      font-size: 0.78em;
+      letter-spacing: 0.01em;
+      color: color-mix(in srgb, currentColor 48%, transparent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    .aor-featured li {
+      transition: transform 0.12s ease;
+      margin-bottom: 0.6rem;
+    }
+    .aor-featured li:hover {
+      transform: translateX(2px);
+    }
+
+    /* Month Header */
+    .aor-index-month {
+      margin: 2rem 0 2.5rem;
+    }
+    .aor-index-month__header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.85rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    }
+    .aor-index-month__header h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+    .aor-index-month__header span {
+      flex: none;
+      color: color-mix(in srgb, currentColor 52%, transparent);
+      font-size: 0.78rem;
+    }
+
+    /* Post Grid & Cards */
+    .aor-post-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.9rem;
+    }
+    .aor-post-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 18rem;
+      margin: 0;
+      padding: 1rem;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+      border-radius: 8px;
+      background: color-mix(in srgb, currentColor 2.5%, transparent);
+      transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+    }
+    .aor-post-card:hover {
+      border-color: color-mix(in srgb, var(--aor-accent) 48%, transparent);
+      box-shadow: 0 8px 22px color-mix(in srgb, currentColor 10%, transparent);
+      transform: translateY(-2px);
+    }
+    .content a.aor-post-card__title-link {
+      color: var(--aor-accent);
+      text-decoration: none;
+    }
+    .content a.aor-post-card__title-link:hover {
+      color: var(--aor-accent-strong);
+      text-decoration: none;
+    }
+    .content a.aor-post-card__title-link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+    }
+    .content a.aor-post-card__title-link:focus-visible {
+      outline: 2px solid var(--aor-accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    .aor-post-card__date {
+      color: color-mix(in srgb, currentColor 48%, transparent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.72rem;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+    .aor-post-card__title {
+      display: -webkit-box;
+      overflow: hidden;
+      margin: 0.65rem 0 0;
+      color: var(--aor-accent);
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: 0;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      font-family: "source sans 3", helvetica neue, segoe ui, arial, sans-serif;
+    }
+    .aor-post-card__description {
+      display: -webkit-box;
+      overflow: hidden;
+      margin: 0.75rem 0 0;
+      color: color-mix(in srgb, currentColor 72%, transparent);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      letter-spacing: 0;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 8;
+    }
+    .aor-post-tags {
+      display: flex;
+      min-width: 0;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.18rem 0.6rem;
+      letter-spacing: 0;
+      font-family: "source sans 3", helvetica neue, segoe ui, arial, sans-serif;
+    }
+    .content a.aor-tag-link, a.aor-tag-link {
+      position: relative;
+      z-index: 1;
+      color: color-mix(in srgb, currentColor 55%, transparent);
+      font-size: 0.72rem;
+      font-weight: 500;
+      line-height: 1.45;
+      text-decoration: none;
+      transition: color 120ms ease;
+    }
+    .content a.aor-tag-link:hover, a.aor-tag-link:hover {
+      color: var(--aor-accent-strong);
+      text-decoration: underline;
+      text-decoration-thickness: 0.06em;
+      text-underline-offset: 0.14em;
+    }
+    .aor-post-tags--card {
+      margin-top: 0.45rem;
+    }
+    .aor-post-tags--index-list, .aor-post-tags--featured-list {
+      display: inline-flex;
+      margin: 0.15rem 0 0.35rem;
+      vertical-align: top;
+    }
+
+    /* Next Post Component */
+    .aor-next-post {
+      max-width: 68ch;
+      margin: 2rem auto 3rem;
+      padding: 1.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      background: #f9fafb;
+      transition: border-color 0.15s ease;
+    }
+    html.dark .aor-next-post {
+      border-color: #262626;
+      background: #171717;
+    }
+    .aor-next-post__label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #6b7280;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: "source sans 3", sans-serif;
+    }
+    .aor-next-post__link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: #111827;
+      font-size: 1.25rem;
+      font-weight: 650;
+      line-height: 1.35;
+      transition: color 150ms ease;
+      text-decoration: none;
+      font-family: "source sans 3", sans-serif;
+    }
+    .aor-next-post__link:hover {
+      color: hsl(var(--primary-hue) 100% 45%);
+    }
+    html.dark .aor-next-post__link {
+      color: #f3f4f6;
+    }
+    html.dark .aor-next-post__link:hover {
+      color: hsl(var(--primary-hue) 100% 75%);
+    }
+    .aor-next-post__icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      flex: none;
+    }
+    .aor-next-post__description {
+      margin: 0.75rem 0 0;
+      color: #4b5563;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    html.dark .aor-next-post__description {
+      color: #9ca3af;
+    }
+
+    /* Social Link Icons */
+    .content :where(a[href*="github.com"])::after,
+    .content :where(a[href*="gitlab.com"])::after,
+    .content :where(a[href*="x.com"])::after,
+    .content :where(a[href*="twitter.com"])::after,
+    .content :where(a[href*="linkedin.com"])::after,
+    .content :where(a[href*="medium.com"])::after,
+    .content :where(a[href*="dev.to"])::after,
+    .content :where(a[href*="google.com"])::after,
+    .content :where(a[href*="reddit.com"])::after,
+    .content :where(a[href*="youtube.com"])::after,
+    .content :where(a[href*="youtu.be"])::after,
+    .content :where(a[href*="tiktok.com"])::after,
+    .content :where(a[href*="instagram.com"])::after {
+      content: "";
+      display: inline-block;
+      width: 0.95em;
+      height: 0.95em;
+      margin-left: 0.25em;
+      vertical-align: -0.12em;
+      background-color: currentColor;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: contain;
+    }
+    .content :where(a[href*="github.com"])::after {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.9.58.11.79-.25.79-.56 0-.28-.01-1.2-.02-2.17-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.14 1.18a10.9 10.9 0 0 1 5.72 0c2.18-1.49 3.14-1.18 3.14-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.83 1.18 3.09 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.08.78 2.18 0 1.57-.01 2.84-.01 3.22 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z'/%3E%3C/svg%3E");
+    }
+    .content :where(a[href*="x.com"])::after, .content :where(a[href*="twitter.com"])::after {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.9 2H22l-6.8 7.8L23 22h-6.8l-5.3-6.6L4.9 22H2l7.3-8.3L1 2h6.9l4.8 6.1L18.9 2zm-1.1 18h1.9L6.2 4H4.2l13.6 16z'/%3E%3C/svg%3E");
+    }
+
+    /* Omnisearch Modal */
+    .aor-omni-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.45);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 12vh 16px 16px;
+    }
+    .aor-omni-backdrop[hidden] { display: none; }
+    .aor-omni {
+      width: 100%;
+      max-width: 640px;
+      background: #fff;
+      color: #18181b;
+      border: 1px solid #e4e4e7;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      overflow: hidden;
+      font-family: inherit;
+    }
+    html.dark .aor-omni {
+      background: #1b1b1f;
+      color: #ededed;
+      border-color: #33333a;
+    }
+    .aor-omni__input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px 16px;
+      border: 0;
+      outline: 0;
+      font-size: 1.05rem;
+      background: 0 0;
+      color: inherit;
+      border-bottom: 1px solid #e4e4e7;
+    }
+    html.dark .aor-omni__input {
+      border-bottom-color: #33333a;
+    }
+    .aor-omni__hint {
+      padding: 6px 16px;
+      font-size: 0.72rem;
+      opacity: 0.6;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .aor-omni__list {
+      max-height: 52vh;
+      overflow-y: auto;
+      margin: 0;
+      padding: 4px 0;
+      list-style: none;
+    }
+    .aor-omni__row {
+      display: block;
+      padding: 9px 16px;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+    .aor-omni__row small {
+      display: block;
+      opacity: 0.55;
+      font-size: 0.72rem;
+      margin-top: 2px;
+    }
+    .aor-omni__row.is-active, .aor-omni__row:hover {
+      background: #f4f4f5;
+    }
+    html.dark .aor-omni__row.is-active, html.dark .aor-omni__row:hover {
+      background: #2a2a31;
+    }
+
+    /* Design System Documentation Bar & Styles */
+    .ds-top-bar {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--hx-color-white, #faf7f0) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    html.dark .ds-top-bar {
+      background: color-mix(in srgb, var(--hx-color-dark, #1a1714) 85%, transparent);
+    }
+    .ds-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: "source sans 3", sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--aor-accent);
+      text-decoration: none;
+    }
+    .ds-brand-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: var(--aor-accent-soft);
+      color: var(--aor-accent);
+      border: 1px solid color-mix(in srgb, var(--aor-accent) 25%, transparent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .ds-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .ds-nav-links a {
+      font-family: "source sans 3", sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: color-mix(in srgb, currentColor 70%, transparent);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .ds-nav-links a:hover {
+      color: var(--aor-accent);
+    }
+    .ds-doc-section {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+    }
+    .ds-section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--aor-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .ds-section-title {
+      font-family: "source sans 3", sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+    }
+    .ds-section-desc {
+      font-size: 1.05rem;
+      color: color-mix(in srgb, currentColor 75%, transparent);
+      margin-bottom: 2rem;
+      max-width: 65ch;
+    }
+
+    /* Spec Table */
+    .ds-spec-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 1.5rem 0;
+      background: color-mix(in srgb, currentColor 1.5%, transparent);
+    }
+    .ds-spec-row {
+      display: grid;
+      grid-template-columns: 180px 1fr 140px;
+      align-items: center;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+      gap: 1.5rem;
+    }
+    .ds-spec-row:last-child {
+      border-bottom: none;
+    }
+    .ds-spec-name {
+      font-family: "source sans 3", sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: color-mix(in srgb, currentColor 60%, transparent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .ds-spec-preview {
+      min-width: 0;
+    }
+    .ds-spec-metrics {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
+      color: color-mix(in srgb, currentColor 55%, transparent);
+      text-align: right;
+    }
+
+    /* Color Swatches */
+    .ds-color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .ds-swatch-card {
+      border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+      border-radius: 8px;
+      overflow: hidden;
+      background: color-mix(in srgb, currentColor 2%, transparent);
+    }
+    .ds-swatch-box {
+      height: 90px;
+      width: 100%;
+      border-bottom: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+      position: relative;
+    }
+    .ds-swatch-meta {
+      padding: 0.85rem 1rem;
+    }
+    .ds-swatch-name {
+      font-family: "source sans 3", sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+    .ds-swatch-token {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.72rem;
+      color: color-mix(in srgb, currentColor 55%, transparent);
+    }
+
+    /* Component State Preview Grid */
+    .ds-state-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .ds-state-card {
+      border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+      border-radius: 8px;
+      padding: 1.25rem;
+      background: color-mix(in srgb, currentColor 2%, transparent);
+    }
+    .ds-state-title {
+      font-family: "source sans 3", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: color-mix(in srgb, currentColor 50%, transparent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Motion Gallery Cards */
+    .ds-motion-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .ds-motion-box {
+      border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+      border-radius: 8px;
+      padding: 1.25rem;
+      background: color-mix(in srgb, currentColor 2%, transparent);
+      cursor: pointer;
+    }
+
+    @media (min-width: 78rem) {
+      .aor-post-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 48rem) {
+      .ds-nav-links { display: none; }
+      .ds-spec-row { grid-template-columns: 1fr; gap: 0.5rem; }
+      .ds-spec-metrics { text-align: left; }
+      .aor-post-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Living Design System Navigation -->
+  <header class="ds-top-bar">
+    <div class="ds-brand">
+      <span>AkitaOnRails</span>
+      <span class="ds-brand-badge">Design System v2.0</span>
+    </div>
+    <nav>
+      <ul class="ds-nav-links">
+        <li><a href="#hero">0. Hero</a></li>
+        <li><a href="#typography">1. Typography</a></li>
+        <li><a href="#colors">2. Colors & Surfaces</a></li>
+        <li><a href="#components">3. Components</a></li>
+        <li><a href="#layout">4. Layout</a></li>
+        <li><a href="#motion">5. Motion</a></li>
+        <li><a href="#icons">6. Icons</a></li>
+      </ul>
+    </nav>
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <!-- Live Theme Mode Switcher -->
+      <button id="dsThemeBtn" onclick="toggleTheme()" class="aor-featured__toggle" style="font-size: 0.78rem; display: inline-flex; align-items: center; gap: 0.35rem;" title="Toggle Light/Dark Theme">
+        <svg id="dsThemeIconLight" class="hidden" fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <svg id="dsThemeIconDark" fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span id="dsThemeText">Theme: Light</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 0) HERO (EXACT CLONE, TEXT ADAPTED)                                      -->
+  <!-- ========================================================================= -->
+  <section id="hero" style="border-bottom: 2px solid color-mix(in srgb, var(--aor-accent) 20%, transparent);">
+    
+    <!-- Exact Original Navbar -->
+    <div class="hextra-nav-container hx:sticky hx:top-0 hx:z-20 hx:w-full hx:bg-transparent hx:print:hidden">
+      <div class="hextra-nav-container-blur hx:pointer-events-none hx:absolute hx:z-[-1] hx:h-full hx:w-full hx:bg-white hx:dark:bg-dark hx:shadow-[0_2px_4px_rgba(0,0,0,.02),0_1px_0_rgba(0,0,0,.06)] hx:contrast-more:shadow-[0_0_0_1px_#000] hx:dark:shadow-[0_-1px_0_rgba(255,255,255,.1)_inset] hx:contrast-more:dark:shadow-[0_0_0_1px_#fff]"></div>
+      <nav class="hextra-max-navbar-width hx:mx-auto hx:flex hx:items-center hx:justify-end hx:gap-2 hx:h-16 hx:px-6">
+        <a class="hx:flex hx:items-center hx:hover:opacity-75 hx:ltr:mr-auto hx:rtl:ml-auto" href="#hero">
+          <span class="hx:mr-2 hx:font-extrabold hx:inline hx:select-none" title="AkitaOnRails Design System">AkitaOnRails.com</span>
+        </a>
+        <a class="hx:text-sm hx:contrast-more:text-gray-700 hx:contrast-more:dark:text-gray-100 hx:relative hx:-ml-2 hx:hidden hx:whitespace-nowrap hx:p-2 hx:md:inline-flex hx:items-center hx:gap-1 hx:text-gray-600 hx:hover:text-gray-800 hx:dark:text-gray-400 hx:dark:hover:text-gray-200" href="#typography" title="Typography Specs">
+          <span class="hx:text-center">Typography</span>
+        </a>
+        <a class="hx:text-sm hx:contrast-more:text-gray-700 hx:contrast-more:dark:text-gray-100 hx:relative hx:-ml-2 hx:hidden hx:whitespace-nowrap hx:p-2 hx:md:inline-flex hx:items-center hx:gap-1 hx:text-gray-600 hx:hover:text-gray-800 hx:dark:text-gray-400 hx:dark:hover:text-gray-200" href="#colors" title="Color Tokens">
+          <span class="hx:text-center">Tokens</span>
+        </a>
+        <a class="hx:p-2 hx:text-current" href="https://github.com/akitaonrails" rel="noreferrer" target="_blank" title="GitHub ↗">
+          <svg fill="currentColor" height="24" viewbox="3 3 18 18"><path d="M12 3C7.0275 3 3 7.12937 3 12.2276c0 4.0833 2.57625 7.5321 6.15374 8.7548C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441 9.77249 20.3249 9.76125 19.5982 9.76125 18.8254 7.5 19.2522 6.915 18.2602 6.735 17.7412 6.63375 17.4759 6.19499 16.6569 5.8125 16.4378 5.4975 16.2647 5.0475 15.838 5.80124 15.8264 6.51 15.8149 7.01625 16.4954 7.18499 16.7723 7.99499 18.1679 9.28875 17.7758 9.80625 17.5335 9.885 16.9337 10.1212 16.53 10.38 16.2993 8.3775 16.0687 6.285 15.2728 6.285 11.7432c0-1.0035.34875-1.834.92249-2.47994C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794c0 0 .753749999999999-.24223 2.47499.94583.72001-.20762 1.48501-.31143 2.25001-.31143C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377c1.7212-1.19959 2.475-.94583 2.475-.94583C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326 17.4113 9.9092 17.76 10.7281 17.76 11.7432c0 3.5411-2.1037 4.3255-4.1063 4.5561C13.98 16.5877 14.2613 17.1414 14.2613 18.0065 14.2613 19.2407 14.25 20.2326 14.25 20.5441 14.25 20.7863 14.4188 21.0746 14.8688 20.9824 16.6554 20.364 18.2079 19.1866 19.3078 17.6162c1.0999-1.5705 1.6917-3.4551 1.6922-5.3886C21 7.12937 16.9725 3 12 3z"></path></svg>
+          <span class="hx:sr-only">GitHub ↗</span>
+        </a>
+        <div class="hextra-search-wrapper hx:relative hx:md:w-64">
+          <div class="hx:relative hx:flex hx:items-center hx:text-gray-900 hx:contrast-more:text-gray-800 hx:dark:text-gray-300 hx:contrast-more:dark:text-gray-300">
+            <input class="hextra-search-input hx:focus:hextra-focus hx:block hx:w-full hx:appearance-none hx:rounded-lg hx:px-3 hx:py-2 hx:transition-colors hx:text-base hx:leading-tight hx:md:text-sm hx:bg-black/[.05] hx:dark:bg-gray-50/10 hx:focus:bg-white hx:dark:focus:bg-dark hx:placeholder:text-gray-500 hx:dark:placeholder:text-gray-400 hx:contrast-more:border hx:contrast-more:border-current" data-ddg="1" enterkeyhint="search" placeholder="Search the site (DuckDuckGo)…" spellcheck="false" type="search"/>
+            <kbd class="hx:absolute hx:my-1.5 hx:select-none hx:ltr:right-1.5 hx:rtl:left-1.5 hx:h-5 hx:rounded-sm hx:bg-white hx:px-1.5 hx:font-mono hx:text-[10px] hx:font-medium hx:text-gray-500 hx:border hx:border-gray-200 hx:dark:border-gray-100/20 hx:dark:bg-dark/50 hx:contrast-more:border-current hx:contrast-more:text-current hx:contrast-more:dark:border-current hx:items-center hx:gap-1 hx:transition-opacity hx:pointer-events-none hx:hidden hx:sm:flex">CTRL K</kbd>
+          </div>
+        </div>
+        <a class="hx:p-2 hx:text-current" href="#hero" title="RSS">
+          <svg aria-hidden="true" fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 5c7.18.0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span class="hx:sr-only">RSS</span>
+        </a>
+        <div aria-label="Select language" class="lang-toggle lang-toggle--navbar" role="navigation">
+          <a class="lang-toggle-link" data-lang="pt" href="#hero">PT</a>
+          <span aria-hidden="true" class="lang-toggle-separator">|</span>
+          <a aria-current="page" class="lang-toggle-link lang-toggle-active" data-lang="en" href="#hero">EN</a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Exact Original Layout Grid & Content -->
+    <div class="hx:mx-auto hx:flex hextra-max-page-width">
+      
+      <!-- Left Sidebar (Clone) -->
+      <aside class="hextra-sidebar-container hx:flex hx:flex-col hx:print:hidden hx:md:top-16 hx:md:shrink-0 hx:md:w-64 hx:md:self-start hx:max-md:[transform:translate3d(0,-100%,0)] hx:md:hidden hx:xl:block" style="padding: 1rem;">
+        <div class="hextra-scrollbar hx:overflow-y-auto hx:overflow-x-hidden hx:p-4 hx:grow">
+          <ul class="ds-raw-list hx:flex hx:flex-col hx:gap-1" style="list-style: none; padding-left: 0; font-family: 'source sans 3', sans-serif; font-size: 0.9rem;">
+            <li><a class="hx:flex hx:items-center hx:gap-2 hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-gray-600 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:text-gray-50" href="#typography">Typography Specs</a></li>
+            <li><a class="hx:flex hx:items-center hx:gap-2 hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-gray-600 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:text-gray-50" href="#colors">Color Tokens & Surfaces</a></li>
+            <li><a class="hx:flex hx:items-center hx:gap-2 hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-gray-600 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:text-gray-50" href="#components">UI Components</a></li>
+            <li><a class="hx:flex hx:items-center hx:gap-2 hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-gray-600 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:text-gray-50" href="#layout">Layout & Architecture</a></li>
+            <li><a class="hx:flex hx:items-center hx:gap-2 hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-gray-600 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:text-gray-50" href="#motion">Motion & Transitions</a></li>
+            <li><a class="hx:flex hx:items-center hx:gap-2 hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-gray-600 hx:hover:text-gray-900 hx:dark:text-neutral-400 hx:dark:hover:text-gray-50" href="#icons">Iconography Matrix</a></li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- Central Main Column (Clone with Adapted Text) -->
+      <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8">
+        <main class="hx:w-full hx:min-w-0 hx:max-w-6xl hx:px-6 hx:pt-4 hx:md:px-12">
+          
+          <h1 class="hx:sr-only">AkitaOnRails Design System</h1>
+          
+          <div class="content">
+            
+            <!-- Index View Toggle (Exact Clone) -->
+            <div aria-label="Post view" class="aor-index-view-toggle" role="group">
+              <button aria-controls="aor-index-list aor-index-grid" aria-pressed="true" data-index-view-button="list" title="List" type="button">
+                <svg aria-hidden="true" fill="none" height="1em" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="1em"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span>List</span>
+              </button>
+              <button aria-controls="aor-index-list aor-index-grid" aria-pressed="false" data-index-view-button="grid" title="Grid" type="button">
+                <svg aria-hidden="true" fill="none" height="1em" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="1em"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6A2 2 0 014 8V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <span>Grid</span>
+              </button>
+            </div>
+
+            <!-- Featured Accordion Container (Clone with Design System Text) -->
+            <section class="aor-featured" id="aor-featured-posts-en">
+              <div class="aor-featured__header">
+                <h2>Featured Design System Highlights</h2>
+                <button aria-controls="aor-featured-posts-en-body" aria-expanded="true" class="aor-featured__toggle" type="button">Hide</button>
+              </div>
+              
+              <div class="aor-featured__body" id="aor-featured-posts-en-body">
+                
+                <!-- List Mode View -->
+                <div class="aor-featured__list" data-index-view="list">
+                  <ul>
+                    <li>
+                      <code>Aug 22</code> — <a href="#colors" title="Warm paper background with terra cotta primary accents and rich HSL variables.">Design Tokens & Variable Schema: Warm Paper & Terra Cotta Palette</a><br/>
+                      <span class="aor-post-tags aor-post-tags--featured-list">
+                        <a class="aor-tag-link" href="#colors">#design-tokens</a>
+                        <a class="aor-tag-link" href="#colors">#css-variables</a>
+                        <a class="aor-tag-link" href="#colors">#color-mix</a>
+                      </span>
+                    </li>
+                    <li>
+                      <code>Aug 19</code> — <a href="#typography" title="Editorial rhythm using Source Serif 4 for prose and Source Sans 3 for headers.">Editorial Typography System: Source Serif 4 & Source Sans 3 Hierarchy</a><br/>
+                      <span class="aor-post-tags aor-post-tags--featured-list">
+                        <a class="aor-tag-link" href="#typography">#typography</a>
+                        <a class="aor-tag-link" href="#typography">#web-fonts</a>
+                        <a class="aor-tag-link" href="#typography">#editorial-design</a>
+                      </span>
+                    </li>
+                    <li>
+                      <code>Aug 18</code> — <a href="#components" title="Seamless switcher between high-density list and responsive card grid.">Dual Index Views: High-Density List and Responsive Article Grid</a><br/>
+                      <span class="aor-post-tags aor-post-tags--featured-list">
+                        <a class="aor-tag-link" href="#components">#ui-patterns</a>
+                        <a class="aor-tag-link" href="#layout">#responsive-grid</a>
+                        <a class="aor-tag-link" href="#motion">#view-switcher</a>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Grid Mode View -->
+                <div class="aor-featured__grid aor-post-grid" data-index-view="grid">
+                  <article class="aor-post-card">
+                    <time class="aor-post-card__date" datetime="2026-08-22">Aug 22, 2026</time>
+                    <h3 class="aor-post-card__title"><a class="aor-post-card__title-link" href="#colors">Design Tokens & Color Palette</a></h3>
+                    <span class="aor-post-tags aor-post-tags--card">
+                      <a class="aor-tag-link" href="#colors">#design-tokens</a>
+                      <a class="aor-tag-link" href="#colors">#css-variables</a>
+                    </span>
+                    <p class="aor-post-card__description">Warm paper background with terra cotta primary accents, deep brick hover states, and seamless dark mode color-mix variables.</p>
+                  </article>
+                  <article class="aor-post-card">
+                    <time class="aor-post-card__date" datetime="2026-08-19">Aug 19, 2026</time>
+                    <h3 class="aor-post-card__title"><a class="aor-post-card__title-link" href="#typography">Editorial Typography System</a></h3>
+                    <span class="aor-post-tags aor-post-tags--card">
+                      <a class="aor-tag-link" href="#typography">#typography</a>
+                      <a class="aor-tag-link" href="#typography">#web-fonts</a>
+                    </span>
+                    <p class="aor-post-card__description">Editorial rhythm using Source Serif 4 for long-form prose and Source Sans 3 for bold headlines and UI controls.</p>
+                  </article>
+                </div>
+
+              </div>
+            </section>
+
+          </div>
+        </main>
+      </article>
+
+      <!-- Right Table of Contents (Clone) -->
+      <nav aria-label="table of contents" class="hextra-toc hx:order-last hx:hidden hx:w-64 hx:shrink-0 hx:xl:block hx:print:hidden hx:px-4">
+        <div class="hextra-scrollbar hx:sticky hx:top-16 hx:overflow-y-auto hx:pr-4 hx:pt-6 hx:text-sm [hyphens:auto] hx:max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))]">
+          <p class="hx:mb-4 hx:font-semibold hx:tracking-tight">Design System Index</p>
+          <ul class="ds-raw-list" style="list-style: none; padding-left: 0;">
+            <li class="hx:my-2"><a class="hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300" href="#hero">0. Hero Clone</a></li>
+            <li class="hx:my-2"><a class="hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300" href="#typography">1. Typography</a></li>
+            <li class="hx:my-2"><a class="hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300" href="#colors">2. Colors & Surfaces</a></li>
+            <li class="hx:my-2"><a class="hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300" href="#components">3. UI Components</a></li>
+            <li class="hx:my-2"><a class="hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300" href="#layout">4. Layout & Spacing</a></li>
+            <li class="hx:my-2"><a class="hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300" href="#motion">5. Motion & Interaction</a></li>
+            <li class="hx:my-2"><a class="hx:font-medium hx:text-gray-500 hx:hover:text-gray-900 hx:dark:text-gray-400 hx:dark:hover:text-gray-300" href="#icons">6. Iconography Matrix</a></li>
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 1) TYPOGRAPHY SECTION                                                    -->
+  <!-- ========================================================================= -->
+  <section id="typography" class="ds-doc-section">
+    <div class="content">
+      <span class="ds-section-badge">01 / Typography System</span>
+      <h2 class="ds-section-title">Type Hierarchy & Scale</h2>
+      <p class="ds-section-desc">
+        The typography pairs <strong>Source Serif 4</strong> for readable editorial prose with <strong>Source Sans 3</strong> for crisp headings, metadata, and controls. Monospace elements utilize clean SFMono/Menlo font stacks.
+      </p>
+
+      <div class="ds-spec-table">
+        
+        <!-- Heading 1 -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Heading 1</div>
+          <div class="ds-spec-preview">
+            <h1 style="margin: 0; font-size: 2.25rem; font-family: 'source sans 3', sans-serif; font-weight: 700; letter-spacing: -0.012em; line-height: 1.15;">
+              AkitaOnRails Blog
+            </h1>
+          </div>
+          <div class="ds-spec-metrics">36px / 41.4px<br/><span style="opacity: 0.6;">2.25rem / 1.15</span></div>
+        </div>
+
+        <!-- Heading 2 -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Heading 2</div>
+          <div class="ds-spec-preview">
+            <h2 style="margin: 0; font-size: 1.35rem; font-family: 'source sans 3', sans-serif; font-weight: 700; letter-spacing: 0; line-height: 1.25;">
+              2026 - August Architecture
+            </h2>
+          </div>
+          <div class="ds-spec-metrics">21.6px / 27px<br/><span style="opacity: 0.6;">1.35rem / 1.25</span></div>
+        </div>
+
+        <!-- Heading 3 -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Heading 3</div>
+          <div class="ds-spec-preview">
+            <h3 class="aor-post-card__title" style="margin: 0;">
+              <span style="color: var(--aor-accent);">LLM Benchmarks: Deepseek v4 Snapshots</span>
+            </h3>
+          </div>
+          <div class="ds-spec-metrics">17.3px / 22.5px<br/><span style="opacity: 0.6;">1.08rem / 1.3</span></div>
+        </div>
+
+        <!-- Heading 4 / Tag Title -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Heading 4</div>
+          <div class="ds-spec-preview">
+            <h4 class="aor-tag-page__title" style="margin: 0; font-family: 'source sans 3', sans-serif; font-weight: 700;">
+              Tag Archive: Artificial Intelligence
+            </h4>
+          </div>
+          <div class="ds-spec-metrics">32px / 38.4px<br/><span style="opacity: 0.6;">2.0rem / 1.2</span></div>
+        </div>
+
+        <!-- Bold L -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Bold L</div>
+          <div class="ds-spec-preview">
+            <a class="aor-next-post__link" href="#typography" style="pointer-events: none;">
+              <span>Understanding Next-Gen Distributed Architecture</span>
+              <svg class="aor-next-post__icon" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </a>
+          </div>
+          <div class="ds-spec-metrics">20px / 27px<br/><span style="opacity: 0.6;">1.25rem / 1.35</span></div>
+        </div>
+
+        <!-- Bold M -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Bold M</div>
+          <div class="ds-spec-preview">
+            <span class="hx:font-extrabold" style="font-family: 'source sans 3', sans-serif; font-size: 1rem; font-weight: 800;">
+              AkitaOnRails Core Brand Signature
+            </span>
+          </div>
+          <div class="ds-spec-metrics">16px / 24px<br/><span style="opacity: 0.6;">1.0rem / 1.5</span></div>
+        </div>
+
+        <!-- Bold S -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Bold S</div>
+          <div class="ds-spec-preview">
+            <button class="aor-featured__toggle" type="button" style="pointer-events: none; font-weight: 600;">
+              Interactive Switch Button
+            </button>
+          </div>
+          <div class="ds-spec-metrics">13.6px / 13.6px<br/><span style="opacity: 0.6;">0.85rem / 1.0</span></div>
+        </div>
+
+        <!-- Paragraph (Reading Body / Large) -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Paragraph (Large)</div>
+          <div class="ds-spec-preview">
+            <p style="margin: 0; font-size: 19px; line-height: 1.7; font-family: 'source serif 4', serif;">
+              Clean Code carries different weight when an agent is the primary reader: small code, greppable names, provenance context, and explicit rules reduce navigation, cost, and errors.
+            </p>
+          </div>
+          <div class="ds-spec-metrics">19px / 32.3px<br/><span style="opacity: 0.6;">1.1875rem / 1.7</span></div>
+        </div>
+
+        <!-- Regular M / Card Body -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Regular M</div>
+          <div class="ds-spec-preview">
+            <p class="aor-post-card__description" style="margin: 0;">
+              I ran the new Deepseek v4 snapshots through the benchmark: Flash jumped from 80 to 90 and Pro from 82 to 91, both Tier A, the cheapest in the pack.
+            </p>
+          </div>
+          <div class="ds-spec-metrics">14.4px / 21.6px<br/><span style="opacity: 0.6;">0.9rem / 1.5</span></div>
+        </div>
+
+        <!-- Regular S / Metadata -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Regular S</div>
+          <div class="ds-spec-preview">
+            <div style="display: flex; gap: 0.8rem; align-items: center;">
+              <span class="aor-post-card__date">Aug 22, 2026</span>
+              <a class="aor-tag-link" href="#typography">#artificial-intelligence</a>
+              <a class="aor-tag-link" href="#typography">#coding-agents</a>
+            </div>
+          </div>
+          <div class="ds-spec-metrics">11.5px / 16.1px<br/><span style="opacity: 0.6;">0.72rem / 1.4</span></div>
+        </div>
+
+        <!-- Label / Mono -->
+        <div class="ds-spec-row">
+          <div class="ds-spec-name">Label / Mono</div>
+          <div class="ds-spec-preview">
+            <span class="aor-next-post__label" style="margin: 0;">NEXT POST • SERIES PART 2</span>
+          </div>
+          <div class="ds-spec-metrics">12px / 12px<br/><span style="opacity: 0.6;">0.75rem / 1.0</span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 2) COLORS & SURFACES                                                     -->
+  <!-- ========================================================================= -->
+  <section id="colors" class="ds-doc-section">
+    <div class="content">
+      <span class="ds-section-badge">02 / Color System</span>
+      <h2 class="ds-section-title">Surfaces, Palettes & Tokens</h2>
+      <p class="ds-section-desc">
+        Warm editorial paper backgrounds with terra cotta and amber accents. Uses dynamic <code>color-mix(in srgb, ...)</code> for adaptive dark mode surfaces and borders.
+      </p>
+
+      <!-- Light Palette Swatches -->
+      <h3 style="font-size: 1.1rem; margin-top: 1.5rem;">Light Theme Tokens</h3>
+      <div class="ds-color-grid">
+        
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #faf7f0;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Paper White</div>
+            <div class="ds-swatch-token">--hx-color-white<br/>#faf7f0</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #f1ece0;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Warm Sand 100</div>
+            <div class="ds-swatch-token">--hx-color-gray-100<br/>#f1ece0</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #e8e2d2;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Warm Sand 200</div>
+            <div class="ds-swatch-token">--hx-color-gray-200<br/>#e8e2d2</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #a63a1e;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Terra Cotta Accent</div>
+            <div class="ds-swatch-token">--aor-accent<br/>#a63a1e (hsl 20° 62% 44%)</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #7f2a12;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Terra Cotta Strong</div>
+            <div class="ds-swatch-token">--aor-accent-strong<br/>#7f2a12</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: rgba(166, 58, 30, 0.13);"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Accent Soft Tonal</div>
+            <div class="ds-swatch-token">--aor-accent-soft<br/>rgba(166,58,30,0.13)</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dark Palette Swatches -->
+      <h3 style="font-size: 1.1rem; margin-top: 2rem;">Dark Theme Tokens</h3>
+      <div class="ds-color-grid">
+        
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #1a1714;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Charcoal Dark</div>
+            <div class="ds-swatch-token">--hx-color-dark<br/>#1a1714</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #2a2520;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Neutral 800</div>
+            <div class="ds-swatch-token">--hx-color-neutral-800<br/>#2a2520</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #23201c;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Neutral 900 / Code</div>
+            <div class="ds-swatch-token">--hx-color-neutral-900<br/>#23201c</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #e2a05a;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Amber Accent</div>
+            <div class="ds-swatch-token">--aor-accent (dark)<br/>#e2a05a (hsl 32° 68% 62%)</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: #f2bd82;"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Amber Strong</div>
+            <div class="ds-swatch-token">--aor-accent-strong (dark)<br/>#f2bd82</div>
+          </div>
+        </div>
+
+        <div class="ds-swatch-card">
+          <div class="ds-swatch-box" style="background-color: rgba(226, 160, 90, 0.16);"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">Dark Accent Soft</div>
+            <div class="ds-swatch-token">--aor-accent-soft (dark)<br/>rgba(226,160,90,0.16)</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Surface Treatments & Dividers -->
+      <h3 style="font-size: 1.1rem; margin-top: 2rem;">Borders, Gradients & Dividers</h3>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0;">
+        
+        <div style="padding: 1.25rem; border: 1px solid color-mix(in srgb, currentColor 16%, transparent); border-radius: 8px; background: color-mix(in srgb, currentColor 2.5%, transparent);">
+          <span style="font-family: ui-monospace, monospace; font-size: 0.75rem; opacity: 0.6;">Card Surface • color-mix(in srgb, currentColor 2.5%, transparent) + border 16%</span>
+        </div>
+
+        <div style="padding: 1.25rem; border: 1px solid color-mix(in srgb, var(--aor-accent) 48%, transparent); border-radius: 8px; background: color-mix(in srgb, var(--aor-accent) 5%, transparent);">
+          <span style="font-family: ui-monospace, monospace; font-size: 0.75rem; color: var(--aor-accent-strong);">Card Hover State • border color-mix(in srgb, var(--aor-accent) 48%, transparent)</span>
+        </div>
+
+        <blockquote>
+          "Editorial Blockquote treatment with 2px accent border-start." — AkitaOnRails
+        </blockquote>
+
+        <hr/>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3) UI COMPONENTS                                                         -->
+  <!-- ========================================================================= -->
+  <section id="components" class="ds-doc-section">
+    <div class="content">
+      <span class="ds-section-badge">03 / Component Library</span>
+      <h2 class="ds-section-title">Interactive UI Components</h2>
+      <p class="ds-section-desc">
+        Comprehensive pattern library showing canonical states side-by-side: default, hover, active, and focused.
+      </p>
+
+      <!-- 1. View Switcher -->
+      <div class="ds-state-card">
+        <div class="ds-state-title">
+          <span>01. Archive View Toggle</span>
+          <span style="font-family: ui-monospace, monospace; font-size: 0.7rem;">.aor-index-view-toggle</span>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+          <div>
+            <span style="display: block; font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.4rem;">List Active</span>
+            <div class="aor-index-view-toggle" style="margin: 0;">
+              <button aria-pressed="true" type="button"><svg fill="none" height="1em" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="1em"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>List</span></button>
+              <button aria-pressed="false" type="button"><svg fill="none" height="1em" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="1em"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6A2 2 0 014 8V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Grid</span></button>
+            </div>
+          </div>
+          <div>
+            <span style="display: block; font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.4rem;">Grid Active</span>
+            <div class="aor-index-view-toggle" style="margin: 0;">
+              <button aria-pressed="false" type="button"><svg fill="none" height="1em" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="1em"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>List</span></button>
+              <button aria-pressed="true" type="button"><svg fill="none" height="1em" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="1em"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6A2 2 0 014 8V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>Grid</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Search Input -->
+      <div class="ds-state-card" style="margin-top: 1.5rem;">
+        <div class="ds-state-title">
+          <span>02. Search Input & Keyboard Shortcut Badge</span>
+          <span style="font-family: ui-monospace, monospace; font-size: 0.7rem;">.hextra-search-input</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+          <div>
+            <span style="display: block; font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.4rem;">Default State</span>
+            <div class="hextra-search-wrapper" style="position: relative; width: 100%;">
+              <input class="hextra-search-input" placeholder="Search the site (DuckDuckGo)…" type="search" style="width: 100%; box-sizing: border-box;"/>
+              <kbd class="hx:absolute" style="position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); font-family: monospace; font-size: 10px; background: rgba(255,255,255,0.8); border: 1px solid #ccc; padding: 2px 5px; border-radius: 3px;">CTRL K</kbd>
+            </div>
+          </div>
+          <div>
+            <span style="display: block; font-size: 0.75rem; opacity: 0.6; margin-bottom: 0.4rem;">Interactive Trigger</span>
+            <button onclick="document.querySelector('.aor-omni-backdrop').hidden = false" class="aor-featured__toggle" style="width: 100%; height: 38px; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <span>Open Omnisearch Dialog</span>
+              <kbd style="font-family: monospace; font-size: 10px; background: color-mix(in srgb, currentColor 10%, transparent); padding: 2px 5px; border-radius: 3px;">Esc to close</kbd>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Language Selector & Tags -->
+      <div class="ds-state-card" style="margin-top: 1.5rem;">
+        <div class="ds-state-title">
+          <span>03. Language Switcher & Tag Badges</span>
+          <span style="font-family: ui-monospace, monospace; font-size: 0.7rem;">.lang-toggle • .aor-tag-link</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+          <div style="display: flex; gap: 2rem; align-items: center;">
+            <div aria-label="Select language" class="lang-toggle">
+              <a class="lang-toggle-link" href="#components">PT</a>
+              <span aria-hidden="true" class="lang-toggle-separator">|</span>
+              <a class="lang-toggle-link lang-toggle-active" href="#components">EN</a>
+            </div>
+            <div aria-label="Select language" class="lang-toggle">
+              <a class="lang-toggle-link lang-toggle-active" href="#components">PT</a>
+              <span aria-hidden="true" class="lang-toggle-separator">|</span>
+              <a class="lang-toggle-link" href="#components">EN</a>
+            </div>
+          </div>
+          <div class="aor-post-tags">
+            <a class="aor-tag-link" href="#components">#artificial-intelligence</a>
+            <a class="aor-tag-link" href="#components">#coding-agents</a>
+            <a class="aor-tag-link" href="#components">#vibe-coding</a>
+            <a class="aor-tag-link" href="#components">#rust</a>
+            <a class="aor-tag-link" href="#components">#security</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Post Card Component -->
+      <div class="ds-state-card" style="margin-top: 1.5rem;">
+        <div class="ds-state-title">
+          <span>04. Post Card (Grid Mode)</span>
+          <span style="font-family: ui-monospace, monospace; font-size: 0.7rem;">.aor-post-card</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+          <!-- Card Default -->
+          <article class="aor-post-card">
+            <time class="aor-post-card__date" datetime="2026-08-18">Aug 18, 2026</time>
+            <h3 class="aor-post-card__title"><a class="aor-post-card__title-link" href="#components">Hot Take: Harness, Loop Engineering, Graph Engineering Are Bullshit</a></h3>
+            <span class="aor-post-tags aor-post-tags--card">
+              <a class="aor-tag-link" href="#components">#artificial-intelligence</a>
+              <a class="aor-tag-link" href="#components">#llms</a>
+            </span>
+            <p class="aor-post-card__description">Here's my receipt: 30+ public repos, an AI marathon, and a whole benchmark — none of it using any of those disciplines.</p>
+          </article>
+
+          <!-- Card Hover / Focus -->
+          <article class="aor-post-card" style="border-color: color-mix(in srgb, var(--aor-accent) 48%, transparent); box-shadow: 0 8px 22px color-mix(in srgb, currentColor 10%, transparent); transform: translateY(-2px);">
+            <time class="aor-post-card__date" datetime="2026-08-15">Aug 15, 2026</time>
+            <h3 class="aor-post-card__title"><a class="aor-post-card__title-link" href="#components" style="color: var(--aor-accent-strong);">LLM Benchmarks: Qwen 3.8, GLM 5.3, Gemini 3.7</a></h3>
+            <span class="aor-post-tags aor-post-tags--card">
+              <a class="aor-tag-link" href="#components">#llm-benchmarks</a>
+              <a class="aor-tag-link" href="#components">#coding-agents</a>
+            </span>
+            <p class="aor-post-card__description">GLM 5.3 scored 94 and closed in on the leading trio. Qwen 3.8 Max jumped from 51 to 92 after it stopped hallucinating.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- 5. Next Post Banner -->
+      <div class="ds-state-card" style="margin-top: 1.5rem;">
+        <div class="ds-state-title">
+          <span>05. Next / Related Post Banner</span>
+          <span style="font-family: ui-monospace, monospace; font-size: 0.7rem;">.aor-next-post</span>
+        </div>
+        <div class="aor-next-post" style="margin: 0;">
+          <span class="aor-next-post__label">Next Article in Series</span>
+          <a class="aor-next-post__link" href="#components">
+            <span>Survival Guide for a Censored Internet in 2026</span>
+            <svg class="aor-next-post__icon" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          </a>
+          <p class="aor-next-post__description">A three-phase guide (commercial VPN, step-by-step self-hosted VPN, and obfuscated protocols) to keep communications alive.</p>
+        </div>
+      </div>
+
+      <!-- 6. Code Block -->
+      <div class="ds-state-card" style="margin-top: 1.5rem;">
+        <div class="ds-state-title">
+          <span>06. Syntax Code Block</span>
+          <span style="font-family: ui-monospace, monospace; font-size: 0.7rem;">.hextra-code-block</span>
+        </div>
+        <div class="hextra-code-block">
+          <pre><code>// AkitaOnRails Design System Token Resolution
+const themeTokens = {
+  primary: "var(--aor-accent, #a63a1e)",
+  accentStrong: "var(--aor-accent-strong, #7f2a12)",
+  softBackground: "var(--aor-accent-soft, rgba(166, 58, 30, 0.13))",
+  paperCanvas: "var(--hx-color-white, #faf7f0)"
+};
+console.log("Design System initialized successfully.");</code></pre>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 4) LAYOUT & SPACING                                                      -->
+  <!-- ========================================================================= -->
+  <section id="layout" class="ds-doc-section">
+    <div class="content">
+      <span class="ds-section-badge">04 / Layout & Architecture</span>
+      <h2 class="ds-section-title">Layout Patterns & Spatial Rhythm</h2>
+      <p class="ds-section-desc">
+        Responsive tri-column structure with sticky top navigation, responsive left sidebar, reading column constrained to <code>68ch</code> for optimal line measure, and sticky right-hand Table of Contents.
+      </p>
+
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        
+        <!-- Tri-Column Schematic -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 15%, transparent); border-radius: 8px; padding: 1.5rem; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <span style="font-family: ui-monospace, monospace; font-size: 0.75rem; opacity: 0.6; display: block; margin-bottom: 1rem;">Blueprint: Tri-Column Page Architecture</span>
+          <div style="display: grid; grid-template-columns: 1fr 3fr 1fr; gap: 0.75rem; height: 160px; text-align: center; font-size: 0.75rem; font-family: 'source sans 3', sans-serif;">
+            <div style="border: 1px dashed var(--aor-accent); border-radius: 4px; padding: 0.75rem; display: flex; align-items: center; justify-content: center; background: var(--aor-accent-soft);">
+              Left Sidebar<br/>(256px / w-64)
+            </div>
+            <div style="border: 1px solid color-mix(in srgb, currentColor 20%, transparent); border-radius: 4px; padding: 0.75rem; display: flex; flex-direction: column; align-items: center; justify-content: center; background: color-mix(in srgb, currentColor 3%, transparent);">
+              <strong>Main Reading Column</strong>
+              <span style="opacity: 0.6; font-size: 0.7rem;">max-w-6xl (inner content: 68ch)</span>
+            </div>
+            <div style="border: 1px dashed var(--aor-accent); border-radius: 4px; padding: 0.75rem; display: flex; align-items: center; justify-content: center; background: var(--aor-accent-soft);">
+              Table of Contents<br/>(256px / w-64)
+            </div>
+          </div>
+        </div>
+
+        <!-- Month Section & Archive Rhythm -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 15%, transparent); border-radius: 8px; padding: 1.5rem; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <span style="font-family: ui-monospace, monospace; font-size: 0.75rem; opacity: 0.6; display: block; margin-bottom: 0.5rem;">Pattern: Chronological Month Grouping</span>
+          <div class="aor-index-month__header">
+            <h2>2026 - August</h2>
+            <span>11 posts</span>
+          </div>
+          <p style="font-size: 0.85rem; opacity: 0.7; margin: 0;">Rhythm includes a 1px baseline rule with color-mix 14% opacity and aligned count badges.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 5) MOTION & INTERACTION                                                  -->
+  <!-- ========================================================================= -->
+  <section id="motion" class="ds-doc-section">
+    <div class="content">
+      <span class="ds-section-badge">05 / Motion & Interaction</span>
+      <h2 class="ds-section-title">Transitions, Easings & Micro-Interactions</h2>
+      <p class="ds-section-desc">
+        Lightweight, purposeful transitions designed for instant response. No heavy animation bloat, prioritizing high frame rates and tactile feedback.
+      </p>
+
+      <div class="ds-motion-grid">
+        
+        <!-- 1. Card Lift -->
+        <div class="ds-motion-box aor-post-card" style="min-height: auto;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <strong style="font-size: 0.9rem; font-family: 'source sans 3', sans-serif;">Card Hover Elevation</strong>
+            <span style="font-family: monospace; font-size: 0.7rem; opacity: 0.6;">150ms ease</span>
+          </div>
+          <p style="font-size: 0.85rem; margin: 0;">Hover over this card to preview the <code>translateY(-2px)</code> lift with soft ambient shadow.</p>
+        </div>
+
+        <!-- 2. List Shift -->
+        <div class="ds-motion-box aor-featured" style="margin: 0; padding: 1.25rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <strong style="font-size: 0.9rem; font-family: 'source sans 3', sans-serif;">List Item Translate</strong>
+            <span style="font-family: monospace; font-size: 0.7rem; opacity: 0.6;">120ms ease</span>
+          </div>
+          <ul>
+            <li><code>Hover Preview</code> — <a href="#motion">Item shifts translateX(2px) smoothly on mouse enter</a></li>
+          </ul>
+        </div>
+
+        <!-- 3. Accordion Transition -->
+        <div class="ds-motion-box" onclick="toggleFeaturedDemo(this)">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <strong style="font-size: 0.9rem; font-family: 'source sans 3', sans-serif;">Accordion Max-Height</strong>
+            <span style="font-family: monospace; font-size: 0.7rem; opacity: 0.6;">220ms ease</span>
+          </div>
+          <p style="font-size: 0.85rem; margin: 0;">Click anywhere on this card to test the collapsible height & opacity easing.</p>
+        </div>
+
+        <!-- 4. Link Underline -->
+        <div class="ds-motion-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <strong style="font-size: 0.9rem; font-family: 'source sans 3', sans-serif;">Link Color & Underline</strong>
+            <span style="font-family: monospace; font-size: 0.7rem; opacity: 0.6;">150ms ease</span>
+          </div>
+          <p style="font-size: 0.85rem; margin: 0;">
+            Check this <a href="#motion">interactive editorial text link</a> with dynamic color-mix underline fade.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 6) ICONS & GLYPHS                                                        -->
+  <!-- ========================================================================= -->
+  <section id="icons" class="ds-doc-section">
+    <div class="content">
+      <span class="ds-section-badge">06 / Iconography</span>
+      <h2 class="ds-section-title">SVG Icons & CSS Mask Glyphs</h2>
+      <p class="ds-section-desc">
+        Pure inline SVGs for system controls, accompanied by SVG data-URI CSS masks for external brand icons with automatic <code>currentColor</code> inheritance.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+        
+        <!-- GitHub -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 14%, transparent); border-radius: 8px; padding: 1rem; text-align: center; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <svg fill="currentColor" height="24" viewbox="3 3 18 18" width="24" style="margin: 0 auto 0.5rem;"><path d="M12 3C7.0275 3 3 7.12937 3 12.2276c0 4.0833 2.57625 7.5321 6.15374 8.7548C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441 9.77249 20.3249 9.76125 19.5982 9.76125 18.8254 7.5 19.2522 6.915 18.2602 6.735 17.7412 6.63375 17.4759 6.19499 16.6569 5.8125 16.4378 5.4975 16.2647 5.0475 15.838 5.80124 15.8264 6.51 15.8149 7.01625 16.4954 7.18499 16.7723 7.99499 18.1679 9.28875 17.7758 9.80625 17.5335 9.885 16.9337 10.1212 16.53 10.38 16.2993 8.3775 16.0687 6.285 15.2728 6.285 11.7432c0-1.0035.34875-1.834.92249-2.47994C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794c0 0 .753749999999999-.24223 2.47499.94583.72001-.20762 1.48501-.31143 2.25001-.31143C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377c1.7212-1.19959 2.475-.94583 2.475-.94583C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326 17.4113 9.9092 17.76 10.7281 17.76 11.7432c0 3.5411-2.1037 4.3255-4.1063 4.5561C13.98 16.5877 14.2613 17.1414 14.2613 18.0065 14.2613 19.2407 14.25 20.2326 14.25 20.5441 14.25 20.7863 14.4188 21.0746 14.8688 20.9824 16.6554 20.364 18.2079 19.1866 19.3078 17.6162c1.0999-1.5705 1.6917-3.4551 1.6922-5.3886C21 7.12937 16.9725 3 12 3z"></path></svg>
+          <div style="font-size: 0.75rem; font-weight: 600;">GitHub</div>
+        </div>
+
+        <!-- RSS -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 14%, transparent); border-radius: 8px; padding: 1rem; text-align: center; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <svg aria-hidden="true" fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" style="margin: 0 auto 0.5rem;"><path d="M6 5c7.18.0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-size: 0.75rem; font-weight: 600;">RSS Feed</div>
+        </div>
+
+        <!-- Sun (Light) -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 14%, transparent); border-radius: 8px; padding: 1rem; text-align: center; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" style="margin: 0 auto 0.5rem;"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364-.707-.707M6.343 6.343l-.707-.707m12.728.0-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-size: 0.75rem; font-weight: 600;">Sun (Light)</div>
+        </div>
+
+        <!-- Moon (Dark) -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 14%, transparent); border-radius: 8px; padding: 1rem; text-align: center; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" style="margin: 0 auto 0.5rem;"><path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003.0 0012 21a9.003 9.003.0 008.354-5.646z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-size: 0.75rem; font-weight: 600;">Moon (Dark)</div>
+        </div>
+
+        <!-- List View -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 14%, transparent); border-radius: 8px; padding: 1rem; text-align: center; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" style="margin: 0 auto 0.5rem;"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-size: 0.75rem; font-weight: 600;">List View</div>
+        </div>
+
+        <!-- Grid View -->
+        <div style="border: 1px solid color-mix(in srgb, currentColor 14%, transparent); border-radius: 8px; padding: 1rem; text-align: center; background: color-mix(in srgb, currentColor 2%, transparent);">
+          <svg fill="none" height="24" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="24" style="margin: 0 auto 0.5rem;"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6A2 2 0 014 8V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zm10 0a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <div style="font-size: 0.75rem; font-weight: 600;">Grid View</div>
+        </div>
+
+      </div>
+
+      <!-- Mask Glyphs Showcase -->
+      <h3 style="font-size: 1.1rem; margin-top: 2rem;">External Social Mask Glyphs</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin: 1.5rem 0;">
+        <a href="https://github.com" target="_blank" style="display: inline-flex; align-items: center;">GitHub</a>
+        <a href="https://x.com" target="_blank" style="display: inline-flex; align-items: center;">X (Twitter)</a>
+        <a href="https://youtube.com" target="_blank" style="display: inline-flex; align-items: center;">YouTube</a>
+        <a href="https://linkedin.com" target="_blank" style="display: inline-flex; align-items: center;">LinkedIn</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- INTERACTIVE OMNISEARCH MODAL (EXACT CLONE)                               -->
+  <!-- ========================================================================= -->
+  <div class="aor-omni-backdrop" hidden role="dialog" aria-label="Search Design System">
+    <div class="aor-omni">
+      <input class="aor-omni__input" placeholder="Filter design system components…" spellcheck="false" type="text" oninput="filterOmni(this.value)"/>
+      <div class="aor-omni__hint">
+        <span id="omniCount">7 components</span>
+        <span>Esc to close</span>
+      </div>
+      <ul class="aor-omni__list" id="omniList">
+        <a class="aor-omni__row is-active" href="#typography" onclick="closeOmni()">
+          <strong>Typography Scale</strong>
+          <small>Source Serif 4, Source Sans 3, Headings & Spec Matrix</small>
+        </a>
+        <a class="aor-omni__row" href="#colors" onclick="closeOmni()">
+          <strong>Colors & Surfaces</strong>
+          <small>Paper White, Warm Sand, Terra Cotta, Amber & Gradients</small>
+        </a>
+        <a class="aor-omni__row" href="#components" onclick="closeOmni()">
+          <strong>View Toggle & Post Cards</strong>
+          <small>Dual index switcher, tag pills, next post banner</small>
+        </a>
+        <a class="aor-omni__row" href="#layout" onclick="closeOmni()">
+          <strong>Layout & Architecture</strong>
+          <small>Tri-column page shell, max-w-68ch measure, month section</small>
+        </a>
+        <a class="aor-omni__row" href="#motion" onclick="closeOmni()">
+          <strong>Motion & Transitions</strong>
+          <small>Card hover elevation, accordion max-height easing</small>
+        </a>
+        <a class="aor-omni__row" href="#icons" onclick="closeOmni()">
+          <strong>Iconography & Glyphs</strong>
+          <small>Inline SVGs, mask-image social links, size matrix</small>
+        </a>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="hextra-footer hx:bg-gray-100 hx:dark:bg-neutral-900" style="padding: 2.5rem 1.5rem; margin-top: 3rem; border-top: 1px solid color-mix(in srgb, currentColor 10%, transparent); text-align: center; font-size: 0.85rem; opacity: 0.7;">
+    <div><strong>AkitaOnRails Living Design System</strong> • Exact pattern library for Hugo / Hextra theme</div>
+    <div style="margin-top: 0.5rem; font-size: 0.75rem;">© 2006-2026 Fabio Akita — All Rights Reserved</div>
+  </footer>
+
+  <!-- Interactive Logic for Showcase -->
+  <script>
+    // Theme Switcher
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.classList.contains('dark');
+      const text = document.getElementById('dsThemeText');
+      const lightIcon = document.getElementById('dsThemeIconLight');
+      const darkIcon = document.getElementById('dsThemeIconDark');
+      
+      if (isDark) {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        html.style.colorScheme = 'light';
+        if (text) text.textContent = 'Theme: Light';
+        if (lightIcon) lightIcon.classList.add('hidden');
+        if (darkIcon) darkIcon.classList.remove('hidden');
+      } else {
+        html.classList.remove('light');
+        html.classList.add('dark');
+        html.style.colorScheme = 'dark';
+        if (text) text.textContent = 'Theme: Dark';
+        if (lightIcon) lightIcon.classList.remove('hidden');
+        if (darkIcon) darkIcon.classList.add('hidden');
+      }
+    }
+
+    // View Switcher (List <-> Grid)
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('[data-index-view-button]');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.getAttribute('data-index-view-button');
+          document.documentElement.setAttribute('data-aor-index-view', view);
+          buttons.forEach(b => {
+            b.setAttribute('aria-pressed', b.getAttribute('data-index-view-button') === view ? 'true' : 'false');
+          });
+        });
+      });
+
+      // Featured Toggle Accordion
+      const featured = document.getElementById('aor-featured-posts-en');
+      if (featured) {
+        const toggle = featured.querySelector('.aor-featured__toggle');
+        const body = featured.querySelector('.aor-featured__body');
+        if (toggle && body) {
+          toggle.addEventListener('click', () => {
+            const isCollapsed = featured.classList.contains('is-collapsed');
+            featured.classList.toggle('is-collapsed', !isCollapsed);
+            toggle.textContent = isCollapsed ? 'Hide' : 'Show';
+            toggle.setAttribute('aria-expanded', isCollapsed ? 'true' : 'false');
+          });
+        }
+      }
+
+      // Keyboard Shortcut for Omnisearch (CTRL+K / CMD+K / Esc)
+      document.addEventListener('keydown', (e) => {
+        const backdrop = document.querySelector('.aor-omni-backdrop');
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+          e.preventDefault();
+          if (backdrop) {
+            backdrop.hidden = false;
+            const input = backdrop.querySelector('input');
+            if (input) input.focus();
+          }
+        }
+        if (e.key === 'Escape') {
+          if (backdrop && !backdrop.hidden) {
+            backdrop.hidden = true;
+          }
+        }
+      });
+
+      // Backdrop click closes modal
+      const backdrop = document.querySelector('.aor-omni-backdrop');
+      if (backdrop) {
+        backdrop.addEventListener('click', (e) => {
+          if (e.target === backdrop) backdrop.hidden = true;
+        });
+      }
+    });
+
+    function closeOmni() {
+      const backdrop = document.querySelector('.aor-omni-backdrop');
+      if (backdrop) backdrop.hidden = true;
+    }
+
+    function filterOmni(query) {
+      const q = (query || '').toLowerCase().trim();
+      const rows = document.querySelectorAll('#omniList .aor-omni__row');
+      let count = 0;
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const matches = text.includes(q);
+        row.style.display = matches ? 'block' : 'none';
+        if (matches) count++;
+      });
+      const countEl = document.getElementById('omniCount');
+      if (countEl) countEl.textContent = count + ' result' + (count === 1 ? '' : 's');
+    }
+  </script>
+
+</body>
+</html>

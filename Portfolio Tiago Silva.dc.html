@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    ::selection { background: var(--accent-soft); }
+  </style>
+</helmet>
+<div ref="{{ rootRef }}" style="--bg:#faf7f0;--bg-alt:#f1ece0;--text:#2a2622;--accent:#a63a1e;--accent-strong:#7f2a12;--accent-soft:rgba(166,58,30,0.13);background:var(--bg);color:var(--text);min-height:100vh;font-family:'Source Serif 4',Charter,Georgia,serif;font-size:19px;line-height:1.7;hyphens:auto;transition:background-color 0.2s ease,color 0.2s ease">
+
+  <header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(20px,5vw,24px);background:var(--bg);border-bottom:1px solid color-mix(in srgb, var(--text) 10%, transparent);transition:background-color 0.2s ease,border-color 0.2s ease">
+    <span style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;letter-spacing:-0.012em;font-size:1rem;color:var(--text)">Tiago Silva</span>
+    <button onClick="{{ toggleTheme }}" aria-label="Alternar tema claro/escuro" style="width:40px;height:40px;border-radius:50%;border:1px solid color-mix(in srgb, var(--text) 16%, transparent);background:var(--bg-alt);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex:none;transition:border-color 0.15s ease" style-hover="border-color:var(--accent)">
+      <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}">
+        <span style="display:block;width:13px;height:13px;border-radius:50%;background:var(--accent);box-shadow:4px -3px 0 1.5px var(--bg-alt);transform:rotate(-40deg)"></span>
+      </sc-if>
+      <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}">
+        <span style="display:block;width:13px;height:13px;border-radius:50%;background:var(--accent)"></span>
+      </sc-if>
+    </button>
+  </header>
+
+  <main style="max-width:68ch;margin-inline:auto;padding-inline:clamp(20px,5vw,24px)">
+
+    <section style="padding-block:clamp(56px,10vw,88px) clamp(40px,8vw,56px);display:flex;flex-direction:column;align-items:flex-start;gap:20px">
+      <img src="assets/tiago-perfil.png" alt="Foto de perfil de Tiago Silva" style="width:108px;height:108px;border-radius:50%;object-fit:cover;border:1px solid color-mix(in srgb, var(--text) 14%, transparent)">
+      <div>
+        <h1 style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;letter-spacing:-0.012em;line-height:1.15;font-size:clamp(2.1rem,6vw,2.9rem);margin:0 0 10px 0;color:var(--text)">Tiago Silva</h1>
+        <p style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;letter-spacing:-0.012em;font-size:clamp(1.15rem,3vw,1.4rem);color:var(--accent-strong);margin:0 0 14px 0">Especialista em Data &amp; Analytics</p>
+        <p style="font-size:1.15rem;line-height:1.7;color:color-mix(in srgb, var(--text) 82%, transparent);margin:0 0 24px 0;max-width:40ch">Focado em ETL, SQL e automação de pipelines na nuvem.</p>
+        <sc-if value="{{ showResumeButton }}" hint-placeholder-val="{{ true }}">
+          <a href="assets/curriculo-tiago-silva.pdf" style="display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:8px;background:var(--accent-soft);color:var(--accent-strong);font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;font-size:0.92rem;text-decoration:none;border:1px solid color-mix(in srgb, var(--accent) 30%, transparent);transition:background-color 0.15s ease,color 0.15s ease" style-hover="background:var(--accent);color:var(--bg)">Baixar currículo (PDF)</a>
+        </sc-if>
+      </div>
+    </section>
+
+    <hr style="border:none;height:1px;width:60%;margin:0 auto;background:linear-gradient(to right, transparent, var(--accent), transparent);opacity:0.5">
+
+    <section style="padding-block:clamp(40px,8vw,56px)">
+      <p style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin:0 0 12px 0">Sobre</p>
+      <h2 style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;letter-spacing:-0.012em;line-height:1.15;font-size:clamp(1.5rem,4vw,1.9rem);margin:0 0 20px 0;color:var(--text)">Da Oficina para os Dados</h2>
+      <p style="margin:0 0 18px 0">Tudo começou com barulho de torno, cheiro de óleo e precisão milimétrica. Na usinagem, aprendi que a qualidade do produto final depende do rigor de cada etapa do processo.</p>
+      <p style="margin:0 0 18px 0">Eu aplico essa mesma filosofia na engenharia de dados. Um pipeline de dados, para mim, é uma linha de produção que exige validações, testes e automação para entregar um resultado confiável.</p>
+      <p style="margin:0 0 18px 0">Meu objetivo é construir sistemas de dados que funcionem não apenas uma vez, mas de forma consistente e escalável. Domino os fundamentos: SQL avançado, Python para automação, ETL com validações de qualidade usando Pydantic, e orquestração com Apache Airflow.</p>
+      <p style="margin:0 0 18px 0">Tolerância apertada e processo confiável geram qualidade — em aço e em dados.</p>
+      <p style="margin:0">Busco oportunidades onde possa aplicar essa mentalidade para construir pipelines que fazem a diferença.</p>
+    </section>
+
+    <hr style="border:none;height:1px;width:60%;margin:0 auto;background:linear-gradient(to right, transparent, var(--accent), transparent);opacity:0.5">
+
+    <section style="padding-block:clamp(40px,8vw,56px)">
+      <h2 style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;letter-spacing:-0.012em;line-height:1.15;font-size:clamp(1.5rem,4vw,1.9rem);margin:0 0 28px 0;color:var(--text)">Projetos</h2>
+      <div style="display:flex;flex-direction:column;gap:32px">
+        <sc-for list="{{ projects }}" as="project" hint-placeholder-count="5">
+          <article style="padding:22px 24px;border-radius:10px;background:var(--bg-alt);border:1px solid color-mix(in srgb, var(--text) 8%, transparent)">
+            <h3 style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;letter-spacing:-0.012em;line-height:1.3;font-size:clamp(1.05rem,2.5vw,1.25rem);margin:0 0 10px 0;color:var(--text)">{{ project.title }}</h3>
+            <p style="margin:0 0 14px 0;font-size:1rem;line-height:1.65;color:color-mix(in srgb, var(--text) 88%, transparent)">{{ project.description }}</p>
+            <sc-if value="{{ showTechTags }}" hint-placeholder-val="{{ true }}" hint-placeholder-count="4">
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px 0">
+                <sc-for list="{{ project.technologies }}" as="tech" hint-placeholder-count="4">
+                  <span style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.02em;color:var(--accent-strong);background:var(--accent-soft);padding:4px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0">{{ tech }}</span>
+                </sc-for>
+              </div>
+            </sc-if>
+            <a href="{{ project.link }}" target="_blank" rel="noreferrer" style="color:var(--accent);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--accent) 32%, transparent);text-underline-offset:0.15em;text-decoration-thickness:0.06em;font-size:0.95rem;transition:color 0.15s ease,text-decoration-color 0.15s ease" style-hover="color:var(--accent-strong);text-decoration-color:var(--accent)">Ver repositório →</a>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <hr style="border:none;height:1px;width:60%;margin:0 auto;background:linear-gradient(to right, transparent, var(--accent), transparent);opacity:0.5">
+
+    <section style="padding-block:clamp(40px,8vw,64px)">
+      <h2 style="font-family:'Source Sans 3',Helvetica Neue,sans-serif;font-weight:700;letter-spacing:-0.012em;line-height:1.15;font-size:clamp(1.5rem,4vw,1.9rem);margin:0 0 24px 0;color:var(--text)">Contato</h2>
+      <ul style="list-style:none;padding:0;margin:0">
+        <li style="position:relative;padding-left:22px;margin-bottom:14px" style-before="content:'';position:absolute;left:0;top:0.62em;width:7px;height:7px;background:var(--accent);opacity:0.9;transform:rotate(45deg)">
+          <a href="mailto:tiagomars233@gmail.com" style="color:var(--accent);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--accent) 32%, transparent);text-underline-offset:0.15em;text-decoration-thickness:0.06em;transition:color 0.15s ease,text-decoration-color 0.15s ease" style-hover="color:var(--accent-strong);text-decoration-color:var(--accent)">tiagomars233@gmail.com</a>
+        </li>
+        <li style="position:relative;padding-left:22px;margin-bottom:14px" style-before="content:'';position:absolute;left:0;top:0.62em;width:7px;height:7px;background:var(--accent);opacity:0.9;transform:rotate(45deg)">
+          <a href="https://www.linkedin.com/in/tiagodados" target="_blank" rel="noreferrer" style="color:var(--accent);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--accent) 32%, transparent);text-underline-offset:0.15em;text-decoration-thickness:0.06em;transition:color 0.15s ease,text-decoration-color 0.15s ease" style-hover="color:var(--accent-strong);text-decoration-color:var(--accent)">linkedin.com/in/tiagodados</a>
+        </li>
+        <li style="position:relative;padding-left:22px;margin-bottom:0" style-before="content:'';position:absolute;left:0;top:0.62em;width:7px;height:7px;background:var(--accent);opacity:0.9;transform:rotate(45deg)">
+          <a href="https://github.com/tmarsbr" target="_blank" rel="noreferrer" style="color:var(--accent);text-decoration:underline;text-decoration-color:color-mix(in srgb, var(--accent) 32%, transparent);text-underline-offset:0.15em;text-decoration-thickness:0.06em;transition:color 0.15s ease,text-decoration-color 0.15s ease" style-hover="color:var(--accent-strong);text-decoration-color:var(--accent)">github.com/tmarsbr</a>
+        </li>
+      </ul>
+    </section>
+
+    <footer style="padding:8px 0 40px;text-align:center;font-size:0.78rem;color:color-mix(in srgb, var(--text) 55%, transparent)">© 2026 Tiago Silva</footer>
+
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;showResumeButton&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Conteúdo&quot;},
+  &quot;showTechTags&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Conteúdo&quot;},
+  &quot;defaultTheme&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;light&quot;, &quot;tsType&quot;: &quot;'light' | 'dark'&quot;, &quot;options&quot;: [&quot;light&quot;, &quot;dark&quot;], &quot;section&quot;: &quot;Aparência&quot;}
+}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+    this.state = { dark: false };
+    this.PALETTES = {
+      light: { bg: '#faf7f0', bgAlt: '#f1ece0', text: '#2a2622', accent: '#a63a1e', accentStrong: '#7f2a12', accentSoft: 'rgba(166,58,30,0.13)' },
+      dark: { bg: '#1a1714', bgAlt: '#2a2520', text: '#e8e2d6', accent: '#e2a05a', accentStrong: '#f2bd82', accentSoft: 'rgba(226,160,90,0.16)' }
+    };
+    this.PROJECTS = [
+      {
+        title: "Pipeline de Web Scraping: Extração de Dados Públicos da Receita Federal",
+        description: "🚀 Pipeline end-to-end para coleta, tratamento e carga de dados massivos do CNPJ da Receita Federal, utilizando Python para scraping e Apache Spark para processamento distribuído na AWS.",
+        technologies: ["Python", "Apache Spark", "AWS S3", "AWS Lambda", "Amazon EMR", "Amazon Athena"],
+        link: "https://github.com/tmarsbr"
+      },
+      {
+        title: "ETL Robusto: Garantia de Qualidade de Dados com Python e Pydantic",
+        description: "🔍 Pipeline ETL para ingestão automatizada de dados de vendas de e-commerce (10k+ registros/dia), com validações de qualidade usando Pydantic e testes automatizados com Pytest, garantindo 99.9% de integridade dos dados e reduzindo erros de carga em 80%.",
+        technologies: ["Python", "Pandas", "Pydantic", "Pytest", "PostgreSQL", "SQL"],
+        link: "https://github.com/tmarsbr/etl-data-quality"
+      },
+      {
+        title: "Analytics-Ready Data Warehouse: Modelagem Dimensional com dbt e AWS",
+        description: "🏛️ Data Warehouse dimensional para análise de desempenho de campanhas de marketing digital, transformando dados brutos de múltiplas fontes (Google Ads, Facebook Ads, CRM) armazenados no S3 em modelo Star Schema otimizado com dbt, permitindo análises 5x mais rápidas.",
+        technologies: ["dbt", "SQL", "AWS S3", "Amazon Redshift", "Data Modeling", "Star Schema"],
+        link: "https://github.com/tmarsbr/dbt-analytics-warehouse"
+      },
+      {
+        title: "Pipeline de Dados Automatizado: Orquestração de ETL na AWS com Airflow",
+        description: "⚡ Pipeline automatizado para coleta diária de dados meteorológicos de APIs públicas (OpenWeather), orquestrado com Apache Airflow na AWS, processando 50+ localizações com agendamento noturno, retry automático e alertas de falha via email.",
+        technologies: ["Apache Airflow", "Python", "AWS S3", "Docker", "Pandas", "Amazon Athena"],
+        link: "https://github.com/tmarsbr/airflow-etl-pipeline"
+      },
+      {
+        title: "Arquitetura Data Lake Escalável: Democratização de Dados para Otimização de Cobranças",
+        description: "☁️ Arquitetura completa de Data Lake na AWS com 4 camadas (RAW/Bronze/Silver/Gold), orquestração via Airflow e governança para democratizar dados e otimizar cobrança de inadimplentes.",
+        technologies: ["AWS S3", "Amazon RDS", "Amazon EMR", "Apache Spark", "Amazon Athena", "CloudWatch", "IAM", "Apache Airflow", "Parquet"],
+        link: "https://github.com/tmarsbr/aws-data-lake-architecture"
+      }
+    ];
+    this.toggleTheme = this.toggleTheme.bind(this);
+  }
+
+  componentDidMount() {
+    const wantDark = (this.props.defaultTheme ?? 'light') === 'dark';
+    if (wantDark) this.applyTheme(true);
+  }
+
+  applyTheme(dark) {
+    const t = dark ? this.PALETTES.dark : this.PALETTES.light;
+    const el = this.rootRef.current;
+    if (el) {
+      el.style.setProperty('--bg', t.bg);
+      el.style.setProperty('--bg-alt', t.bgAlt);
+      el.style.setProperty('--text', t.text);
+      el.style.setProperty('--accent', t.accent);
+      el.style.setProperty('--accent-strong', t.accentStrong);
+      el.style.setProperty('--accent-soft', t.accentSoft);
+    }
+    this.setState({ dark });
+  }
+
+  toggleTheme() {
+    this.applyTheme(!this.state.dark);
+  }
+
+  renderVals() {
+    return {
+      rootRef: this.rootRef,
+      isDark: this.state.dark,
+      isLight: !this.state.dark,
+      toggleTheme: this.toggleTheme,
+      projects: this.PROJECTS,
+      showResumeButton: this.props.showResumeButton ?? true,
+      showTechTags: this.props.showTechTags ?? true
+    };
+  }
+}
+</script>
+</body>
+</html>
