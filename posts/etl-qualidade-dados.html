@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ETL Robusto com Pydantic — Tiago Silva</title>
+  <meta name="description" content="Pipeline ETL para ingestão automatizada com validações de qualidade usando Pydantic.">
+  <meta name="theme-color" content="#faf7f0">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) document.documentElement.classList.add('dark');
+    } catch (error) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="header__brand" aria-label="Tiago Silva — página inicial"><span class="header__mark" aria-hidden="true">TS</span><span class="header__name">Tiago Silva</span></a>
+      <nav class="header__nav" aria-label="Navegação principal">
+        <a href="../index.html#projetos" class="nav-link">Projetos</a>
+        <a href="../index.html#sobre" class="nav-link">Sobre</a>
+        <a href="../index.html#contato" class="nav-link">Contato</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false" title="Ativar tema escuro">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-page" id="conteudo">
+    <div class="container container--article">
+      <a href="../index.html#projetos" class="article-back">← Voltar para os projetos</a>
+
+      <header class="article-header">
+        <time class="article-header__date" datetime="2026-08-18">18 de agosto de 2026</time>
+        <h1 class="article-header__title">ETL Robusto: Garantia de Qualidade de Dados com Python e Pydantic</h1>
+        <div class="article-header__tags">
+          <span class="article-tag">#python</span>
+          <span class="article-tag">#pydantic</span>
+          <span class="article-tag">#etl</span>
+          <span class="article-tag">#postgresql</span>
+          <span class="article-tag">#pytest</span>
+        </div>
+      </header>
+
+      <div class="article-body">
+        <p>Dados sujos são o inimigo silencioso de qualquer operação data-driven. Neste projeto, construí um pipeline ETL que trata qualidade de dados como requisito de primeira classe — não como um "nice to have".</p>
+
+        <h2>Contexto</h2>
+        <p>O cenário era um e-commerce com ingestão diária de 10.000+ registros de vendas vindos de múltiplas fontes (ERP, planilhas manuais, APIs de marketplace). O problema: dados inconsistentes quebravam relatórios, geravam métricas erradas e prejudicavam decisões de negócio.</p>
+
+        <h2>A Solução: Validação como Código</h2>
+
+        <img src="../public/images/arquitetura_etl_qualidade.png" alt="Diagrama de arquitetura do pipeline ETL com validação Pydantic" width="3120" height="2288" loading="lazy" decoding="async">
+
+        <p>A ideia central foi usar <code>Pydantic</code> para definir schemas de validação que funcionam como contratos de dados. Cada registro passa por validação tipada antes de entrar no banco — se não atende ao contrato, é separado para quarentena com log detalhado do erro.</p>
+
+        <ul>
+          <li><strong>Extract:</strong> Leitura de CSVs, APIs e banco legado com <code>Pandas</code></li>
+          <li><strong>Transform:</strong> Normalização de campos, remoção de duplicatas, merge de fontes</li>
+          <li><strong>Validate:</strong> Cada registro é validado contra um modelo <code>Pydantic</code> com tipos, ranges e regras de negócio</li>
+          <li><strong>Load:</strong> Registros válidos vão para <code>PostgreSQL</code>, rejeitados vão para tabela de quarentena</li>
+        </ul>
+
+        <h2>Testes Automatizados</h2>
+        <p>Implementei uma suite de testes com <code>Pytest</code> que cobre cenários como:</p>
+        <ul>
+          <li>Campos obrigatórios nulos</li>
+          <li>Valores fora do range esperado (preço negativo, quantidade zero)</li>
+          <li>Formatos de data inconsistentes</li>
+          <li>Duplicatas cross-source</li>
+        </ul>
+
+        <h2>Resultados</h2>
+        <ul>
+          <li>99.9% de integridade dos dados carregados</li>
+          <li>Redução de 80% nos erros de carga</li>
+          <li>Time de BI deixou de "limpar dados na mão" semanalmente</li>
+          <li>Quarentena com rastreabilidade completa de cada rejeição</li>
+        </ul>
+
+        <blockquote>Um pipeline que não valida dados é uma esteira que entrega peças com defeito.</blockquote>
+      </div>
+
+      <a class="article-repo" href="https://github.com/tmarsbr/etl-data-quality" target="_blank" rel="noopener noreferrer">
+        Ver repositório no GitHub →
+      </a>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container footer__inner"><p>© <span id="currentYear">2026</span> Tiago Silva</p><a href="#top">Voltar ao topo ↑</a></div></footer>
+  <script src="../main.js"></script>
+</body>
+</html>

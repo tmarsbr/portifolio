@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tiago Silva | Engenheiro de Dados</title>
+  <meta name="description" content="Portfólio de Tiago Silva, engenheiro de dados com foco em ETL, qualidade, SQL, Python e pipelines na nuvem.">
+  <meta name="author" content="Tiago da Silva E. Santo">
+  <meta name="theme-color" content="#faf7f0">
+
+  <meta property="og:title" content="Tiago Silva | Engenheiro de Dados">
+  <meta property="og:description" content="ETL, qualidade de dados e pipelines confiáveis com Python, SQL, Airflow, dbt e AWS.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    } catch (error) {
+      // A página continua funcional quando o armazenamento local está bloqueado.
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__brand" aria-label="Tiago Silva — página inicial">
+        <span class="header__mark" aria-hidden="true">TS</span>
+        <span class="header__name">Tiago Silva</span>
+      </a>
+
+      <nav class="header__nav" aria-label="Navegação principal">
+        <a href="#projetos" class="nav-link">Projetos</a>
+        <a href="#sobre" class="nav-link">Sobre</a>
+        <a href="#contato" class="nav-link">Contato</a>
+      </nav>
+
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false" title="Ativar tema escuro">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="hero__eyebrow"><span aria-hidden="true"></span> Engenheiro de Dados Júnior · São Paulo, SP</p>
+          <h1 class="hero__title" id="hero-title">Transformo dados brutos em <em>pipelines confiáveis.</em></h1>
+          <p class="hero__subtitle">Sou Tiago Silva. Construo soluções de ETL com qualidade, testes e automação para que os dados cheguem prontos para decisões — não para mais uma rodada de correções.</p>
+
+          <div class="hero__actions">
+            <a href="#projetos" class="btn btn--primary">Ver estudos de caso <span aria-hidden="true">↓</span></a>
+            <a href="https://github.com/tmarsbr" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <ul class="hero__proof" aria-label="Áreas de atuação">
+            <li>ETL &amp; Data Quality</li>
+            <li>Orquestração</li>
+            <li>Cloud AWS</li>
+          </ul>
+        </div>
+
+        <figure class="portrait-card">
+          <span class="portrait-card__accent" aria-hidden="true"></span>
+          <img src="public/imagem/perfil-640.jpg" alt="Retrato profissional de Tiago Silva" width="640" height="640" fetchpriority="high" decoding="async">
+          <figcaption>
+            <strong>Tiago Silva</strong>
+            <span>Precisão de oficina aplicada aos dados.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--projects" id="projetos" aria-labelledby="projects-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section__eyebrow">01 / Estudos de caso</p>
+            <h2 class="section__title" id="projects-title">Engenharia que dá para inspecionar</h2>
+          </div>
+          <p class="section__intro">Projetos documentados do problema à arquitetura, com decisões técnicas, validações e resultados.</p>
+        </div>
+
+        <div class="case-grid">
+          <article class="case-card case-card--featured">
+            <a class="case-card__media" href="posts/web-scraping-receita-federal.html" aria-label="Abrir estudo de caso sobre web scraping da Receita Federal">
+              <img src="public/projects/capa_web_scraping_receita-1200.jpg" alt="" width="1200" height="670" decoding="async">
+            </a>
+            <div class="case-card__body">
+              <p class="case-card__eyebrow">Web scraping · Python &amp; AWS</p>
+              <h3 class="case-card__title"><a href="posts/web-scraping-receita-federal.html">Extração de dados públicos da Receita Federal</a></h3>
+              <p class="case-card__description">Pipeline para automatizar coleta, tratamento e disponibilização de dados cadastrais em uma arquitetura preparada para escala.</p>
+              <p class="case-card__result"><span>Foco</span> Extração automatizada, processamento distribuído e dados consultáveis.</p>
+              <ul class="tag-list" aria-label="Tecnologias do projeto">
+                <li>Python</li><li>Apache Spark</li><li>S3</li><li>EMR</li>
+              </ul>
+              <div class="case-card__links">
+                <a href="posts/web-scraping-receita-federal.html">Ler estudo de caso <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <a class="case-card__media" href="posts/etl-qualidade-dados.html" aria-label="Abrir estudo de caso sobre ETL e qualidade de dados">
+              <img src="public/projects/capa_etl_qualidade-1200.jpg" alt="" width="1200" height="670" decoding="async">
+            </a>
+            <div class="case-card__body">
+              <p class="case-card__eyebrow">ETL · Data Quality</p>
+              <h3 class="case-card__title"><a href="posts/etl-qualidade-dados.html">ETL robusto com Python e Pydantic</a></h3>
+              <p class="case-card__description">Contratos de dados, quarentena de registros inválidos e testes automatizados antes da carga no PostgreSQL.</p>
+              <p class="case-card__result"><span>Escala</span> 10 mil+ registros/dia com validação tipada.</p>
+              <ul class="tag-list" aria-label="Tecnologias do projeto">
+                <li>Python</li><li>Pydantic</li><li>Pytest</li><li>PostgreSQL</li>
+              </ul>
+              <div class="case-card__links">
+                <a href="posts/etl-qualidade-dados.html">Ver case <span aria-hidden="true">→</span></a>
+                <a href="https://github.com/tmarsbr/etl-data-quality" target="_blank" rel="noopener noreferrer">Código <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <a class="case-card__media" href="posts/data-warehouse-dbt.html" aria-label="Abrir estudo de caso sobre Data Warehouse com dbt">
+              <img src="public/projects/capa_dw_dbt-1200.jpg" alt="" width="1200" height="670" decoding="async">
+            </a>
+            <div class="case-card__body">
+              <p class="case-card__eyebrow">Analytics Engineering · dbt</p>
+              <h3 class="case-card__title"><a href="posts/data-warehouse-dbt.html">Data Warehouse dimensional na AWS</a></h3>
+              <p class="case-card__description">Modelagem Star Schema com transformações versionadas, testes de integridade, documentação e lineage.</p>
+              <p class="case-card__result"><span>Entrega</span> Camadas staging, intermediate e marts prontas para BI.</p>
+              <ul class="tag-list" aria-label="Tecnologias do projeto">
+                <li>dbt</li><li>SQL</li><li>Redshift</li><li>Star Schema</li>
+              </ul>
+              <div class="case-card__links">
+                <a href="posts/data-warehouse-dbt.html">Ver case <span aria-hidden="true">→</span></a>
+                <a href="https://github.com/tmarsbr/dbt-analytics-warehouse" target="_blank" rel="noopener noreferrer">Código <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <a class="case-card__media" href="posts/pipeline-airflow-aws.html" aria-label="Abrir estudo de caso sobre pipeline Airflow na AWS">
+              <img src="public/projects/capa_airflow_aws-1200.jpg" alt="" width="1200" height="670" decoding="async">
+            </a>
+            <div class="case-card__body">
+              <p class="case-card__eyebrow">Orquestração · Airflow</p>
+              <h3 class="case-card__title"><a href="posts/pipeline-airflow-aws.html">Pipeline meteorológico automatizado</a></h3>
+              <p class="case-card__description">DAG diária com retry, alertas, transformação em Python e armazenamento particionado no S3.</p>
+              <p class="case-card__result"><span>Escala</span> 50+ localidades com execução e monitoramento automáticos.</p>
+              <ul class="tag-list" aria-label="Tecnologias do projeto">
+                <li>Airflow</li><li>Python</li><li>Docker</li><li>AWS S3</li>
+              </ul>
+              <div class="case-card__links">
+                <a href="posts/pipeline-airflow-aws.html">Ver case <span aria-hidden="true">→</span></a>
+                <a href="https://github.com/tmarsbr/airflow-etl-pipeline" target="_blank" rel="noopener noreferrer">Código <span aria-hidden="true">↗</span></a>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <a class="case-card__media" href="posts/data-lake-escalavel.html" aria-label="Abrir estudo de caso sobre Data Lake na AWS">
+              <img src="public/projects/capa_data_lake_aws-1200.jpg" alt="" width="1200" height="670" decoding="async">
+            </a>
+            <div class="case-card__body">
+              <p class="case-card__eyebrow">Arquitetura · Data Lake</p>
+              <h3 class="case-card__title"><a href="posts/data-lake-escalavel.html">Data Lake escalável em quatro camadas</a></h3>
+              <p class="case-card__description">Arquitetura RAW, Bronze, Silver e Gold com processamento distribuído, governança e consumo via SQL.</p>
+              <p class="case-card__result"><span>Foco</span> Qualidade entre camadas, IAM e observabilidade.</p>
+              <ul class="tag-list" aria-label="Tecnologias do projeto">
+                <li>AWS</li><li>Spark</li><li>Airflow</li><li>Parquet</li>
+              </ul>
+              <div class="case-card__links">
+                <a href="posts/data-lake-escalavel.html">Ver case <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sobre" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section-heading section-heading--compact">
+          <div>
+            <p class="section__eyebrow">02 / Sobre</p>
+            <h2 class="section__title" id="about-title">Da oficina para os dados</h2>
+          </div>
+        </div>
+
+        <div class="about-layout">
+          <div class="about-copy">
+            <p>Tudo começou com barulho de torno, cheiro de óleo e precisão milimétrica. Na usinagem, aprendi que a qualidade do produto final depende do rigor de cada etapa do processo.</p>
+            <p>Levo essa mesma disciplina para a engenharia de dados: desenho fluxos rastreáveis, valido antes de carregar e automatizo o que precisa funcionar todos os dias. O objetivo é simples — sistemas confiáveis, não soluções que funcionam apenas na demonstração.</p>
+            <blockquote>“Tolerância apertada e processo confiável geram qualidade — em aço e em dados.”</blockquote>
+          </div>
+
+          <aside class="skills-panel" aria-labelledby="skills-title">
+            <p class="skills-panel__label" id="skills-title">Ferramentas que uso</p>
+            <ul class="skill-list">
+              <li>Python</li><li>SQL</li><li>Apache Airflow</li><li>Apache Spark</li><li>AWS</li><li>dbt</li><li>Pydantic</li><li>Docker</li><li>PostgreSQL</li><li>Pytest</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--contact" id="contato" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-panel">
+          <div>
+            <p class="section__eyebrow">03 / Contato</p>
+            <h2 class="contact-panel__title" id="contact-title">Vamos construir algo confiável?</h2>
+            <p class="contact-panel__text">Estou em São Paulo e aberto a oportunidades em engenharia de dados, ETL e analytics engineering.</p>
+          </div>
+
+          <div class="contact-panel__actions" aria-label="Links de contato">
+            <a class="btn btn--primary" href="mailto:tiagomars233@gmail.com">Enviar email <span aria-hidden="true">→</span></a>
+            <a href="https://www.linkedin.com/in/tiagodados" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+            <a href="https://github.com/tmarsbr" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="currentYear">2026</span> Tiago Silva</p>
+      <a href="#top">Voltar ao topo <span aria-hidden="true">↑</span></a>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

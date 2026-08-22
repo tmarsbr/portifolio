@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Warehouse com dbt — Tiago Silva</title>
+  <meta name="description" content="Data Warehouse dimensional para análise de campanhas de marketing digital com dbt e AWS.">
+  <meta name="theme-color" content="#faf7f0">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) document.documentElement.classList.add('dark');
+    } catch (error) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="header__brand" aria-label="Tiago Silva — página inicial"><span class="header__mark" aria-hidden="true">TS</span><span class="header__name">Tiago Silva</span></a>
+      <nav class="header__nav" aria-label="Navegação principal">
+        <a href="../index.html#projetos" class="nav-link">Projetos</a>
+        <a href="../index.html#sobre" class="nav-link">Sobre</a>
+        <a href="../index.html#contato" class="nav-link">Contato</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false" title="Ativar tema escuro">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-page" id="conteudo">
+    <div class="container container--article">
+      <a href="../index.html#projetos" class="article-back">← Voltar para os projetos</a>
+
+      <header class="article-header">
+        <time class="article-header__date" datetime="2026-08-12">12 de agosto de 2026</time>
+        <h1 class="article-header__title">Analytics-Ready Data Warehouse: Modelagem Dimensional com dbt e AWS</h1>
+        <div class="article-header__tags">
+          <span class="article-tag">#dbt</span>
+          <span class="article-tag">#sql</span>
+          <span class="article-tag">#aws</span>
+          <span class="article-tag">#data-modeling</span>
+          <span class="article-tag">#star-schema</span>
+        </div>
+      </header>
+
+      <div class="article-body">
+        <p>Um time de marketing digital que gasta 2 horas por dia juntando dados de Google Ads, Facebook Ads e CRM em planilhas não está fazendo análise — está fazendo trabalho manual. Este projeto eliminou esse gargalo.</p>
+
+        <h2>O Cenário</h2>
+        <p>Dados de campanhas espalhados em 3 fontes diferentes, com nomenclaturas inconsistentes, granularidades distintas e sem um modelo unificado. O time de BI criava relatórios diferentes a cada semana porque os dados "não batiam".</p>
+
+        <h2>Modelagem Star Schema</h2>
+
+        <img src="../public/images/arquitetura_dw_dbt.png" alt="Diagrama do Data Warehouse com modelagem Star Schema" width="3120" height="2196" loading="lazy" decoding="async">
+
+        <p>Desenhei um modelo dimensional clássico com:</p>
+        <ul>
+          <li><strong>Fato:</strong> <code>fct_campaign_performance</code> — métricas diárias (impressões, cliques, conversões, custo, receita)</li>
+          <li><strong>Dimensão:</strong> <code>dim_campaign</code> — nome, plataforma, objetivo, segmento</li>
+          <li><strong>Dimensão:</strong> <code>dim_date</code> — calendário completo com semana fiscal, trimestre, etc.</li>
+          <li><strong>Dimensão:</strong> <code>dim_channel</code> — Google, Facebook, Email, Orgânico</li>
+        </ul>
+
+        <h2>Pipeline com dbt</h2>
+        <p>O <code>dbt</code> transformou a maneira como as transformações são gerenciadas:</p>
+        <ul>
+          <li>Cada modelo é versionado no Git</li>
+          <li>Testes de schema garantem integridade referencial</li>
+          <li>Documentação é gerada automaticamente</li>
+          <li>Lineage mostra toda a cadeia de dependência entre tabelas</li>
+        </ul>
+
+        <p>Os dados brutos ficam no <code>S3</code>, são carregados no <code>Amazon Redshift</code>, e o dbt transforma de staging → intermediate → marts.</p>
+
+        <h2>Resultados</h2>
+        <ul>
+          <li>Queries que levavam minutos passaram a rodar em segundos</li>
+          <li>Análises 5x mais rápidas de construir</li>
+          <li>Uma única fonte de verdade para todas as métricas de marketing</li>
+          <li>Time de BI parou de "limpar dados" e passou a analisar</li>
+        </ul>
+
+        <blockquote>Dados brutos são matéria-prima. Sem modelagem, são apenas ruído organizado.</blockquote>
+      </div>
+
+      <a class="article-repo" href="https://github.com/tmarsbr/dbt-analytics-warehouse" target="_blank" rel="noopener noreferrer">
+        Ver repositório no GitHub →
+      </a>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container footer__inner"><p>© <span id="currentYear">2026</span> Tiago Silva</p><a href="#top">Voltar ao topo ↑</a></div></footer>
+  <script src="../main.js"></script>
+</body>
+</html>

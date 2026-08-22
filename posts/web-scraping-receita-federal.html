@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pipeline de Web Scraping — Tiago Silva</title>
+  <meta name="description" content="Pipeline end-to-end para coleta, tratamento e carga de dados massivos do CNPJ da Receita Federal.">
+  <meta name="theme-color" content="#faf7f0">
+  <script>
+    try {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) document.documentElement.classList.add('dark');
+    } catch (error) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="header">
+    <div class="container header__inner">
+      <a href="../index.html" class="header__brand" aria-label="Tiago Silva — página inicial"><span class="header__mark" aria-hidden="true">TS</span><span class="header__name">Tiago Silva</span></a>
+      <nav class="header__nav" aria-label="Navegação principal">
+        <a href="../index.html#projetos" class="nav-link">Projetos</a>
+        <a href="../index.html#sobre" class="nav-link">Sobre</a>
+        <a href="../index.html#contato" class="nav-link">Contato</a>
+      </nav>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Ativar tema escuro" aria-pressed="false" title="Ativar tema escuro">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="article-page" id="conteudo">
+    <div class="container container--article">
+
+      <a href="../index.html#projetos" class="article-back">← Voltar para os projetos</a>
+
+      <header class="article-header">
+        <time class="article-header__date" datetime="2026-08-22">22 de agosto de 2026</time>
+        <h1 class="article-header__title">Pipeline de Web Scraping: Extração de Dados Públicos da Receita Federal</h1>
+        <div class="article-header__tags">
+          <span class="article-tag">#python</span>
+          <span class="article-tag">#apache-spark</span>
+          <span class="article-tag">#aws</span>
+          <span class="article-tag">#web-scraping</span>
+          <span class="article-tag">#aws-lambda</span>
+          <span class="article-tag">#amazon-emr</span>
+        </div>
+      </header>
+
+      <div class="article-body">
+
+        <p>A Receita Federal disponibiliza mensalmente os dados abertos de CNPJ do Brasil — são dezenas de gigabytes de arquivos CSV compactados, com informações de todas as empresas ativas e inativas do país. O desafio: coletar, tratar e carregar esses dados de forma automatizada e escalável.</p>
+
+        <h2>O Problema</h2>
+        <p>Muitas empresas precisam cruzar dados do CNPJ para validação cadastral, análise de mercado ou compliance. Fazer isso manualmente é inviável — são mais de 50 milhões de registros distribuídos em múltiplos arquivos com schemas inconsistentes.</p>
+
+        <h2>Arquitetura da Solução</h2>
+        <p>Desenhei um pipeline end-to-end com as seguintes camadas:</p>
+
+        <ol class="pipeline-flow" aria-label="Etapas do pipeline de web scraping">
+          <li><span>01</span><strong>Descoberta</strong>Identificação automática dos arquivos mais recentes no portal público.</li>
+          <li><span>02</span><strong>Extração</strong>Download controlado, verificação de integridade e registro da execução.</li>
+          <li><span>03</span><strong>Camada RAW</strong>Preservação dos arquivos originais no S3, particionados por referência.</li>
+          <li><span>04</span><strong>Processamento</strong>Padronização e transformação distribuída com Apache Spark.</li>
+          <li><span>05</span><strong>Consumo</strong>Dados em Parquet, catalogados e disponíveis para consultas no Athena.</li>
+        </ol>
+
+        <ul>
+          <li><strong>Extração:</strong> Script Python com <code>requests</code> e <code>BeautifulSoup</code> que navega no portal da Receita, identifica os links de download mais recentes e baixa os arquivos ZIP automaticamente.</li>
+          <li><strong>Armazenamento raw:</strong> Os arquivos brutos são enviados para o <code>AWS S3</code> na camada RAW, com particionamento por data de extração.</li>
+          <li><strong>Processamento:</strong> Jobs <code>Apache Spark</code> rodando no <code>Amazon EMR</code> descompactam, padronizam schemas e aplicam transformações de limpeza (remoção de duplicatas, normalização de campos, cast de tipos).</li>
+          <li><strong>Orquestração:</strong> <code>AWS Lambda</code> dispara o pipeline mensalmente via EventBridge, e monitora o status de cada etapa.</li>
+          <li><strong>Consulta:</strong> Os dados processados ficam em Parquet no S3 e são consultáveis via <code>Amazon Athena</code>, sem necessidade de provisionar banco de dados.</li>
+        </ul>
+
+        <h2>Decisões Técnicas</h2>
+        <p>Escolhi Spark no EMR em vez de Pandas por uma razão simples: volume. Com 50M+ de registros, Pandas estoura a memória de uma máquina comum. O Spark distribui o processamento em cluster e permite escalar horizontalmente conforme o volume cresce.</p>
+
+        <p>O particionamento em Parquet por UF e data de referência permite que queries no Athena leiam apenas os blocos necessários — reduzindo custo e tempo de resposta em até 90%.</p>
+
+        <h2>Resultados</h2>
+        <ul>
+          <li>Pipeline executa mensalmente sem intervenção manual</li>
+          <li>Tempo de processamento: ~45 minutos para o dataset completo</li>
+          <li>Dados consultáveis em segundos via Athena</li>
+          <li>Custo mensal de infraestrutura: &lt; US$ 15</li>
+        </ul>
+
+        <blockquote>Tolerância apertada e processo confiável geram qualidade — em aço e em dados.</blockquote>
+
+        <h2>Tecnologias Utilizadas</h2>
+        <ul>
+          <li>Python (requests, BeautifulSoup)</li>
+          <li>Apache Spark</li>
+          <li>AWS S3, Lambda, EMR, Athena</li>
+          <li>EventBridge (agendamento)</li>
+          <li>Parquet (formato de armazenamento)</li>
+        </ul>
+
+      </div>
+
+      <a class="article-repo" href="https://github.com/tmarsbr" target="_blank" rel="noopener noreferrer">
+        Explorar projetos no GitHub →
+      </a>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner"><p>© <span id="currentYear">2026</span> Tiago Silva</p><a href="#top">Voltar ao topo ↑</a></div>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>

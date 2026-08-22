@@ -1,59 +1,48 @@
-# Deploy do Portfólio para GitHub Pages
+# Publica o portfólio estático no GitHub Pages.
 name: Deploy to GitHub Pages
 
 on:
-  # Executa no push para a branch main
   push:
-    branches: [ main ]
-  
-  # Permite execução manual do workflow
+    branches: [main]
   workflow_dispatch:
 
-# Define permissões para o GITHUB_TOKEN
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Permite apenas um deploy simultâneo, cancelando execuções em andamento
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  # Job de build
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Build project
-        run: npm run build
-        env:
-          # Importante: define a URL base para GitHub Pages
-          PUBLIC_URL: /portifolio
-          # Permite warnings do ESLint durante o build
-          CI: false
-          
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-        
-      - name: Upload artifact
+
+      - name: Prepare static site
+        shell: bash
+        run: |
+          mkdir -p _site/public/imagem
+          mkdir -p _site/public/images
+          mkdir -p _site/public/projects
+          cp index.html style.css main.js _site/
+          cp -R posts _site/
+          cp public/imagem/perfil-640.jpg _site/public/imagem/
+          cp public/images/*.png _site/public/images/
+          cp public/projects/*-1200.jpg _site/public/projects/
+          touch _site/.nojekyll
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build
+          path: ./_site
 
-  # Job de deploy
   deploy:
     environment:
       name: github-pages
